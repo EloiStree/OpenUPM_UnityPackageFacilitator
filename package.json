@@ -1,11 +1,11 @@
-{                                                                                           
-  "name": "be.eloiexperiments.UnityPackageFacilitator",                                           
-  "displayName": "Unity Package Creator",                                                    
-  "version": "0.0.1",                                                                       
-  "unity": "2018.1",                                                                        
+
+{                                                                                
+  "name": "be.eloiexperiments.unitypackagefacilitator",                              
+  "displayName": "Unity Package Creator",                        
+  "version": "0.0.1",                         
+  "unity": "2018.1",                             
   "description": "No description",              
-  "keywords": [],                                                                                        
-  "category": "Script",                                                                     
-  "dependencies":                                                                             
-      { }                                                                                     
-}                                                                                           
+  "keywords": [Script,Tool]
+  "category": "Script",                   
+  "dependencies":{}
+}                                                                                
