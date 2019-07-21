@@ -1,8 +1,6 @@
-
 {                                                                   
             "name": "be.eloiexperiments.UnityPackageFacilitator",          
-    "references": [                                                 
-    ],                                                              
+    "references": [],                                                              
     "optionalUnityReferences": [],                                  
     "includePlatforms": [],                                                  
     "excludePlatforms": [],                                         
