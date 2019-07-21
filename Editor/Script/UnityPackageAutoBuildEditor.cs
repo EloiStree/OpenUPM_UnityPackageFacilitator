@@ -152,11 +152,11 @@ public class UnityPackageAutoBuildEditor : Editor
         packageJson += "\n  \"displayName\": \"" + packageInfo.m_displayName + "\",                        ";
         packageJson += "\n  \"version\": \"" + packageInfo.m_packageVersion + "\",                         ";
         packageJson += "\n  \"unity\": \"" + packageInfo.m_unityVersion + "\",                             ";
-        packageJson += "\n  \"description\": \"" + packageInfo.m_description + "\",              ";
-        packageJson += "\n  \"keywords\": [" + string.Join(",", keywordForJson) + "],";
+        packageJson += "\n  \"description\": \"" + packageInfo.m_description + "\",                         ";
+        packageJson += "\n  \"keywords\": [" + string.Join(",", keywordForJson) + "],                       ";
         packageJson += "\n  \"category\": \"" + packageInfo.m_category.ToString() + "\",                   ";
-        packageJson += "\n  \"dependencies\":{" + string.Join(",", dependenciesModificatedForJson) + "}";
-        packageJson += "\n}                                                                                ";
+        packageJson += "\n  \"dependencies\":{" + string.Join(",", dependenciesModificatedForJson) + "}     ";
+        packageJson += "\n  }                                                                                ";
         Directory.CreateDirectory(whereToCreate);
         File.Delete(whereToCreate + "/package.json");
         File.WriteAllText(whereToCreate + "/package.json", packageJson);
@@ -174,8 +174,11 @@ public class UnityPackageAutoBuildEditor : Editor
         m_howToUse += "\nContact me if you need assistance: " + additionalInfo.m_contact + "   ";
         m_howToUse += "\n   ";
         m_howToUse += "\n--------------------------------------    ";
+        m_howToUse += "\n``` json     ";
+        m_howToUse += packageJson;
+        m_howToUse += "\n```    ";
 
-        File.WriteAllText(whereToCreate + "/readme.md", m_howToUse+ packageJson);
+        File.WriteAllText(whereToCreate + "/readme.md", m_howToUse);
 
     }
 }
