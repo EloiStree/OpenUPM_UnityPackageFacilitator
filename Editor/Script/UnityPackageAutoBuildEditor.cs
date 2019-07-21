@@ -27,13 +27,13 @@ public class UnityPackageAutoBuildEditor : Editor
             QuickGit.Clone(myScript.m_gitLink, whereToCreate);
             CreateStructure(myScript);
         }
-        if (GUILayout.Button("Create files & directory"))
+        if (GUILayout.Button("Create files & directories"))
         {
             CreateStructure(myScript);
         }
         if (GUILayout.Button("Pull & Push"))
         {
-            QuickGit.PullAddCommitAndPush(whereToCreate, DateTime.Now.ToString("yyyy mm dd hh mm"));
+            QuickGit.PullAddCommitAndPush(whereToCreate, DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
         }
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
