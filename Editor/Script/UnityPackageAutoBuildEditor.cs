@@ -233,9 +233,11 @@ public static class QuickGit
     public static void PullAddCommitAndPush(string gitDirectoryPath, string commitDescription = "none")
     {
         RunCommands(new string[] {
+                "git add .",
+                "git commit -m \"Save: " + commitDescription + "\"",
                 "git pull",
                 "git add .",
-                "git commit -m \"" + commitDescription + "\"",
+                "git commit -m \"Merge: "+ commitDescription + "\"",
                 "git push"
           }, gitDirectoryPath);
     }
