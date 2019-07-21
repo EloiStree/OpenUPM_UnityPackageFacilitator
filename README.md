@@ -4,6 +4,10 @@ Add the following line to the [UnityRoot]/Packages/manifest.json
 "be.eloiexperiments.unitypackagefacilitator":"https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git",    
 ```    
 --------------------------------------    
+Feel free to support my work: http://patreon.com/eloistree
+Contact me if you need assistance: http://eloistree.page.link/discord
+--------------------------------------    
+--------------------------------------    
 {                                                                                
   "name": "be.eloiexperiments.unitypackagefacilitator",                              
   "displayName": "Unity Package Creator",                        

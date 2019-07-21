@@ -35,13 +35,19 @@ public class UnityPackageAutoBuildEditor : Editor
         {
             QuickGit.PullAddCommitAndPush(whereToCreate, DateTime.Now.ToString("yyyy mm dd hh mm"));
         }
-        if (GUILayout.Button("CMD"))
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Cmd.exe"))
         {
             QuickGit.OpenCmd(whereToCreate);
         }
         if (GUILayout.Button("Folder"))
         {
             Application.OpenURL(myScript.GetFolderPath());
+        }
+        if (GUILayout.Button("Git Server"))
+        {
+            Application.OpenURL(myScript.m_gitLink);
         }
         GUILayout.EndHorizontal();
 
@@ -51,7 +57,7 @@ public class UnityPackageAutoBuildEditor : Editor
     public void CreateStructure(UnityPackageAutoBuild myScript)
     {
         string whereToCreate = myScript.m_projectPath + "/" + myScript.m_packageJson.m_folderName;
-        CreatePackageJson(myScript.m_packageJson, whereToCreate, myScript.m_gitLink);
+        CreatePackageJson(myScript.m_packageJson, whereToCreate, myScript);
         CreateFolders(whereToCreate, myScript.m_directoriesStructure);
         CreateAssembly(myScript.m_assemblyRuntime, whereToCreate);
         CreateAssembly(myScript.m_assemblyEditor, whereToCreate);
@@ -127,7 +133,7 @@ public class UnityPackageAutoBuildEditor : Editor
         }
     }
 
-    private void CreatePackageJson( PackageJson packageInfo, string whereToCreate, string gitLink, string fileName = "package.json")
+    private void CreatePackageJson( PackageJson packageInfo, string whereToCreate, UnityPackageAutoBuild additionalInfo, string fileName = "package.json")
     {
         string packageJson = "";
         string[] dependenciesModificatedForJson = new string[packageInfo.m_dependencies.Length];
@@ -158,8 +164,13 @@ public class UnityPackageAutoBuildEditor : Editor
         string m_howToUse = "# How to use: " + packageInfo.m_displayName+ "   " ;
         m_howToUse += "\nAdd the following line to the [UnityRoot]/Packages/manifest.json    ";
         m_howToUse += "\n``` json     ";
-        m_howToUse += "\n" + string.Format("\"{0}\":\"{1}\",", packageInfo.m_packageIdName, gitLink)+  "    "  ;
+        m_howToUse += "\n" + string.Format("\"{0}\":\"{1}\",", packageInfo.m_packageIdName, additionalInfo.m_gitLink) +  "    "  ;
         m_howToUse += "\n```    ";
+        m_howToUse += "\n--------------------------------------    ";
+        m_howToUse += "\nFeel free to support my work: " + additionalInfo.m_patreonLink;
+        m_howToUse += "\nContact me if you need assistance: " + additionalInfo.m_contact;
+        m_howToUse += "\n--------------------------------------    ";
+
         m_howToUse += "\n--------------------------------------    ";
 
         File.WriteAllText(whereToCreate + "/readme.md", m_howToUse+ packageJson);

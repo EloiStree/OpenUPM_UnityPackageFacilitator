@@ -6,6 +6,9 @@ using UnityEngine;
 public class UnityPackageAutoBuild : MonoBehaviour
 {
     public string m_gitLink;
+    [Header("Contact info")]
+    public string m_patreonLink = "http://patreon.com/eloistree";
+    public string m_contact = "http://eloistree.page.link/discord";
     [Header("Package Info")]
     public string country="be";
     public string company="eloiexperiments";
