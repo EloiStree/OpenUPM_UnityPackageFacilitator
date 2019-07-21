@@ -6,11 +6,20 @@ using UnityEngine;
 public class UnityPackageAutoBuild : MonoBehaviour
 {
     public string m_gitLink;
-    public string m_projectPath;
+    [Header("Package Info")]
+    public string country="be";
+    public string company="eloiexperiments";
+    public string[] m_directoriesStructure;
     public PackageJson m_packageJson;
+    [Header("Semi-automatic")]
     public AssemblyJson m_assemblyRuntime;
     public AssemblyJson m_assemblyEditor = new AssemblyJson() { m_isEditorAssembly = true };
-    public string[] m_directoriesStructure = new string[] {
+    public string m_projectPath;
+
+    public void Reset()
+    {
+
+        m_directoriesStructure = new string[] {
         "Runtime"
        ,"Runtime/Scene"
        ,"Runtime/Script"
@@ -20,11 +29,6 @@ public class UnityPackageAutoBuild : MonoBehaviour
        ,"Editor"
        ,"Editor/Script"
     };
-
-    public void Reset()
-    {
-
-
         m_projectPath = Application.dataPath;
         String sDate = DateTime.Now.ToString();
         DateTime datevalue = (Convert.ToDateTime(sDate.ToString()));
@@ -32,7 +36,7 @@ public class UnityPackageAutoBuild : MonoBehaviour
         m_packageJson.m_month = datevalue.Month;
         m_packageJson.m_day = datevalue.Day;
         m_packageJson.m_projectIdName = Application.productName.Replace(" ", "").ToLower();
-        m_packageJson.m_packageIdName = "be.eloiexperiments." + Application.productName.Replace(" ", "").ToLower();
+        m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace( Application.productName));
         m_packageJson.m_displayName = Application.productName;
         m_assemblyRuntime.m_packageIdName = m_packageJson.m_packageIdName.ToLower();
         m_assemblyEditor.m_packageIdName = m_packageJson.m_packageIdName.ToLower() + "editor";
@@ -40,12 +44,18 @@ public class UnityPackageAutoBuild : MonoBehaviour
 
 
     }
+
+    private string CleanForNameSpace(string value)
+    {
+        return value.ToLower().Replace(" ", "").Replace(".", "");
+    }
+
     public void OnValidate()
     {
 
         m_projectPath = Application.dataPath;
         m_packageJson.RefreshFolderName();
-        m_packageJson.m_packageIdName = "be.eloiexperiments." + m_packageJson.m_projectIdName.Replace(" ", "").ToLower();
+        m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace(m_packageJson.m_projectIdName));
         m_assemblyRuntime.m_packageName = m_packageJson.m_projectIdName.ToLower();
         m_assemblyEditor.m_packageName = m_packageJson.m_projectIdName.ToLower() + "editor";
         m_assemblyRuntime.m_packageIdName = m_packageJson.m_packageIdName.ToLower();
