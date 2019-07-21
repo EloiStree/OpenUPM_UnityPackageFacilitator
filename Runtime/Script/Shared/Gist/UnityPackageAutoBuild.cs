@@ -45,6 +45,11 @@ public class UnityPackageAutoBuild : MonoBehaviour
 
     }
 
+    public string GetFolderPath()
+    {
+        return m_projectPath + "/" + m_packageJson.m_folderName;
+    }
+
     private string CleanForNameSpace(string value)
     {
         return value.ToLower().Replace(" ", "").Replace(".", "");

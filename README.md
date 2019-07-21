@@ -9,8 +9,8 @@ Add the following line to the [UnityRoot]/Packages/manifest.json
   "displayName": "Unity Package Creator",                        
   "version": "0.0.1",                         
   "unity": "2018.1",                             
-  "description": "No description",              
-  "keywords": ["Script","Tool"],
+  "description": "Tools to create the structure of new unity package under 2 minutes.",              
+  "keywords": ["Script","Tool","Productivity","Git","Unity Package"],
   "category": "Script",                   
-  "dependencies":{}
+  "dependencies":{"be.eloiexperiments.randomtool": "0.0.1"}
 }                                                                                

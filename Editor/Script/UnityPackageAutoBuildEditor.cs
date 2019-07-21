@@ -39,6 +39,10 @@ public class UnityPackageAutoBuildEditor : Editor
         {
             QuickGit.OpenCmd(whereToCreate);
         }
+        if (GUILayout.Button("Folder"))
+        {
+            Application.OpenURL(myScript.GetFolderPath());
+        }
         GUILayout.EndHorizontal();
 
         EditorGUILayout.HelpBox("Reminder:Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
