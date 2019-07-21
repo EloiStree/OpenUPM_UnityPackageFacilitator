@@ -162,15 +162,17 @@ public class UnityPackageAutoBuildEditor : Editor
         File.WriteAllText(whereToCreate + "/package.json", packageJson);
 
         string m_howToUse = "# How to use: " + packageInfo.m_displayName+ "   " ;
+        m_howToUse += "\n   ";
+
         m_howToUse += "\nAdd the following line to the [UnityRoot]/Packages/manifest.json    ";
         m_howToUse += "\n``` json     ";
         m_howToUse += "\n" + string.Format("\"{0}\":\"{1}\",", packageInfo.m_packageIdName, additionalInfo.m_gitLink) +  "    "  ;
         m_howToUse += "\n```    ";
         m_howToUse += "\n--------------------------------------    ";
-        m_howToUse += "\nFeel free to support my work: " + additionalInfo.m_patreonLink;
-        m_howToUse += "\nContact me if you need assistance: " + additionalInfo.m_contact;
-        m_howToUse += "\n--------------------------------------    ";
-
+        m_howToUse += "\n   ";
+        m_howToUse += "\nFeel free to support my work: " + additionalInfo.m_patreonLink+"   ";
+        m_howToUse += "\nContact me if you need assistance: " + additionalInfo.m_contact + "   ";
+        m_howToUse += "\n   ";
         m_howToUse += "\n--------------------------------------    ";
 
         File.WriteAllText(whereToCreate + "/readme.md", m_howToUse+ packageJson);
