@@ -1,7 +1,7 @@
 
 {                                                                   
             "name": "be.eloiexperiments.unitypackagefacilitatoreditor",          
-    "references": ["b","be.randomtoll","be.eloiexperiments.unitypackagefacilitator"
+    "references": ["be.eloiexperiments.unitypackagefacilitator"
 ],                                                              
     "optionalUnityReferences": [],                                  
     "includePlatforms": [                                           

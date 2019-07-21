@@ -131,6 +131,11 @@ public class UnityPackageAutoBuildEditor : Editor
         {
             dependenciesModificatedForJson[i] = "\"" + packageInfo.m_dependencies[i] + "\": \"0.0.1\"";
         }
+        string[] keywordForJson = new string[packageInfo.m_keywords.Length];
+        for (int i = 0; i < packageInfo.m_keywords.Length; i++)
+        {
+            keywordForJson[i] = "\"" + packageInfo.m_keywords[i] + "\"";
+        }
 
         packageJson += "\n{                                                                                ";
         packageJson += "\n  \"name\": \"" + packageInfo.m_packageIdName + "\",                              ";
@@ -138,7 +143,7 @@ public class UnityPackageAutoBuildEditor : Editor
         packageJson += "\n  \"version\": \"" + packageInfo.m_packageVersion + "\",                         ";
         packageJson += "\n  \"unity\": \"" + packageInfo.m_unityVersion + "\",                             ";
         packageJson += "\n  \"description\": \"" + packageInfo.m_description + "\",              ";
-        packageJson += "\n  \"keywords\": [" + string.Join(",", packageInfo.m_keywords) + "],";
+        packageJson += "\n  \"keywords\": [" + string.Join(",", keywordForJson) + "],";
         packageJson += "\n  \"category\": \"" + packageInfo.m_category.ToString() + "\",                   ";
         packageJson += "\n  \"dependencies\":{" + string.Join(",", dependenciesModificatedForJson) + "}";
         packageJson += "\n}                                                                                ";

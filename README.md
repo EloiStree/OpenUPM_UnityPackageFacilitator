@@ -5,7 +5,7 @@
   "version": "0.0.1",                         
   "unity": "2018.1",                             
   "description": "No description",              
-  "keywords": [Script,Tool]
+  "keywords": ["Script","Tool"],
   "category": "Script",                   
   "dependencies":{}
 }                                                                                
