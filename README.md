@@ -1,3 +1,15 @@
-# 2019_07_21_UnityPackageCreator
 
-Tools to create the structure of new unity package under 2 minutes.
+{
+{                                                                                           
+  "name": "be.eloiexperiments.UnityPackageFacilitator",                                           
+  "displayName": "Unity Package Creator",                                                    
+  "version": "0.0.1",                                                                       
+  "unity": "2018.1",                                                                        
+  "description": "No description",              
+  "keywords": [                                                                             Script,Tool
+  ],                                                                                        
+  "category": "Script",                                                                     
+  "dependencies":                                                                             
+      {                                                                                     
+      }                                                                                     
+}                                                                                           

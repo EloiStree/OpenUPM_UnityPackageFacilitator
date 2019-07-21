@@ -10,6 +10,6 @@
   ],                                                                                        
   "category": "Script",                                                                     
   "dependencies":                                                                             
-      {                                                                                     "be.eloiexperiments.randomtool": "0.0.1"
+      {                                                                                     
       }                                                                                     
 }                                                                                           

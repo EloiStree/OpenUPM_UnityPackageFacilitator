@@ -163,7 +163,8 @@ public class UnityPackageAutoBuild : MonoBehaviour
         packageJson += "\n}                                                                                           ";
         Directory.CreateDirectory(whereToCreate);
         File.Delete(whereToCreate + "/package.json");
-        File.WriteAllText(whereToCreate +"/package.json", packageJson);
+        File.WriteAllText(whereToCreate + "/package.json", packageJson);
+        File.WriteAllText(whereToCreate + "/readme.md", packageJson);
     }
 }
     public enum CatergoryType { Script}
