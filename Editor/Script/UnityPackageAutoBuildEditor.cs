@@ -138,7 +138,7 @@ public class UnityPackageAutoBuildEditor : Editor
         packageJson += "\n  \"version\": \"" + packageInfo.m_packageVersion + "\",                         ";
         packageJson += "\n  \"unity\": \"" + packageInfo.m_unityVersion + "\",                             ";
         packageJson += "\n  \"description\": \"" + packageInfo.m_description + "\",              ";
-        packageJson += "\n  \"keywords\": [" + string.Join(",", packageInfo.m_keywords) + "]";
+        packageJson += "\n  \"keywords\": [" + string.Join(",", packageInfo.m_keywords) + "],";
         packageJson += "\n  \"category\": \"" + packageInfo.m_category.ToString() + "\",                   ";
         packageJson += "\n  \"dependencies\":{" + string.Join(",", dependenciesModificatedForJson) + "}";
         packageJson += "\n}                                                                                ";
