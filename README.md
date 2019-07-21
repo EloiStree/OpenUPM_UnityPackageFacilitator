@@ -1,4 +1,9 @@
-# How to use: Unity Package Creator   Add the following line to the [UnityRoot]/Packages/manifest.json    ``` json     "be.eloiexperiments.unitypackagefacilitator":"https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git",    ```    --------------------------------------    
+# How to use: Unity Package Creator   
+Add the following line to the [UnityRoot]/Packages/manifest.json    
+``` json     
+"be.eloiexperiments.unitypackagefacilitator":"https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git",    
+```    
+--------------------------------------    
 {                                                                                
   "name": "be.eloiexperiments.unitypackagefacilitator",                              
   "displayName": "Unity Package Creator",                        
