@@ -41,18 +41,8 @@ public class UnityPackageAutoBuildEditor : Editor
         }
         GUILayout.EndHorizontal();
 
+        EditorGUILayout.HelpBox("Reminder:Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
 
-
-        //if (!string.IsNullOrEmpty(m_gitLink))
-        //{
-        //    if (!Directory.Exists(whereToCreate) || (Directory.Exists(whereToCreate) && !Directory.Exists(whereToCreate + "/.git")))
-        //    {
-
-        //        UnityEngine.Debug.Log("Clone...");
-        //        UnityEngine.Debug.Log("Where ... " + whereToCreate);
-        //        QuickGit.Clone(m_gitLink, whereToCreate);
-        //    }
-        //}
     }
     public void CreateStructure(UnityPackageAutoBuild myScript)
     {
@@ -192,7 +182,7 @@ public static class QuickGit
         //string cmd = disk + ":" + "&" + "cd \"" + gitDirectoryPath + "\"";
 
         string strCmdText;
-        strCmdText = "/K " + disk + ":" + " && cd " + gitDirectoryPath + "";
+        strCmdText = "/K " + disk + ":" + " && cd " + gitDirectoryPath + " && git status";
         System.Diagnostics.Process process = new System.Diagnostics.Process();
         process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
         process.StartInfo.FileName = "cmd.exe";
