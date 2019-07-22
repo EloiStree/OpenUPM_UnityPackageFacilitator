@@ -187,13 +187,14 @@ public class UnityPackageAutoBuildEditor : Editor
 
 public static class UnityPackageManagerUtility
 {
-    [MenuItem("Window /Package Utility / Update")]
+    [MenuItem("Window /Package Utility / Remove Locker")]
     public static void RemoveLocker()
     {
         string packagePath = GetProjectPackagePath();
         string package = File.ReadAllText(packagePath);
-        package = Regex.Replace(package, "(,)[.\\n\\r]*(\"lock\":)[\\S\\r\\n{}]*", "}");
-        File.WriteAllText(packagePath, package);
+        package = Regex.Replace(package, "(,)[. \\n \\r]*(\"lock\":)[\\S \\r \\n { }]*", "}");
+         File.WriteAllText(packagePath, package);
+        AssetDatabase.Refresh();
     }
 
     private static string GetProjectPackagePath()

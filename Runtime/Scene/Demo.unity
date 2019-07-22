@@ -120,95 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &36354423
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 36354425}
-  - component: {fileID: 36354424}
-  m_Layer: 0
-  m_Name: Create Unity Package Auto Build
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &36354424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36354423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c66ed96ca05cfc54eb723a2d8e26d965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gitLink: https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git
-  m_patreonLink: http://patreon.com/eloistree
-  m_contact: http://eloistree.page.link/discord
-  country: be
-  company: eloiexperiments
-  m_directoriesStructure:
-  - Runtime
-  - Runtime/Scene
-  - Runtime/Script
-  - Runtime/Script/Shared/Gist
-  - Runtime/Assets/
-  - Runtime/Assets/Shared/
-  - Editor
-  - Editor/Script
-  m_packageJson:
-    m_year: 2019
-    m_month: 7
-    m_day: 21
-    m_projectIdName: UnityPackageFacilitator
-    m_folderName: 2019_07_21_UnityPackageFacilitator
-    m_packageIdName: be.eloiexperiments.unitypackagefacilitator
-    m_displayName: Unity Package Creator
-    m_description: Tools to create the structure of new unity package under 2 minutes.
-    m_keywords:
-    - Script
-    - Tool
-    - Productivity
-    - Git
-    - Unity Package
-    m_category: 0
-    m_packageVersion: 0.0.1
-    m_unityVersion: 2018.1
-    m_dependencies:
-    - be.eloiexperiments.randomtool
-  m_assemblyRuntime:
-    m_packageName: unitypackagefacilitator
-    m_packageIdName: be.eloiexperiments.unitypackagefacilitator
-    m_reference: []
-    m_isEditorAssembly: 0
-  m_assemblyEditor:
-    m_packageName: unitypackagefacilitatoreditor
-    m_packageIdName: be.eloiexperiments.unitypackagefacilitatoreditor
-    m_reference:
-    - be.eloiexperiments.unitypackagefacilitator
-    m_isEditorAssembly: 1
-  m_projectPath: C:/Users/stree/OneDrive/Desktop/2019_07_21_PackageCreator/UnityPackageCreator/Assets
---- !u!4 &36354425
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36354423}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,3 +294,72 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &7865751208623259185
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7865751208659257158, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Example: Create Unity Package Auto Build'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c0d60d2aa59daf48bfe651a5df0620b, type: 3}
