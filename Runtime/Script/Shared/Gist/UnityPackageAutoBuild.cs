@@ -18,7 +18,8 @@ public class UnityPackageAutoBuild : MonoBehaviour
     public AssemblyJson m_assemblyRuntime;
     public AssemblyJson m_assemblyEditor = new AssemblyJson() { m_isEditorAssembly = true };
     public string m_projectPath;
-
+    [HideInInspector]
+    public string m_gitUserName = "eloistree";
     public void Reset()
     {
 

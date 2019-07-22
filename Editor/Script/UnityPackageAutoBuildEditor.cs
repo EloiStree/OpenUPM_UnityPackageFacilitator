@@ -15,45 +15,102 @@ public class UnityPackageAutoBuildEditor : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
+
         UnityPackageAutoBuild myScript = (UnityPackageAutoBuild)target;
 
+        string projectName = myScript.m_packageJson.m_folderName;
         string whereToCreate = myScript.m_projectPath + "/" + myScript.m_packageJson.m_folderName;
+        bool isGitDirectoryDefined = Directory.Exists(myScript.GetFolderPath().ToLower() + "/.git/");
+        bool isGitUrlDefined = !string.IsNullOrEmpty(myScript.m_gitLink);
+
+        if (isGitDirectoryDefined )
+        {
+            GUILayout.BeginHorizontal();
+            if (isGitUrlDefined && GUILayout.Button("Clone"))
+            {
+                Directory.CreateDirectory(whereToCreate);
+                QuickGit.Clone(myScript.m_gitLink, whereToCreate);
+                CreateStructure(myScript);
+            }
+            if (GUILayout.Button("Create files & directories"))
+            {
+                CreateStructure(myScript);
+            }
+            if (isGitDirectoryDefined && GUILayout.Button("Pull & Push"))
+            {
+                QuickGit.PullAddCommitAndPush(whereToCreate, DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Cmd.exe"))
+            {
+                QuickGit.OpenCmd(whereToCreate);
+            }
+            if (GUILayout.Button("Open Folder"))
+            {
+                Application.OpenURL(myScript.GetFolderPath());
+            }
+            if (isGitUrlDefined && GUILayout.Button("Open Git Server"))
+            {
+                Application.OpenURL(myScript.m_gitLink);
+            }
+            GUILayout.EndHorizontal();
+        }
+        if (!isGitDirectoryDefined &&  !isGitUrlDefined)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Create: Git Project");
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("GitLab"))
+            {
+                Application.OpenURL("https://gitlab.com/projects/new");
+            }
+            if (GUILayout.Button("Github"))
+            {
+                Application.OpenURL("https://github.com/new");
+            }
+            if (GUILayout.Button("Local"))
+            {
+                QuickGit.CreateLocal(myScript.GetFolderPath());
+            }
+            GUILayout.EndHorizontal();
+        }
+        if (isGitDirectoryDefined && !isGitUrlDefined)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Create: Create project");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            myScript.m_gitUserName = EditorGUILayout.TextField("User:", myScript.m_gitUserName);
+            GUILayout.EndHorizontal();
 
 
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Clone"))
-        {
-            Directory.CreateDirectory(whereToCreate);
-            QuickGit.Clone(myScript.m_gitLink, whereToCreate);
-            CreateStructure(myScript);
+            GUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("GitLab"))
+            {
+                
+                QuickGit.PushLocalToGitLab(whereToCreate, myScript.m_gitUserName, projectName, out myScript.m_gitLink);
+            }
+            //if (GUILayout.Button("Github"))
+            //{
+            //    QuickGit.PushLocalToGitHub(whereToCreate, myScript.m_gitUserName, projectName, out myScript.m_gitLink);
+            //}
+           
+            GUILayout.EndHorizontal();
         }
-        if (GUILayout.Button("Create files & directories"))
-        {
-            CreateStructure(myScript);
-        }
-        if (GUILayout.Button("Pull & Push"))
-        {
-            QuickGit.PullAddCommitAndPush(whereToCreate, DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
-        }
-        GUILayout.EndHorizontal();
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Cmd.exe"))
-        {
-            QuickGit.OpenCmd(whereToCreate);
-        }
-        if (GUILayout.Button("Folder"))
-        {
-            Application.OpenURL(myScript.GetFolderPath());
-        }
-        if (GUILayout.Button("Git Server"))
-        {
-            Application.OpenURL(myScript.m_gitLink);
-        }
-        GUILayout.EndHorizontal();
 
         EditorGUILayout.HelpBox("Reminder:Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
 
     }
+
+    private void CreateLocalGit(UnityPackageAutoBuild myScript,string where)
+    {
+        QuickGit.CreateLocal(where + "/" + myScript.m_packageJson.m_folderName);
+    }
+
     public void CreateStructure(UnityPackageAutoBuild myScript)
     {
         string whereToCreate = myScript.m_projectPath + "/" + myScript.m_packageJson.m_folderName;
@@ -294,4 +351,69 @@ public static class QuickGit
         process.WaitForExit();
     }
 
+    public static void CreateLocal(string directoryPath)
+    {
+        Directory.CreateDirectory(directoryPath);
+        File.WriteAllText(directoryPath + "/test.md", "Test");
+        RunCommands(new string[] {
+                "git init .",
+                "git add .",
+                "git commit -m \"First commit\"",
+          }, directoryPath);
+        //$ git push -u origin master
+
+    }
+    public static void PushLocalToNewOnline(GitServer server, string directoryPath, string userName, string newRepoName, out string gitCreatedUrl) {
+        gitCreatedUrl = "";
+        switch (server)
+        {
+            //case GitServer.GitHub:
+            //    PushLocalToGitHub(directoryPath, userName, newRepoName, out gitCreatedUrl);
+            //    break; 
+            case GitServer.GitLab:
+                PushLocalToGitLab(directoryPath, userName, newRepoName, out gitCreatedUrl);
+                break;
+            default:
+                break;
+        }
+    }
+//    public static void PushLocalToGitHub(string directoryPath, string userName, string newRepoName, out string gitCreatedUrl)
+//    {
+//        if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(newRepoName))
+//            gitCreatedUrl = "https://github.com/" + userName + "/" + newRepoName + ".git";
+//        else
+//            gitCreatedUrl = "";
+//        //https://kbroman.org/github_tutorial/pages/init.html
+//        RunCommands(new string[] {
+//                "git add .",
+//                "git commit -m \"Local to Remote\"",
+               
+////                "git remote add origin git@github.com:"+userName+"/"+newRepoName+".git",
+//                "git remote add origin https://github.com/"+userName+"/"+newRepoName+"",
+//                "git push --set-upstream https://github.com/"+userName+"/"+newRepoName+".git master",
+//                "git push -u origin master"
+//          }, directoryPath);
+//    }
+    public static void PushLocalToGitLab(string directoryPath, string userName, string newRepoName, out string gitCreatedUrl)
+    {
+
+
+        if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(newRepoName))
+        gitCreatedUrl = "https://gitlab.com/"+userName+"/"+newRepoName+".git";
+                else
+        gitCreatedUrl = "";
+        
+        //https://docs.gitlab.com/ee/gitlab-basics/create-project.html
+        //git push --set-upstream https://gitlab.example.com/namespace/nonexistent-project.git master
+        //git push --set-upstream address/your-project.git
+        RunCommands(new string[] {
+                "git add .",
+                "git commit -m \"Local to Remote\"",
+                "git push --set-upstream https://gitlab.com/"+userName+"/"+newRepoName+".git master",
+                "git push -u origin master"
+          }, directoryPath);
+
+    }
+
+    public enum GitServer { GitHub, GitLab}
 }
