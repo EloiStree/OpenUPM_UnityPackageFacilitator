@@ -77,6 +77,7 @@ public class PackagePullPush : MonoBehaviour
 
 
         QuickGit.PullAddCommitAndPush(GetProjectPathInUnity());
+        QuickGit.AddFileInEmptyFolder(GetProjectPathInUnity());
     }
     
     public void RemoveProject() {

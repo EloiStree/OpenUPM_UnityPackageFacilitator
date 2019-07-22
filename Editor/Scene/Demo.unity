@@ -150,8 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gitLink: https://gitlab.com/eloistree/2019_07_22_oculusguardianidentity.git
-  m_isValideLink: 1
   m_projectName: 2019_07_22_oculusguardianidentity
+  m_isValideLink: 1
+  m_useDebug: 0
 --- !u!4 &701874547
 Transform:
   m_ObjectHideFlags: 0

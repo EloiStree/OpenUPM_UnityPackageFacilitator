@@ -2,9 +2,48 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 public static class QuickGit
 {
+
+    //public static void RemoveAllEmptyFolders()
+    //{
+    //}
+    public static void AddFileInEmptyFolder(string folderPath)
+    {
+        List<string> folders = GetAllFolders(folderPath).ToList() ;
+        FindRemoveFilesIn(ref folders,".git");
+        for (int i = 0; i < folders.Count; i++)
+        {
+            string path = folders[i];
+            UnityEngine.Debug.Log("d " + path);
+            bool isEmpty = Directory.GetFiles(path).Length <= 0;
+            string emptyPath = path + "/empty.txt";
+            if (isEmpty)
+            {
+                File.WriteAllText(emptyPath, "Avoid empty folder");
+            }
+            else {
+                if(File.Exists(emptyPath))
+                    File.Delete(emptyPath);
+            }
+        }
+    }
+
+    private static void FindRemoveFilesIn(ref List<string> folders, string toFound)
+    {
+        for (int i = folders.Count - 1; i >=0; i--)
+        {
+            if (folders[i].IndexOf(toFound) > -1)
+                folders.RemoveAt(i);
+        }
+    }
+
+    public static string [] GetAllFolders(string folderPath) {
+       string [] path = Directory.GetDirectories(folderPath, "*", SearchOption.AllDirectories);
+        return path;
+    }
     public static void OpenCmd(string gitDirectoryPath)
     {
         if (gitDirectoryPath.Length < 2) return;
@@ -183,7 +222,7 @@ public static class QuickGit
                 "rmdir "+directoryPath
           }, directoryPath);
     }
-    public static void RemoveFiles(string directoryPath )
+    public static void RemoveFiles( string directoryPath)
     {
         string[] pathfiles = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
         string[] pathfilesOwn = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
