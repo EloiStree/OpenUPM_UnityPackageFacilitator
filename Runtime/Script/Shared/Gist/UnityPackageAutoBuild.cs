@@ -61,6 +61,12 @@ public class UnityPackageAutoBuild : MonoBehaviour
     public void OnValidate()
     {
 
+        if (m_packageJson == null)
+            return;
+        if (m_assemblyRuntime == null)
+            return;
+        if (m_assemblyEditor == null)
+            return;
         m_projectPath = Application.dataPath;
         m_packageJson.RefreshFolderName();
         m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace(m_packageJson.m_projectIdName));
