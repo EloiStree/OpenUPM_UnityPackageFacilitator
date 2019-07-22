@@ -7,11 +7,11 @@ using UnityEngine;
 public class PackagePullPush : MonoBehaviour
 {
     public string m_gitLink;
+    [Space(10)]
     [Header("Debug information")]
-    public bool m_isValideLink;
     public string m_projectName;
+    public bool m_isValideLink;
     public JsonUnityPackageMirror m_packageMirror;
-    public Color m_disableColor;
     public bool m_useDebug;
 
     public string GetProjectNameFromGitLink(string gitLinkFormated) {

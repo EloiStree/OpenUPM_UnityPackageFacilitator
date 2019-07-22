@@ -11,7 +11,8 @@ public class PackagePullPushEditor : Editor
         DrawDefaultInspector();
 
         PackagePullPush myScript = (PackagePullPush) target;
-
+        
+        GUILayout.Label("Commands", EditorStyles.boldLabel);
         bool isLinkValide = myScript.IsGitLinkValide();
         bool isDirectoryCreated = myScript.IsDirectoryCreated();
         GUILayout.BeginHorizontal();
