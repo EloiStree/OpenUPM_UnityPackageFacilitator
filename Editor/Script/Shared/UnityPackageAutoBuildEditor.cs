@@ -23,16 +23,17 @@ public class UnityPackageAutoBuildEditor : Editor
         bool isGitDirectoryDefined = Directory.Exists(myScript.GetFolderPath().ToLower() + "/.git/");
         bool isGitUrlDefined = !string.IsNullOrEmpty(myScript.m_gitLink);
 
+        GUILayout.BeginHorizontal();
+        if (isGitUrlDefined && !isGitDirectoryDefined && GUILayout.Button("Clone"))
+        {
+            Directory.CreateDirectory(whereToCreate);
+            QuickGit.Clone(myScript.m_gitLink, whereToCreate);
+            CreateStructure(myScript);
+        }
         if (isGitDirectoryDefined )
         {
-            GUILayout.BeginHorizontal();
-            if (isGitUrlDefined && GUILayout.Button("Clone"))
-            {
-                Directory.CreateDirectory(whereToCreate);
-                QuickGit.Clone(myScript.m_gitLink, whereToCreate);
-                CreateStructure(myScript);
-            }
-            if (GUILayout.Button("Create files & directories"))
+          
+            if (isGitDirectoryDefined && GUILayout.Button("Create files & directories"))
             {
                 CreateStructure(myScript);
             }
@@ -42,20 +43,20 @@ public class UnityPackageAutoBuildEditor : Editor
             }
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Cmd.exe"))
+            if (isGitDirectoryDefined && GUILayout.Button("Cmd.exe"))
             {
                 QuickGit.OpenCmd(whereToCreate);
             }
-            if (GUILayout.Button("Open Folder"))
+            if (isGitDirectoryDefined && GUILayout.Button("Open Folder"))
             {
                 Application.OpenURL(myScript.GetFolderPath());
             }
-            if (isGitUrlDefined && GUILayout.Button("Open Git Server"))
+            if (isGitUrlDefined  && GUILayout.Button("Open Git Server"))
             {
                 Application.OpenURL(myScript.m_gitLink);
             }
-            GUILayout.EndHorizontal();
         }
+        GUILayout.EndHorizontal();
         if (!isGitDirectoryDefined &&  !isGitUrlDefined)
         {
             GUILayout.BeginHorizontal();
