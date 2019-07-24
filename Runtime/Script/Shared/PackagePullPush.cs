@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PackagePullPush : MonoBehaviour
 {
-    public string m_gitLink;
+    [SerializeField] string m_gitLink;
     [Space(10)]
     [Header("Debug information")]
     public string m_projectName;
@@ -14,6 +14,8 @@ public class PackagePullPush : MonoBehaviour
     public JsonUnityPackageMirror m_packageMirror;
     public bool m_useDebug;
 
+
+    public string GetGitLink() { return m_gitLink; }
     public string GetProjectNameFromGitLink(string gitLinkFormated) {
         // https://gitlab.com/eloistree/2019_07_22_oculusguardianidentity.git
         // https://github.com/EloiStree/CodeAndQuestsEveryDay.git
@@ -38,10 +40,15 @@ public class PackagePullPush : MonoBehaviour
 
     public void OnValidate()
     {
+        RefreshInfo();
+    }
+
+    public void RefreshInfo()
+    {
         QuickGit.SetDebugOn(m_useDebug);
         m_useDebug = QuickGit.GetDebugState();
 
-           m_isValideLink = IsGitLinkValide(m_gitLink);
+        m_isValideLink = IsGitLinkValide(m_gitLink);
         m_projectName = GetProjectNameFromGitLink(m_gitLink);
     }
 
@@ -73,6 +80,12 @@ public class PackagePullPush : MonoBehaviour
     public string GetProjectPathInUnity()
     {
         return Application.dataPath + "/" + GetProjectNameFromGitLink(m_gitLink);
+    }
+
+    internal void SetGitLink(string gitLink)
+    {
+        m_gitLink = gitLink;
+        RefreshInfo();
     }
 
     public void PullAndPush() {

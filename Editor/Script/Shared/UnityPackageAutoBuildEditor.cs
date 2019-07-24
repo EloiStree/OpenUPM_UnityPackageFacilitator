@@ -79,6 +79,16 @@ public class UnityPackageAutoBuildEditor : Editor
            
             GUILayout.EndHorizontal();
         }
+        if (isGitUrlDefined) {
+            GUILayout.BeginHorizontal();
+            bool packageExist = File.Exists(whereToCreate + "/package.json");
+            if (GUILayout.Button(packageExist? "Create structure": "Update structure"))
+            {
+                CreateStructure(myScript);
+            }
+
+            GUILayout.EndHorizontal();
+        }
 
         EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
 

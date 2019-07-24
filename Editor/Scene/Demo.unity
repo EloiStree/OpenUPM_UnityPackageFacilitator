@@ -341,6 +341,225 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1009865112
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7865751208659257158, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Example: Quick Git Utility'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_dependencies.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_gitLink
+      value: https://gitlab.com/eloistree/2019_07_21_QuickGitUtility.git
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_projectIdName
+      value: QuickGitUtility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_folderName
+      value: 2019_07_21_QuickGitUtility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_packageIdName
+      value: be.eloiexperiments.quickgitutility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyRuntime.m_packageName
+      value: quickgitutility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyRuntime.m_packageIdName
+      value: be.eloiexperiments.quickgitutility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_packageName
+      value: quickgitutilityeditor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_packageIdName
+      value: be.eloiexperiments.quickgitutilityeditor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[1]
+      value: be.eloiexperiments.quickgitutility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[2]
+      value: be.eloiexperiments.qu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[3]
+      value: be.eloiexperiments.qui
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[4]
+      value: be.eloiexperiments.quic
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[5]
+      value: be.eloiexperiments.quick
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[6]
+      value: be.eloiexperiments.quickg
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[7]
+      value: be.eloiexperiments.quickgi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[8]
+      value: be.eloiexperiments.quickgit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[9]
+      value: be.eloiexperiments.quickgitu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[10]
+      value: be.eloiexperiments.quickgitut
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[11]
+      value: be.eloiexperiments.quickgituti
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[12]
+      value: be.eloiexperiments.quickgitutil
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[13]
+      value: be.eloiexperiments.quickgitutili
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[14]
+      value: be.eloiexperiments.quickgitutilit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[15]
+      value: be.eloiexperiments.quickgitutility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_displayName
+      value: Quick Git Utility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_description
+      value: Tools to execute git instructions from command line.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_keywords.Array.data[4]
+      value: Utility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[0]
+      value: be.eloiexperiments.quickgitutility
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569269807452296411, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_gitLink
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c0d60d2aa59daf48bfe651a5df0620b, type: 3}
 --- !u!1 &885370614024159160 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5889882537256309753, guid: c364f445677afbf49bad9b0aa19488ac,
@@ -418,9 +637,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8b1146c8a5a3842b4ff8288e2cc5bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gitLink: 
-  m_projectName: 
-  m_isValideLink: 0
+  m_gitLink: https://gitlab.com/eloistree/2019_03_03_testddd.git
+  m_projectName: 2019_03_03_testddd
+  m_isValideLink: 1
   m_useDebug: 0
 --- !u!1001 &6770149492060253249
 PrefabInstance:
@@ -501,7 +720,7 @@ PrefabInstance:
     - target: {fileID: 7865751208659257158, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
         type: 3}
       propertyPath: m_Name
-      value: 'Example: Create Unity Package Auto Build'
+      value: 'Example: Create Unity Package'
       objectReference: {fileID: 0}
     - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
         type: 3}
@@ -557,6 +776,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyRuntime.m_reference.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_dependencies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[1]
+      value: be.eloiexperiments.unitypackagefacilitator
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyRuntime.m_reference.Array.data[0]
+      value: be.eloiexperiments.quickgitutility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_assemblyEditor.m_reference.Array.data[0]
+      value: be.eloiexperiments.quickgitutilityeditor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_dependencies.Array.data[0]
+      value: be.eloiexperiments.quickgitutility
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+        type: 3}
+      propertyPath: m_packageJson.m_dependencies.Array.data[1]
+      value: be.eloiexperiments.quickgitutilityeditor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c0d60d2aa59daf48bfe651a5df0620b, type: 3}

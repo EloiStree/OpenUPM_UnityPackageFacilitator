@@ -12,7 +12,7 @@ public class PackagePullPushEditor : Editor
 
         PackagePullPush myScript = (PackagePullPush) target;
         
-        if (string.IsNullOrEmpty(myScript.m_gitLink))
+        if (string.IsNullOrEmpty(myScript.GetGitLink()))
             return;
         GUILayout.Label("Commands", EditorStyles.boldLabel);
         bool isLinkValide = myScript.IsGitLinkValide();
@@ -68,7 +68,7 @@ public class PackagePullPushEditor : Editor
         }
         if (isLinkValide && GUILayout.Button("Open Git Server"))
         {
-            Application.OpenURL(myScript.m_gitLink);
+            Application.OpenURL(myScript.GetGitLink());
         }
         GUILayout.EndHorizontal();
      

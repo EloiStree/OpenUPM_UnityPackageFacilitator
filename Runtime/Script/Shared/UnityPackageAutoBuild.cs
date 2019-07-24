@@ -57,7 +57,7 @@ public class UnityPackageAutoBuild : MonoBehaviour
 
         if (m_pullPush == null)
             m_pullPush = gameObject.AddComponent<PackagePullPush>();
-        m_pullPush.m_gitLink = m_gitLink;
+        m_pullPush.SetGitLink( m_gitLink);
     }
 
     public string GetFolderPath()
@@ -82,7 +82,8 @@ public class UnityPackageAutoBuild : MonoBehaviour
 
         RefreshToAccessPullPushScript();
 
-        m_pullPush.m_gitLink = m_gitLink;
+
+        m_pullPush.SetGitLink(m_gitLink);
         m_projectPath = Application.dataPath;
         m_packageJson.RefreshFolderName();
         m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace(m_packageJson.m_projectIdName));
@@ -125,6 +126,7 @@ public class PackageJson
     public string m_folderName = "2019_01_01_ProjectName";
     public string m_packageIdName = "be.eloiexperiments.unnamed";
     public string m_displayName = "Unnamed package";
+    [TextArea(1,5)]
     public string m_description = "No description";
     public string[] m_keywords = new string[] { "Script", "Tool" };
     public CatergoryType m_category = CatergoryType.Script;
