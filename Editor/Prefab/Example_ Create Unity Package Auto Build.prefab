@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7865751208659257160}
   - component: {fileID: 7865751208659257161}
+  - component: {fileID: 1569269807452296411}
   m_Layer: 0
   m_Name: Example_ Create Unity Package Auto Build
   m_TagString: Untagged
@@ -88,3 +89,21 @@ MonoBehaviour:
     - be.eloiexperiments.unitypackagefacilitator
     m_isEditorAssembly: 1
   m_projectPath: C:/Users/stree/OneDrive/Desktop/2019_07_21_PackageCreator/UnityPackageCreator/Assets
+  m_pullPush: {fileID: 1569269807452296411}
+  m_gitUserName: eloistree
+--- !u!114 &1569269807452296411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865751208659257158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8b1146c8a5a3842b4ff8288e2cc5bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gitLink: https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git
+  m_projectName: 2019_07_21_UnityPackageFacilitator
+  m_isValideLink: 1
+  m_useDebug: 0

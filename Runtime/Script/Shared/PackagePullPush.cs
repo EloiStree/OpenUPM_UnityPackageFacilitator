@@ -59,6 +59,8 @@ public class PackagePullPush : MonoBehaviour
 
     public string RemoveWhiteSpace(string gitLinkFormated, string by="_")
     {
+        if (!string.IsNullOrEmpty(gitLinkFormated)
+            ) return "";
         return gitLinkFormated.Replace(" ", by);
     }
 
@@ -75,8 +77,7 @@ public class PackagePullPush : MonoBehaviour
 
     public void PullAndPush() {
 
-
-        QuickGit.PullAddCommitAndPush(GetProjectPathInUnity());
+        QuickGit.PullAddCommitAndPush(GetProjectPathInUnity(), DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
         QuickGit.AddFileInEmptyFolder(GetProjectPathInUnity());
     }
     

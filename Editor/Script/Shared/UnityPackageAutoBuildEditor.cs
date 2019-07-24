@@ -30,32 +30,6 @@ public class UnityPackageAutoBuildEditor : Editor
             QuickGit.Clone(myScript.m_gitLink, whereToCreate);
             CreateStructure(myScript);
         }
-        if (isGitDirectoryDefined )
-        {
-          
-            if (isGitDirectoryDefined && GUILayout.Button("Create files & directories"))
-            {
-                CreateStructure(myScript);
-            }
-            if (isGitDirectoryDefined && GUILayout.Button("Pull & Push"))
-            {
-                QuickGit.PullAddCommitAndPush(whereToCreate, DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
-            }
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            if (isGitDirectoryDefined && GUILayout.Button("Cmd.exe"))
-            {
-                QuickGit.OpenCmd(whereToCreate);
-            }
-            if (isGitDirectoryDefined && GUILayout.Button("Open Folder"))
-            {
-                Application.OpenURL(myScript.GetFolderPath());
-            }
-            if (isGitUrlDefined  && GUILayout.Button("Open Git Server"))
-            {
-                Application.OpenURL(myScript.m_gitLink);
-            }
-        }
         GUILayout.EndHorizontal();
         if (!isGitDirectoryDefined &&  !isGitUrlDefined)
         {
@@ -74,6 +48,8 @@ public class UnityPackageAutoBuildEditor : Editor
             if (GUILayout.Button("Local"))
             {
                 QuickGit.CreateLocal(myScript.GetFolderPath());
+                myScript.
+        RefreshToAccessPullPushScript();
             }
             GUILayout.EndHorizontal();
         }
@@ -92,8 +68,9 @@ public class UnityPackageAutoBuildEditor : Editor
 
             if (GUILayout.Button("GitLab"))
             {
-                
                 QuickGit.PushLocalToGitLab(whereToCreate, myScript.m_gitUserName, projectName, out myScript.m_gitLink);
+                myScript.
+      RefreshToAccessPullPushScript();
             }
             //if (GUILayout.Button("Github"))
             //{
@@ -103,7 +80,7 @@ public class UnityPackageAutoBuildEditor : Editor
             GUILayout.EndHorizontal();
         }
 
-        EditorGUILayout.HelpBox("Reminder:Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
+        EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
 
     }
 

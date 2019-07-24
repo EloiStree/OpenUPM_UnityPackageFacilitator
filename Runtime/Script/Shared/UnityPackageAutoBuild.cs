@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 public class UnityPackageAutoBuild : MonoBehaviour
 {
     public string m_gitLink;
@@ -18,11 +17,13 @@ public class UnityPackageAutoBuild : MonoBehaviour
     public AssemblyJson m_assemblyRuntime;
     public AssemblyJson m_assemblyEditor = new AssemblyJson() { m_isEditorAssembly = true };
     public string m_projectPath;
+    [Header("Linked")]
+    public PackagePullPush m_pullPush;
     [HideInInspector]
     public string m_gitUserName = "eloistree";
     public void Reset()
     {
-
+        RefreshToAccessPullPushScript();
         m_directoriesStructure = new string[] {
         "Runtime"
        ,"Runtime/Scene"
@@ -40,13 +41,23 @@ public class UnityPackageAutoBuild : MonoBehaviour
         m_packageJson.m_month = datevalue.Month;
         m_packageJson.m_day = datevalue.Day;
         m_packageJson.m_projectIdName = Application.productName.Replace(" ", "").ToLower();
-        m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace( Application.productName));
+        m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace(Application.productName));
         m_packageJson.m_displayName = Application.productName;
         m_assemblyRuntime.m_packageIdName = m_packageJson.m_packageIdName.ToLower();
         m_assemblyEditor.m_packageIdName = m_packageJson.m_packageIdName.ToLower() + "editor";
         OnValidate();
 
 
+    }
+
+    public void RefreshToAccessPullPushScript()
+    {
+        if (m_pullPush == null)
+            m_pullPush = GetComponent<PackagePullPush>();
+
+        if (m_pullPush == null)
+            m_pullPush = gameObject.AddComponent<PackagePullPush>();
+        m_pullPush.m_gitLink = m_gitLink;
     }
 
     public string GetFolderPath()
@@ -68,6 +79,10 @@ public class UnityPackageAutoBuild : MonoBehaviour
             return;
         if (m_assemblyEditor == null)
             return;
+
+        RefreshToAccessPullPushScript();
+
+        m_pullPush.m_gitLink = m_gitLink;
         m_projectPath = Application.dataPath;
         m_packageJson.RefreshFolderName();
         m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace(m_packageJson.m_projectIdName));

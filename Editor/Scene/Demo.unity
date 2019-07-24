@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66ed96ca05cfc54eb723a2d8e26d965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gitLink: https://gitlab.com/eloistree/2019_03_02_InitProject.git
+  m_gitLink: https://gitlab.com/eloistree/2019_03_03_testddd.git
   m_patreonLink: http://patreon.com/eloistree
   m_contact: http://eloistree.page.link/discord
   country: be
@@ -376,10 +376,10 @@ MonoBehaviour:
   m_packageJson:
     m_year: 2019
     m_month: 3
-    m_day: 2
-    m_projectIdName: InitProject
-    m_folderName: 2019_03_02_InitProject
-    m_packageIdName: be.eloiexperiments.initproject
+    m_day: 3
+    m_projectIdName: testddd
+    m_folderName: 2019_03_03_testddd
+    m_packageIdName: be.eloiexperiments.testddd
     m_displayName: Init Project
     m_description: Project initial vide
     m_keywords:
@@ -392,18 +392,36 @@ MonoBehaviour:
     m_dependencies:
     - be.eloiexperiments.randomtool
   m_assemblyRuntime:
-    m_packageName: initproject
-    m_packageIdName: be.eloiexperiments.initproject
+    m_packageName: testddd
+    m_packageIdName: be.eloiexperiments.testddd
     m_reference: []
     m_isEditorAssembly: 0
   m_assemblyEditor:
-    m_packageName: initprojecteditor
-    m_packageIdName: be.eloiexperiments.initprojecteditor
+    m_packageName: testdddeditor
+    m_packageIdName: be.eloiexperiments.testdddeditor
     m_reference:
     - be.eloiexperiments.initproject
+    - be.eloiexperiments.testddd
     m_isEditorAssembly: 1
   m_projectPath: C:/Users/stree/OneDrive/Desktop/2019_07_21_PackageCreator/UnityPackageCreator/Assets
+  m_pullPush: {fileID: 885370614024159162}
   m_gitUserName: eloistree
+--- !u!114 &885370614024159162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 885370614024159160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8b1146c8a5a3842b4ff8288e2cc5bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gitLink: 
+  m_projectName: 
+  m_isValideLink: 0
+  m_useDebug: 0
 --- !u!1001 &6770149492060253249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -542,3 +560,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c0d60d2aa59daf48bfe651a5df0620b, type: 3}
+--- !u!1 &7865751208623259186 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7865751208659257158, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7865751208623259185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7865751208623259187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865751208623259186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8b1146c8a5a3842b4ff8288e2cc5bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gitLink: https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git
+  m_projectName: 2019_07_21_UnityPackageFacilitator
+  m_isValideLink: 1
+  m_useDebug: 0

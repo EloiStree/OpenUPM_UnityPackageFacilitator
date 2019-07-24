@@ -12,6 +12,8 @@ public class PackagePullPushEditor : Editor
 
         PackagePullPush myScript = (PackagePullPush) target;
         
+        if (string.IsNullOrEmpty(myScript.m_gitLink))
+            return;
         GUILayout.Label("Commands", EditorStyles.boldLabel);
         bool isLinkValide = myScript.IsGitLinkValide();
         bool isDirectoryCreated = myScript.IsDirectoryCreated();
@@ -20,7 +22,6 @@ public class PackagePullPushEditor : Editor
         disableStyle.normal.textColor = new Color(0.6627451f, 0.6627451f, 0.6627451f);
         var enableStyle = new GUIStyle(GUI.skin.button);
         enableStyle.normal.textColor = new Color(0f, 0.4f, 0f);
-
         if (GUILayout.Button("Down", isDirectoryCreated?disableStyle: enableStyle))
         {
             if(!isDirectoryCreated)
@@ -64,6 +65,10 @@ public class PackagePullPushEditor : Editor
         {
 
             myScript.OpenStatusInCommentLine();
+        }
+        if (isLinkValide && GUILayout.Button("Open Git Server"))
+        {
+            Application.OpenURL(myScript.m_gitLink);
         }
         GUILayout.EndHorizontal();
      
