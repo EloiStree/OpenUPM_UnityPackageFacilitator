@@ -26,12 +26,21 @@ public class PackagePullPushEditor : Editor
         {
             if(!isDirectoryCreated)
                 myScript.PullProject();
+            if (myScript.m_affectPackageManager)
+
+                UnityPackageUtility.RemovePackage(myScript.GetGitLink());
         }
         if (GUILayout.Button("Up", isDirectoryCreated ? enableStyle : disableStyle))
         {
             if (isDirectoryCreated) {
                 myScript.PullAndPush();
                 RemoveFolderWithUnityTool(myScript);
+            }
+            string namespaceId = myScript.m_namespaceId;
+            if (!string.IsNullOrEmpty(namespaceId))
+            {
+                if( myScript. m_affectPackageManager)
+                UnityPackageUtility.AddPackage(namespaceId, myScript.GetGitLink());
             }
         }
         GUILayout.EndHorizontal();

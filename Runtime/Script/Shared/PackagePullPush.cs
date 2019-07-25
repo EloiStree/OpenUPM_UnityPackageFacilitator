@@ -7,9 +7,11 @@ using UnityEngine;
 public class PackagePullPush : MonoBehaviour
 {
     [SerializeField] string m_gitLink;
+    public bool m_affectPackageManager=true;
     [Space(10)]
     [Header("Debug information")]
     public string m_projectName;
+    public string m_namespaceId;
     public bool m_isValideLink;
     public JsonUnityPackageMirror m_packageMirror;
     public bool m_useDebug;
@@ -41,6 +43,13 @@ public class PackagePullPush : MonoBehaviour
     public void OnValidate()
     {
         RefreshInfo();
+        string path = GetProjectPathInUnity() + "/package.json";
+        if (File.Exists(path)) {
+        GitUnityPackageJson pack = UnityPackageUtility.GetPackageInfo(path);
+            if (pack != null) {
+                m_namespaceId = pack.GetNamespaceID();
+            }
+        }
     }
 
     public void RefreshInfo()
@@ -107,6 +116,7 @@ public class PackagePullPush : MonoBehaviour
     public bool IsDirectoryCreated() {
         return Directory.Exists(GetProjectPathInUnity());
     }
+   
 }
 public class JsonUnityPackageMirror
 {

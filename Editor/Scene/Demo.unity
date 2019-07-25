@@ -120,53 +120,156 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &701874545
+--- !u!1 &48542868
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 100006, guid: b5b2825195bebbf4182b2971da68361c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1342350814}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 701874547}
-  - component: {fileID: 701874546}
+  - component: {fileID: 48542871}
+  - component: {fileID: 48542870}
+  - component: {fileID: 48542869}
   m_Layer: 0
-  m_Name: GuardianID
+  m_Name: Torus_2x2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &701874546
-MonoBehaviour:
+--- !u!23 &48542869
+MeshRenderer:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2300006, guid: b5b2825195bebbf4182b2971da68361c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1342350814}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 701874545}
+  m_GameObject: {fileID: 48542868}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8b1146c8a5a3842b4ff8288e2cc5bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gitLink: https://gitlab.com/eloistree/2019_07_22_oculusguardianidentity.git
-  m_projectName: 2019_07_22_oculusguardianidentity
-  m_isValideLink: 1
-  m_useDebug: 0
---- !u!4 &701874547
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 60d8e4e5921d8604986b83edfa03fbca, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &48542870
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3300006, guid: b5b2825195bebbf4182b2971da68361c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1342350814}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48542868}
+  m_Mesh: {fileID: 4300002, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
+--- !u!4 &48542871
 Transform:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1342350814}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 701874545}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 48542868}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &597384827
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7865751208659257158, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_Name
+      value: UnityPackageFacilitator
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865751208659257160, guid: 38d3c62502b582f49a7ee6ac808d6f4f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38d3c62502b582f49a7ee6ac808d6f4f, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,503 +444,202 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1009865112
+--- !u!1001 &1342350814
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7865751208659257158, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 100006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_Name
-      value: 'Example: Quick Git Utility'
+      value: Torus_2x2
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
+    - target: {fileID: 400006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_dependencies.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_gitLink
-      value: https://gitlab.com/eloistree/2019_07_21_QuickGitUtility.git
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_projectIdName
-      value: QuickGitUtility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_folderName
-      value: 2019_07_21_QuickGitUtility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_packageIdName
-      value: be.eloiexperiments.quickgitutility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyRuntime.m_packageName
-      value: quickgitutility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyRuntime.m_packageIdName
-      value: be.eloiexperiments.quickgitutility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_packageName
-      value: quickgitutilityeditor
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_packageIdName
-      value: be.eloiexperiments.quickgitutilityeditor
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[1]
-      value: be.eloiexperiments.quickgitutility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[2]
-      value: be.eloiexperiments.qu
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[3]
-      value: be.eloiexperiments.qui
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[4]
-      value: be.eloiexperiments.quic
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[5]
-      value: be.eloiexperiments.quick
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[6]
-      value: be.eloiexperiments.quickg
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[7]
-      value: be.eloiexperiments.quickgi
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[8]
-      value: be.eloiexperiments.quickgit
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[9]
-      value: be.eloiexperiments.quickgitu
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[10]
-      value: be.eloiexperiments.quickgitut
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[11]
-      value: be.eloiexperiments.quickgituti
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[12]
-      value: be.eloiexperiments.quickgitutil
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[13]
-      value: be.eloiexperiments.quickgitutili
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[14]
-      value: be.eloiexperiments.quickgitutilit
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[15]
-      value: be.eloiexperiments.quickgitutility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_displayName
-      value: Quick Git Utility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_description
-      value: Tools to execute git instructions from command line.
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_keywords.Array.data[4]
-      value: Utility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[0]
-      value: be.eloiexperiments.quickgitutility
-      objectReference: {fileID: 0}
-    - target: {fileID: 1569269807452296411, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_gitLink
+    - target: {fileID: 2300006, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: 60d8e4e5921d8604986b83edfa03fbca, type: 2}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1c0d60d2aa59daf48bfe651a5df0620b, type: 3}
---- !u!1 &885370614024159160 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5889882537256309753, guid: c364f445677afbf49bad9b0aa19488ac,
-    type: 3}
-  m_PrefabInstance: {fileID: 6770149492060253249}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &885370614024159161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885370614024159160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c66ed96ca05cfc54eb723a2d8e26d965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gitLink: https://gitlab.com/eloistree/2019_03_03_testddd.git
-  m_patreonLink: http://patreon.com/eloistree
-  m_contact: http://eloistree.page.link/discord
-  country: be
-  company: eloiexperiments
-  m_directoriesStructure:
-  - Runtime
-  - Runtime/Scene
-  - Runtime/Script
-  - Runtime/Script/Shared/Gist
-  - Runtime/Assets/
-  - Runtime/Assets/Shared/
-  - Editor
-  - Editor/Script
-  m_packageJson:
-    m_year: 2019
-    m_month: 3
-    m_day: 3
-    m_projectIdName: testddd
-    m_folderName: 2019_03_03_testddd
-    m_packageIdName: be.eloiexperiments.testddd
-    m_displayName: Init Project
-    m_description: Project initial vide
-    m_keywords:
-    - Script
-    - Tool
-    - init
-    m_category: 0
-    m_packageVersion: 0.0.1
-    m_unityVersion: 2018.1
-    m_dependencies:
-    - be.eloiexperiments.randomtool
-  m_assemblyRuntime:
-    m_packageName: testddd
-    m_packageIdName: be.eloiexperiments.testddd
-    m_reference: []
-    m_isEditorAssembly: 0
-  m_assemblyEditor:
-    m_packageName: testdddeditor
-    m_packageIdName: be.eloiexperiments.testdddeditor
-    m_reference:
-    - be.eloiexperiments.initproject
-    - be.eloiexperiments.testddd
-    m_isEditorAssembly: 1
-  m_projectPath: C:/Users/stree/OneDrive/Desktop/2019_07_21_PackageCreator/UnityPackageCreator/Assets
-  m_pullPush: {fileID: 885370614024159162}
-  m_gitUserName: eloistree
---- !u!114 &885370614024159162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885370614024159160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8b1146c8a5a3842b4ff8288e2cc5bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gitLink: https://gitlab.com/eloistree/2019_03_03_testddd.git
-  m_projectName: 2019_03_03_testddd
-  m_isValideLink: 1
-  m_useDebug: 0
---- !u!1001 &6770149492060253249
+  m_SourcePrefab: {fileID: 100100000, guid: b5b2825195bebbf4182b2971da68361c, type: 3}
+--- !u!1001 &1774125706
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5889882537256309753, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309753, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_Name
-      value: 'Example: New'
+      value: QuickGit
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5889882537256309751, guid: c364f445677afbf49bad9b0aa19488ac,
+    - target: {fileID: 5889882537256309751, guid: 6737b3b80a5eb25429d8e190d37208c7,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c364f445677afbf49bad9b0aa19488ac, type: 3}
---- !u!1001 &7865751208623259185
+  m_SourcePrefab: {fileID: 100100000, guid: 6737b3b80a5eb25429d8e190d37208c7, type: 3}
+--- !u!1001 &5735521085411798884
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7865751208659257158, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2912517219781632085, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_Name
-      value: 'Example: Create Unity Package'
+      value: Manifest
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257160, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
+    - target: {fileID: 2524340682859101187, guid: 585c6569823d8874a9e9778699170d12,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyRuntime.m_reference.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_dependencies.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[1]
-      value: be.eloiexperiments.unitypackagefacilitator
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyRuntime.m_reference.Array.data[0]
-      value: be.eloiexperiments.quickgitutility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_assemblyEditor.m_reference.Array.data[0]
-      value: be.eloiexperiments.quickgitutilityeditor
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_dependencies.Array.data[0]
-      value: be.eloiexperiments.quickgitutility
-      objectReference: {fileID: 0}
-    - target: {fileID: 7865751208659257161, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-        type: 3}
-      propertyPath: m_packageJson.m_dependencies.Array.data[1]
-      value: be.eloiexperiments.quickgitutilityeditor
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1c0d60d2aa59daf48bfe651a5df0620b, type: 3}
---- !u!1 &7865751208623259186 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7865751208659257158, guid: 1c0d60d2aa59daf48bfe651a5df0620b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7865751208623259185}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7865751208623259187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7865751208623259186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8b1146c8a5a3842b4ff8288e2cc5bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gitLink: https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git
-  m_projectName: 2019_07_21_UnityPackageFacilitator
-  m_isValideLink: 1
-  m_useDebug: 0
+  m_SourcePrefab: {fileID: 100100000, guid: 585c6569823d8874a9e9778699170d12, type: 3}

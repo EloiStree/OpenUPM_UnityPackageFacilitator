@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &822573058574089324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1483052358577414347}
+  - component: {fileID: 6994810374120370347}
+  - component: {fileID: 1616183932718621959}
+  m_Layer: 0
+  m_Name: 'Package_ Sound '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1483052358577414347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822573058574089324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6994810374120370347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822573058574089324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee63733ae950f5d4f9ce99832dd9b9af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gitLink: https://gitlab.com/eloistree/2019_07_25_PingSoundProject.git
+  m_directoriesStructure:
+  - Runtime
+  - Runtime/Scene
+  - Runtime/Script
+  - Runtime/Script/Shared/Gist
+  - Runtime/Assets/
+  - Runtime/Assets/Shared/
+  - Editor
+  - Editor/Script
+  m_packageJson:
+    m_projectId:
+      m_year: 2019
+      m_month: 7
+      m_day: 25
+      m_projectName: PingSoundProject
+    country: be
+    company: eloiexperiments
+    m_description: No description
+    m_keywords:
+    - Script
+    - Tool
+    m_category: 0
+    m_packageVersion: 0.0.1
+    m_unityVersion: 2018.1
+    m_dependencies:
+    - be.eloiexperiments.measuretoolsvr
+    m_assemblyRuntime:
+      m_packageName: pingsoundproject
+      m_packageNamespaceId: be.eloiexperiments.pingsoundproject
+      m_reference:
+      - be.eloiexperiments.measuretoolsvr
+      m_isEditorAssembly: 0
+    m_assemblyEditor:
+      m_packageName: pingsoundprojecteditor
+      m_packageNamespaceId: be.eloiexperiments.pingsoundprojecteditor
+      m_reference:
+      - be.eloiexperiments.pingsoundproject
+      m_isEditorAssembly: 1
+  m_projectPath: C:/Users/stree/OneDrive/Desktop/2019_07_21_PackageCreator/UnityPackageCreator/Assets
+  m_patreonLink: http://patreon.com/eloistree
+  m_contact: http://eloistree.page.link/discord
+  m_pullPush: {fileID: 1616183932718621959}
+  m_gitUserName: eloistree
+--- !u!114 &1616183932718621959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822573058574089324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6574b5f3f3459740a56e89e0965dbd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gitLink: https://gitlab.com/eloistree/2019_07_25_PingSoundProject.git
+  m_affectPackageManager: 0
+  m_projectName: 2019_07_25_PingSoundProject
+  m_namespaceId: be.eloiexperiments.pingsoundproject
+  m_isValideLink: 1
+  m_useDebug: 0

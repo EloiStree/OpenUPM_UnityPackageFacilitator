@@ -1,16 +1,19 @@
-
-{                                                                   
-            "name": "be.eloiexperiments.unitypackagefacilitatoreditor",          
-    "references": ["be.eloiexperiments.quickgitutilityeditor","be.eloiexperiments.quickgitutility","be.eloiexperiments.unitypackagefacilitator"
-],                                                              
-    "optionalUnityReferences": [],                                  
-    "includePlatforms": [                                           
-        "Editor"                                                    
-    ],                                                              
-    "excludePlatforms": [],                                         
-    "allowUnsafeCode": false,                                       
-    "overrideReferences": false,                                    
-    "precompiledReferences": [],                                    
-    "autoReferenced": true,                                         
-    "defineConstraints": []                                         
-}                                                                   
+{
+    "name": "be.eloiexperiments.unitypackagefacilitatoreditor",
+    "references": [
+        "be.eloiexperiments.quickgitutilityeditor",
+        "be.eloiexperiments.quickgitutility",
+        "be.eloiexperiments.unitypackagefacilitator"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

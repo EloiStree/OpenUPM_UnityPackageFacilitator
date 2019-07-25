@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1560203541613211290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2388539291286400547}
+  - component: {fileID: 4004360306931776941}
+  - component: {fileID: 2315898011751062441}
+  m_Layer: 0
+  m_Name: Package_ QuickGit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2388539291286400547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560203541613211290}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4004360306931776941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560203541613211290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee63733ae950f5d4f9ce99832dd9b9af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gitLink: https://gitlab.com/eloistree/2019_07_21_QuickGitUtility.git
+  m_patreonLink: http://patreon.com/eloistree
+  m_contact: http://eloistree.page.link/discord
+  m_directoriesStructure: []
+  m_packageJson:
+    m_projectId:
+      m_year: 2019
+      m_month: 7
+      m_day: 21
+      m_projectName: QuickGitUtility
+    country: be
+    company: eloiexperiments
+    m_description: No description
+    m_keywords:
+    - Script
+    - Tool
+    m_category: 0
+    m_packageVersion: 0.0.1
+    m_unityVersion: 2018.1
+    m_dependencies:
+    - be.eloiexperiments.randomtool
+    m_assemblyRuntime:
+      m_packageName: quickgitutility
+      m_packageNamespaceId: be.eloiexperiments.quickgitutility
+      m_reference: []
+      m_isEditorAssembly: 0
+    m_assemblyEditor:
+      m_packageName: quickgitutilityeditor
+      m_packageNamespaceId: be.eloiexperiments.quickgitutilityeditor
+      m_reference: []
+      m_isEditorAssembly: 1
+  m_projectPath: C:/Users/stree/OneDrive/Desktop/2019_07_21_PackageCreator/UnityPackageCreator/Assets
+  m_pullPush: {fileID: 2315898011751062441}
+  m_gitUserName: eloistree
+--- !u!114 &2315898011751062441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560203541613211290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6574b5f3f3459740a56e89e0965dbd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gitLink: https://gitlab.com/eloistree/2019_07_21_QuickGitUtility.git
+  m_affectPackageManager: 1
+  m_projectName: 2019_07_21_QuickGitUtility
+  m_namespaceId: be.eloiexperiments.quickgitutility
+  m_isValideLink: 1
+  m_useDebug: 0

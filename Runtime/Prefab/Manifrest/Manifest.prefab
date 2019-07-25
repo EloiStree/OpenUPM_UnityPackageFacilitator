@@ -1,0 +1,401 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1102389888159606839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6216936931124102108}
+  - component: {fileID: 6252728198336811028}
+  m_Layer: 0
+  m_Name: CurrentManifest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6216936931124102108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102389888159606839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2524340682859101187}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6252728198336811028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102389888159606839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6b1a05f11737c40b7ca80b5cb37ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_manifestInfo:
+    dependencies:
+    - nameId: be.eloiexperiments.measuretoolsvr
+      value: https://gitlab.com/eloistree/2019_07_03_codeandquestspackage_measuretools.git
+    - nameId: be.eloiexperiments.randomtool
+      value: https://gitlab.com/eloistree/2019_01_15_randomtool.git
+    - nameId: com.unity.ads
+      value: 2.0.8
+    - nameId: com.unity.analytics
+      value: 3.3.2
+    - nameId: com.unity.collab-proxy
+      value: 1.2.16
+    - nameId: com.unity.package-manager-ui
+      value: 2.1.2
+    - nameId: com.unity.purchasing
+      value: 2.0.6
+    - nameId: com.unity.textmeshpro
+      value: 2.0.1
+    - nameId: com.unity.timeline
+      value: 1.0.0
+    - nameId: com.unity.modules.ai
+      value: 1.0.0
+    - nameId: com.unity.modules.animation
+      value: 1.0.0
+    - nameId: com.unity.modules.assetbundle
+      value: 1.0.0
+    - nameId: com.unity.modules.audio
+      value: 1.0.0
+    - nameId: com.unity.modules.cloth
+      value: 1.0.0
+    - nameId: com.unity.modules.director
+      value: 1.0.0
+    - nameId: com.unity.modules.imageconversion
+      value: 1.0.0
+    - nameId: com.unity.modules.imgui
+      value: 1.0.0
+    - nameId: com.unity.modules.jsonserialize
+      value: 1.0.0
+    - nameId: com.unity.modules.particlesystem
+      value: 1.0.0
+    - nameId: com.unity.modules.physics
+      value: 1.0.0
+    - nameId: com.unity.modules.physics2d
+      value: 1.0.0
+    - nameId: com.unity.modules.screencapture
+      value: 1.0.0
+    - nameId: com.unity.modules.terrain
+      value: 1.0.0
+    - nameId: com.unity.modules.terrainphysics
+      value: 1.0.0
+    - nameId: com.unity.modules.tilemap
+      value: 1.0.0
+    - nameId: com.unity.modules.ui
+      value: 1.0.0
+    - nameId: com.unity.modules.uielements
+      value: 1.0.0
+    - nameId: com.unity.modules.umbra
+      value: 1.0.0
+    - nameId: com.unity.modules.unityanalytics
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequest
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequestassetbundle
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequestaudio
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequesttexture
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequestwww
+      value: 1.0.0
+    - nameId: com.unity.modules.vehicles
+      value: 1.0.0
+    - nameId: com.unity.modules.video
+      value: 1.0.0
+    - nameId: com.unity.modules.vr
+      value: 1.0.0
+    - nameId: com.unity.modules.wind
+      value: 1.0.0
+    - nameId: com.unity.modules.xr
+      value: 1.0.0
+  m_toRemove: 
+  m_toAddName: be.eloiexperiments.measuretoolsvr
+  m_toAddValue: https://gitlab.com/eloistree/2019_07_03_codeandquestspackage_measuretools.git
+--- !u!1 &2912517219781632085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2524340682859101187}
+  m_Layer: 0
+  m_Name: Manifest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2524340682859101187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2912517219781632085}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6216936931124102108}
+  - {fileID: 8675008406592291463}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5735521086061047317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5735521086061047319}
+  - component: {fileID: 5735521086061047318}
+  m_Layer: 0
+  m_Name: Default
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5735521086061047319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735521086061047317}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8675008406592291463}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5735521086061047318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735521086061047317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 851a67e05f888b24aadd81ca0b69caa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_name: Default
+  m_manifestUrl: https://gitlab.com/eloistree/2019_07_24_publicunitypackagemanifests/raw/master/ExampleManifest.json
+  m_downloaded: "{\n  \"dependencies\": {\n    \"be.eloiexperiments.randomtool\":
+    \"https://gitlab.com/eloistree/2019_01_15_randomtool.git\",\n    \"be.eloiexperiments.unityprefsthemall\":
+    \"https://gitlab.com/eloistree/2019_06_10_unityprefsthemall.git\",\n    \"com.unity.ads\":
+    \"2.0.8\",\n    \"com.unity.analytics\": \"3.3.2\",\n    \"com.unity.collab-proxy\":
+    \"1.2.16\",\n    \"com.unity.package-manager-ui\": \"2.1.2\",\n    \"com.unity.purchasing\":
+    \"2.0.6\",\n    \"com.unity.textmeshpro\": \"2.0.1\",\n    \"com.unity.timeline\":
+    \"1.0.0\",\n    \"com.unity.modules.ai\": \"1.0.0\",\n    \"com.unity.modules.animation\":
+    \"1.0.0\",\n    \"com.unity.modules.assetbundle\": \"1.0.0\",\n    \"com.unity.modules.audio\":
+    \"1.0.0\",\n    \"com.unity.modules.cloth\": \"1.0.0\",\n    \"com.unity.modules.director\":
+    \"1.0.0\",\n    \"com.unity.modules.imageconversion\": \"1.0.0\",\n    \"com.unity.modules.imgui\":
+    \"1.0.0\",\n    \"com.unity.modules.jsonserialize\": \"1.0.0\",\n    \"com.unity.modules.particlesystem\":
+    \"1.0.0\",\n    \"com.unity.modules.physics\": \"1.0.0\",\n    \"com.unity.modules.physics2d\":
+    \"1.0.0\",\n    \"com.unity.modules.screencapture\": \"1.0.0\",\n    \"com.unity.modules.terrain\":
+    \"1.0.0\",\n    \"com.unity.modules.terrainphysics\": \"1.0.0\",\n    \"com.unity.modules.tilemap\":
+    \"1.0.0\",\n    \"com.unity.modules.ui\": \"1.0.0\",\n    \"com.unity.modules.uielements\":
+    \"1.0.0\",\n    \"com.unity.modules.umbra\": \"1.0.0\",\n    \"com.unity.modules.unityanalytics\":
+    \"1.0.0\",\n    \"com.unity.modules.unitywebrequest\": \"1.0.0\",\n    \"com.unity.modules.unitywebrequestassetbundle\":
+    \"1.0.0\",\n    \"com.unity.modules.unitywebrequestaudio\": \"1.0.0\",\n    \"com.unity.modules.unitywebrequesttexture\":
+    \"1.0.0\",\n    \"com.unity.modules.unitywebrequestwww\": \"1.0.0\",\n    \"com.unity.modules.vehicles\":
+    \"1.0.0\",\n    \"com.unity.modules.video\": \"1.0.0\",\n    \"com.unity.modules.vr\":
+    \"1.0.0\",\n    \"com.unity.modules.wind\": \"1.0.0\",\n    \"com.unity.modules.xr\":
+    \"1.0.0\"\n  }\n}\n"
+  m_manifest:
+    dependencies:
+    - nameId: be.eloiexperiments.randomtool
+      value: https://gitlab.com/eloistree/2019_01_15_randomtool.git
+    - nameId: be.eloiexperiments.unityprefsthemall
+      value: https://gitlab.com/eloistree/2019_06_10_unityprefsthemall.git
+    - nameId: com.unity.ads
+      value: 2.0.8
+    - nameId: com.unity.analytics
+      value: 3.3.2
+    - nameId: com.unity.collab-proxy
+      value: 1.2.16
+    - nameId: com.unity.package-manager-ui
+      value: 2.1.2
+    - nameId: com.unity.purchasing
+      value: 2.0.6
+    - nameId: com.unity.textmeshpro
+      value: 2.0.1
+    - nameId: com.unity.timeline
+      value: 1.0.0
+    - nameId: com.unity.modules.ai
+      value: 1.0.0
+    - nameId: com.unity.modules.animation
+      value: 1.0.0
+    - nameId: com.unity.modules.assetbundle
+      value: 1.0.0
+    - nameId: com.unity.modules.audio
+      value: 1.0.0
+    - nameId: com.unity.modules.cloth
+      value: 1.0.0
+    - nameId: com.unity.modules.director
+      value: 1.0.0
+    - nameId: com.unity.modules.imageconversion
+      value: 1.0.0
+    - nameId: com.unity.modules.imgui
+      value: 1.0.0
+    - nameId: com.unity.modules.jsonserialize
+      value: 1.0.0
+    - nameId: com.unity.modules.particlesystem
+      value: 1.0.0
+    - nameId: com.unity.modules.physics
+      value: 1.0.0
+    - nameId: com.unity.modules.physics2d
+      value: 1.0.0
+    - nameId: com.unity.modules.screencapture
+      value: 1.0.0
+    - nameId: com.unity.modules.terrain
+      value: 1.0.0
+    - nameId: com.unity.modules.terrainphysics
+      value: 1.0.0
+    - nameId: com.unity.modules.tilemap
+      value: 1.0.0
+    - nameId: com.unity.modules.ui
+      value: 1.0.0
+    - nameId: com.unity.modules.uielements
+      value: 1.0.0
+    - nameId: com.unity.modules.umbra
+      value: 1.0.0
+    - nameId: com.unity.modules.unityanalytics
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequest
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequestassetbundle
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequestaudio
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequesttexture
+      value: 1.0.0
+    - nameId: com.unity.modules.unitywebrequestwww
+      value: 1.0.0
+    - nameId: com.unity.modules.vehicles
+      value: 1.0.0
+    - nameId: com.unity.modules.video
+      value: 1.0.0
+    - nameId: com.unity.modules.vr
+      value: 1.0.0
+    - nameId: com.unity.modules.wind
+      value: 1.0.0
+    - nameId: com.unity.modules.xr
+      value: 1.0.0
+  m_previousValue: https://gitlab.com/eloistree/2019_07_24_publicunitypackagemanifests/raw/master/ExampleManifest.json
+  m_toRemove: 
+  m_toAddName: 
+  m_toAddValue: 
+--- !u!1 &7183742910187913620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8675008406592291463}
+  m_Layer: 0
+  m_Name: From Web
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8675008406592291463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7183742910187913620}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5735521086061047319}
+  - {fileID: 5497793034913072278}
+  m_Father: {fileID: 2524340682859101187}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8064491128404592764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5497793034913072278}
+  - component: {fileID: 5174739060452980460}
+  m_Layer: 0
+  m_Name: Measure toolbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5497793034913072278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8064491128404592764}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8675008406592291463}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5174739060452980460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8064491128404592764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 851a67e05f888b24aadd81ca0b69caa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_name: Measure toolbox
+  m_manifestUrl: https://gitlab.com/eloistree/2019_07_22_grenadescripts/raw/master/Editor/Script/Shared/Gist/MeasureToolbox.json
+  m_downloaded: '{ "dependencies": {
+
+    "be.eloiexperiments.measuretoolsvr":"https://gitlab.com/eloistree/2019_07_03_codeandquestspackage_measuretools.git"
+
+    }}'
+  m_manifest:
+    dependencies:
+    - nameId: be.eloiexperiments.measuretoolsvr
+      value: https://gitlab.com/eloistree/2019_07_03_codeandquestspackage_measuretools.git
+  m_previousValue: https://gitlab.com/eloistree/2019_07_22_grenadescripts/raw/master/Editor/Script/Shared/Gist/MeasureToolbox.json
+  m_toRemove: be.eloiexperiments.measuretoolsvr
+  m_toAddName: 
+  m_toAddValue: 

@@ -1,29 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 public class UnityPackageAutoBuild : MonoBehaviour
 {
     public string m_gitLink;
+ 
+    public string[] m_directoriesStructure;
+    
+    public UnityPackageBuilderJson m_packageJson;
+    public string m_projectPath;
+
     [Header("Contact info")]
     public string m_patreonLink = "http://patreon.com/eloistree";
     public string m_contact = "http://eloistree.page.link/discord";
-    [Header("Package Info")]
-    public string country="be";
-    public string company="eloiexperiments";
-    public string[] m_directoriesStructure;
-    public PackageJson m_packageJson;
-    [Header("Semi-automatic")]
-    public AssemblyJson m_assemblyRuntime;
-    public AssemblyJson m_assemblyEditor = new AssemblyJson() { m_isEditorAssembly = true };
-    public string m_projectPath;
     [Header("Linked")]
     public PackagePullPush m_pullPush;
+
+
     [HideInInspector]
     public string m_gitUserName = "eloistree";
+
+
     public void Reset()
     {
-        RefreshToAccessPullPushScript();
+        m_projectPath = Application.dataPath;
+        MakeSureThatPullPushScriptIsAssociatedToThisScript();
         m_directoriesStructure = new string[] {
         "Runtime"
        ,"Runtime/Scene"
@@ -34,23 +37,48 @@ public class UnityPackageAutoBuild : MonoBehaviour
        ,"Editor"
        ,"Editor/Script"
     };
-        m_projectPath = Application.dataPath;
-        String sDate = DateTime.Now.ToString();
-        DateTime datevalue = (Convert.ToDateTime(sDate.ToString()));
-        m_packageJson.m_year = datevalue.Year;
-        m_packageJson.m_month = datevalue.Month;
-        m_packageJson.m_day = datevalue.Day;
-        m_packageJson.m_projectIdName = Application.productName.Replace(" ", "").ToLower();
-        m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace(Application.productName));
-        m_packageJson.m_displayName = Application.productName;
-        m_assemblyRuntime.m_packageIdName = m_packageJson.m_packageIdName.ToLower();
-        m_assemblyEditor.m_packageIdName = m_packageJson.m_packageIdName.ToLower() + "editor";
-        OnValidate();
+        m_packageJson.m_projectId.SetProjectName(Application.productName);
+        m_packageJson.m_projectId.SetWithTodayDate();
+        MakeSureThatTheAssemblyEditorTargetTheRuntimeOne();
 
 
     }
 
-    public void RefreshToAccessPullPushScript()
+    public void OnValidate()
+    {
+        m_projectPath = Application.dataPath;
+        if (m_packageJson == null)
+            return;
+        if (m_packageJson.m_assemblyRuntime == null)
+            return;
+        if (m_packageJson.m_assemblyEditor == null)
+            return;
+        m_pullPush.SetGitLink(m_gitLink);
+        SetWithGitLinkName(m_gitLink, ref m_packageJson);
+        m_packageJson.m_assemblyRuntime.m_packageName = m_packageJson.GetProjectNameId(true);
+        m_packageJson.m_assemblyEditor.m_packageName = m_packageJson.GetProjectNameId(true) + "editor";
+        m_packageJson.m_assemblyRuntime.m_packageNamespaceId = m_packageJson.GetProjectNamespaceId(true);
+        m_packageJson.m_assemblyEditor.m_packageNamespaceId = m_packageJson.GetProjectNamespaceId(true) + "editor";
+        MakeSureThatPullPushScriptIsAssociatedToThisScript();
+    }
+    public void MakeSureThatTheAssemblyEditorTargetTheRuntimeOne() {
+
+
+        UnityPackageAssemblyBuilderJson assEditor = m_packageJson.m_assemblyEditor;
+        UnityPackageAssemblyBuilderJson assRuntime = m_packageJson.m_assemblyRuntime;
+
+        List<string> editorRef = assEditor.m_reference.ToList();
+
+        editorRef.Remove(assRuntime.m_packageNamespaceId);
+        editorRef.Insert(0,assRuntime.m_packageNamespaceId);
+        assEditor.m_reference = editorRef.ToArray();
+
+
+
+    }
+
+
+    public void MakeSureThatPullPushScriptIsAssociatedToThisScript()
     {
         if (m_pullPush == null)
             m_pullPush = GetComponent<PackagePullPush>();
@@ -62,7 +90,7 @@ public class UnityPackageAutoBuild : MonoBehaviour
 
     public string GetFolderPath()
     {
-        return m_projectPath + "/" + m_packageJson.m_folderName;
+        return m_projectPath + "/" + m_packageJson.GetProjectDatedId(false);
     }
 
     private string CleanForNameSpace(string value)
@@ -70,62 +98,112 @@ public class UnityPackageAutoBuild : MonoBehaviour
         return value.ToLower().Replace(" ", "").Replace(".", "");
     }
 
-    public void OnValidate()
-    {
-
-        if (m_packageJson == null)
-            return;
-        if (m_assemblyRuntime == null)
-            return;
-        if (m_assemblyEditor == null)
-            return;
-
-        RefreshToAccessPullPushScript();
-
-
-        m_pullPush.SetGitLink(m_gitLink);
-        m_projectPath = Application.dataPath;
-        m_packageJson.RefreshFolderName();
-        m_packageJson.m_packageIdName = string.Format("{0}.{1}.{2}", CleanForNameSpace(country), CleanForNameSpace(company), CleanForNameSpace(m_packageJson.m_projectIdName));
-        m_assemblyRuntime.m_packageName = m_packageJson.m_projectIdName.ToLower();
-        m_assemblyEditor.m_packageName = m_packageJson.m_projectIdName.ToLower() + "editor";
-        m_assemblyRuntime.m_packageIdName = m_packageJson.m_packageIdName.ToLower();
-        m_assemblyEditor.m_packageIdName = m_packageJson.m_packageIdName.ToLower() + "editor";
-
-        List<string> editorRef = m_assemblyEditor.m_reference.ToList();
-        editorRef.Remove(m_assemblyRuntime.m_packageIdName);
-        editorRef.Add(m_assemblyRuntime.m_packageIdName);
-        m_assemblyEditor.m_reference = editorRef.ToArray();
-    }
    
 
+    private void SetWithGitLinkName(string gitlink, ref UnityPackageBuilderJson packageJson)
+    {
+        packageJson.m_projectId.SetWithIdInText(gitlink);
 
-
+    }
 }
 [System.Serializable]
-public class AssemblyJson
+public class EloiProjectIdFormat {
+    [Range(2018, 2030)]
+    [SerializeField] int m_year = 2019;
+    [Range(1, 12)]
+    [SerializeField] int m_month = 1;
+    [Range(1, 31)]
+    [SerializeField] int m_day = 1;
+    [SerializeField] string m_projectName= "UnnamedPackage";
+    public static string m_idRegex = "\\d\\d\\d\\d_\\d\\d_\\d\\d_[\\w\\d_]*";
+    public static string m_dateRegex = "\\d\\d\\d\\d_\\d\\d_\\d\\d";
+    public static string m_prefixRegex = "\\d\\d\\d\\d_\\d\\d_\\d\\d_";
+
+    public void SetWithTodayDate() {
+        String sDate = DateTime.Now.ToString();
+        DateTime datevalue = (Convert.ToDateTime(sDate.ToString()));
+        SetWithDate(datevalue);
+    }
+    public void SetWithDate(DateTime time ) {
+        m_year = time.Year;
+        m_month = time.Month;
+        m_day = time.Day;
+    }
+
+    public void SetWithIdInText(string text) {
+        string value = GetFirstProjectInText(text);
+        string[] tokens = value.Split('_');
+        try
+        {
+            m_year = int.Parse(tokens[0]);
+            m_month = int.Parse(tokens[1]);
+            m_day = int.Parse(tokens[2]);
+            m_projectName = (tokens[3]);
+
+        }
+        catch (Exception) { return; };
+
+    }
+
+    public string GetFirstProjectInText(string text) {
+        string[] projects = FindProjectsInText(text);
+        if(projects.Length>0)
+             return projects[0];
+        return "";
+    }
+    public string[] FindProjectsInText(string text) {
+        List<string> result = new List<string>();
+        foreach (Match match in Regex.Matches(text, m_idRegex))
+        {
+            result.Add(match.Value);
+        }
+        return result.ToArray();
+    }
+
+    public void SetProjectName(string name) {
+        m_projectName = name;
+    }
+
+    public string GetProjectDatedNameId(bool toLower=false) {
+        string id = string.Format("{0:0000}_{1:00}_{2:00}_{3}",m_year, m_month, m_day, GetProjectNameWithoutSpace());
+        if(toLower)
+        id = id.ToLower();
+        return id;
+    }
+
+    public string GetProjectNameWithoutSpace(bool toLower=false)
+    {
+        string id = m_projectName.Replace(" ", "");
+        if (toLower)
+            id = id.ToLower();
+        return id;
+    }
+
+    public string GetProjectDisplayName()
+    {
+        return m_projectName;
+    }
+}
+
+[System.Serializable]
+public class UnityPackageAssemblyBuilderJson
 {
 
+    [HideInInspector]
     public string m_packageName;
-    public string m_packageIdName;
+    [HideInInspector]
+    public string m_packageNamespaceId;
     public string[] m_reference;
+    [HideInInspector]
     public bool m_isEditorAssembly;
 }
 [System.Serializable]
-public class PackageJson
+public class UnityPackageBuilderJson
 {
-    [Header("Project id")]
-    [Range(2018, 2030)]
-    public int m_year = 2019;
-    [Range(1, 12)]
-    public int m_month = 1;
-    [Range(1, 31)]
-    public int m_day = 1;
-    public string m_projectIdName = "ProjectName";
+    public EloiProjectIdFormat m_projectId;
     [Header("Project info")]
-    public string m_folderName = "2019_01_01_ProjectName";
-    public string m_packageIdName = "be.eloiexperiments.unnamed";
-    public string m_displayName = "Unnamed package";
+    public string country = "be";
+    public string company = "eloiexperiments";
     [TextArea(1,5)]
     public string m_description = "No description";
     public string[] m_keywords = new string[] { "Script", "Tool" };
@@ -133,11 +211,32 @@ public class PackageJson
     public string m_packageVersion = "0.0.1";
     public string m_unityVersion = "2018.1";
     public string[] m_dependencies = new string[] { "be.eloiexperiments.randomtool" };
+    public UnityPackageAssemblyBuilderJson m_assemblyRuntime;
+    public UnityPackageAssemblyBuilderJson m_assemblyEditor = new UnityPackageAssemblyBuilderJson() { m_isEditorAssembly = true };
 
-    internal void RefreshFolderName()
+
+    public string GetProjectDatedId(bool toLower)
     {
-        m_projectIdName = m_projectIdName.Replace(" ", "");
-        m_folderName = string.Format("{0:00}_{1:00}_{2:00}_{3}", m_year, m_month, m_day, m_projectIdName);
+
+        return m_projectId.GetProjectDatedNameId(toLower);
     }
+
+    public string GetProjectNameId()
+    {
+        return m_projectId.GetProjectNameWithoutSpace();
+    }
+    public string GetProjectNamespaceId(bool useLower=false)
+    {
+        string id = string.Format("{0}.{1}.{2}", country, company, GetProjectNameId());
+        if (useLower)
+            id= id.ToLower();
+        return id ;
+    }
+
+    internal string GetProjectNameId(bool toLower)
+    {
+        return m_projectId.GetProjectNameWithoutSpace(toLower);
+    }
+
     public enum CatergoryType { Script }
 }
