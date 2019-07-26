@@ -10,7 +10,7 @@ public class UnityPackageEditorDrawer
 
     public  static void DrawManifrest(ref UnityPackageManifest manifestInfo, ref string remove, ref string addname, ref string addvalue, bool withButtonToPushAndLoad=true, bool withDirectoryButton=true)
     {
-        int buttonlenght = 25;
+        int buttonlenght = 30;
         int nameLength = 200;
         if (withButtonToPushAndLoad) {
             GUILayout.BeginHorizontal();
@@ -70,9 +70,15 @@ public class UnityPackageEditorDrawer
                 manifestInfo.Remove(m_dependencies[i].nameId);
             }
             GUILayout.TextField(m_dependencies[i].nameId, GUILayout.Width(nameLength));
-            if (m_dependencies[i].value.IndexOf("http")>-1  &&  GUILayout.Button("->", GUILayout.Width(buttonlenght)))
+            if (m_dependencies[i].value.IndexOf("http")>-1  )
             {
-                Application.OpenURL(m_dependencies[i].value);
+
+                if (GUILayout.Button("Down", GUILayout.Width(40)))
+                    UnityPackageUtility.Down(m_dependencies[i].value);
+                if (GUILayout.Button("Up", GUILayout.Width(40)))
+                    UnityPackageUtility.Up(m_dependencies[i].nameId,m_dependencies[i].value);
+                if (GUILayout.Button("Go", GUILayout.Width(25)))
+                    Application.OpenURL(m_dependencies[i].value);
             }
             GUILayout.TextField(m_dependencies[i].value);
 

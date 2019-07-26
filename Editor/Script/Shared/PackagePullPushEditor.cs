@@ -24,24 +24,11 @@ public class PackagePullPushEditor : Editor
         enableStyle.normal.textColor = new Color(0f, 0.4f, 0f);
         if (GUILayout.Button("Down", isDirectoryCreated?disableStyle: enableStyle))
         {
-            if(!isDirectoryCreated)
-                myScript.PullProject();
-            if (myScript.m_affectPackageManager)
-
-                UnityPackageUtility.RemovePackage(myScript.GetGitLink());
+            UnityPackageUtility.Down(myScript.GetGitLink(), myScript.m_affectPackageManager);
         }
         if (GUILayout.Button("Up", isDirectoryCreated ? enableStyle : disableStyle))
         {
-            if (isDirectoryCreated) {
-                myScript.PullAndPush();
-                RemoveFolderWithUnityTool(myScript);
-            }
-            string namespaceId = myScript.m_namespaceId;
-            if (!string.IsNullOrEmpty(namespaceId))
-            {
-                if( myScript. m_affectPackageManager)
-                UnityPackageUtility.AddPackage(namespaceId, myScript.GetGitLink());
-            }
+            UnityPackageUtility.Up(myScript.m_namespaceId,myScript.GetGitLink(),  myScript.m_affectPackageManager);
         }
         GUILayout.EndHorizontal();
         GUILayout.Space(6);

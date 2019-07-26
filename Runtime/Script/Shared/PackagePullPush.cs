@@ -18,17 +18,7 @@ public class PackagePullPush : MonoBehaviour
 
 
     public string GetGitLink() { return m_gitLink; }
-    public string GetProjectNameFromGitLink(string gitLinkFormated) {
-        // https://gitlab.com/eloistree/2019_07_22_oculusguardianidentity.git
-        // https://github.com/EloiStree/CodeAndQuestsEveryDay.git
-
-        gitLinkFormated = RemoveWhiteSpace(gitLinkFormated);
-        int startProjectName = m_gitLink.LastIndexOf('/');
-        if (startProjectName < 0)
-            return "";
-        string projectName = m_gitLink.Substring(startProjectName + 1).Replace(".git", "").Replace(".GIT", "");
-        return projectName;
-    }
+    
 
     public void UpdateProject()
     {
@@ -37,7 +27,7 @@ public class PackagePullPush : MonoBehaviour
 
     public bool IsGitLinkValide()
     {
-        return IsGitLinkValide(m_gitLink);
+        return UnityPackageUtility.IsGitLinkValide(m_gitLink);
     }
 
     public void OnValidate()
@@ -52,33 +42,22 @@ public class PackagePullPush : MonoBehaviour
         }
     }
 
+    public string GetProjectPathInUnity()
+    {
+        return UnityPackageUtility.GetGitDirectoryPropositionRootPathInUnity(m_gitLink);
+    }
+
     public void RefreshInfo()
     {
         QuickGit.SetDebugOn(m_useDebug);
         m_useDebug = QuickGit.GetDebugState();
 
-        m_isValideLink = IsGitLinkValide(m_gitLink);
-        m_projectName = GetProjectNameFromGitLink(m_gitLink);
+        m_isValideLink = UnityPackageUtility.IsGitLinkValide(m_gitLink);
+        m_projectName = UnityPackageUtility. GetProjectNameFromGitLink(m_gitLink);
     }
 
-    public bool IsGitLinkValide(string gitLink)
-    {
-        if (string.IsNullOrEmpty(gitLink))
-            return false;
-        if (gitLink.LastIndexOf('/') < 0) return false;
-        if (gitLink.ToLower().LastIndexOf(".git") < 0) return false;
-        string name = GetProjectNameFromGitLink(gitLink);
-        if (name == null || string.IsNullOrWhiteSpace(name))
-            return false;
-        return true;
-    }
 
-    public string RemoveWhiteSpace(string gitLinkFormated, string by="_")
-    {
-        if (!string.IsNullOrEmpty(gitLinkFormated)
-            ) return "";
-        return gitLinkFormated.Replace(" ", by);
-    }
+
 
     public void PullProject()
     {
@@ -86,10 +65,7 @@ public class PackagePullPush : MonoBehaviour
         QuickGit.Clone(m_gitLink, GetProjectPathInUnity());
     }
 
-    public string GetProjectPathInUnity()
-    {
-        return Application.dataPath + "/" + GetProjectNameFromGitLink(m_gitLink);
-    }
+
 
     internal void SetGitLink(string gitLink)
     {
@@ -99,8 +75,9 @@ public class PackagePullPush : MonoBehaviour
 
     public void PullAndPush() {
 
-        QuickGit.PullAddCommitAndPush(GetProjectPathInUnity(), DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
         QuickGit.AddFileInEmptyFolder(GetProjectPathInUnity());
+        QuickGit.PullAddCommitAndPush(GetProjectPathInUnity(), DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
+       
     }
     
     public void RemoveProject() {

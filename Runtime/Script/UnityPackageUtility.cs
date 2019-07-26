@@ -91,6 +91,70 @@ public class UnityPackageUtility
     {
         return GetGitUnityPackageInDirectory(QuickGit.GetGitProjectsInDirectory(directoryPath));
     }
+
+    public static void Down(string gitUrl, bool affectManifest=true)
+    {
+        
+        string directoryPath = GetGitDirectoryPropositionRootPathInUnity(gitUrl);
+        Directory.CreateDirectory(directoryPath);
+        if (!Directory.Exists(directoryPath+"/.git"))
+            QuickGit.Clone(gitUrl, directoryPath);
+        else QuickGit.Pull(directoryPath);
+
+        if (affectManifest && !string.IsNullOrEmpty(gitUrl))
+            UnityPackageUtility.RemovePackage(gitUrl);
+    }
+
+    public static void Up(string namespaceId, string gitUrl, bool affectManifest=true)
+    {
+        string directoryPath = GetGitDirectoryPropositionRootPathInUnity(gitUrl);
+        QuickGit.AddFileInEmptyFolder(directoryPath);
+        QuickGit.PullAddCommitAndPush(directoryPath, "Update: "+DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
+       
+        #if UNITY_EDITOR
+
+                UnityEditor.FileUtil.DeleteFileOrDirectory(directoryPath);
+                UnityEditor.AssetDatabase.Refresh();
+        #endif
+        if (affectManifest && !string.IsNullOrEmpty(namespaceId) && !string.IsNullOrEmpty(gitUrl))
+            UnityPackageUtility.AddPackage(namespaceId, gitUrl);
+    }
+
+
+    public static  string GetGitDirectoryPropositionRootPathInUnity(string gitLink)
+    {
+        return Application.dataPath + "/" + UnityPackageUtility.GetProjectNameFromGitLink(gitLink);
+    }
+    public static bool IsGitLinkValide(string gitLink)
+    {
+        if (string.IsNullOrEmpty(gitLink))
+            return false;
+        if (gitLink.LastIndexOf('/') < 0) return false;
+        if (gitLink.ToLower().LastIndexOf(".git") < 0) return false;
+        string name = GetProjectNameFromGitLink(gitLink);
+        if (name == null || string.IsNullOrWhiteSpace(name))
+            return false;
+        return true;
+    }
+    public static string GetProjectNameFromGitLink(string gitLinkFormated)
+    {
+        // https://gitlab.com/eloistree/2019_07_22_oculusguardianidentity.git
+        // https://github.com/EloiStree/CodeAndQuestsEveryDay.git
+
+        //gitLinkFormated = RemoveWhiteSpace(gitLinkFormated);
+        int startProjectName = gitLinkFormated.LastIndexOf('/');
+        if (startProjectName < 0)
+            return "";
+        string projectName = gitLinkFormated.Substring(startProjectName + 1).Replace(".git", "").Replace(".GIT", "");
+        return projectName;
+    }
+    public static string RemoveWhiteSpace(string gitLinkFormated, string by = "_")
+    {
+        if (!string.IsNullOrEmpty(gitLinkFormated)
+            ) return "";
+        return gitLinkFormated.Replace(" ", by);
+    }
+
     public static List<GitUnityPackageLinkOnDisk> GetGitUnityPackageInDirectory(string[] directoriesPath)
     {
         return GetGitUnityPackageInDirectory(QuickGit.GetGitProjectsInDirectory(directoriesPath));
