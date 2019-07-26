@@ -1,7 +1,7 @@
 
 {                                                                   
             "name": "be.eloiexperiments.unitypackagefacilitator",          
-    "references": ["be.eloiexperiments.quickgitutility"
+    "references": ["be.eloiexperiments.quickgitutility","be.eloiexperiments.quickgitutilityeditor"
 ],                                                              
     "optionalUnityReferences": [],                                  
     "includePlatforms": [],                                                  

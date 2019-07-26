@@ -1,4 +1,4 @@
-# How to use: Unity Package Creator   
+# How to use: 2019_07_21_UnityPackageFacilitator   
    
 Add the following line to the [UnityRoot]/Packages/manifest.json    
 ``` json     
@@ -13,7 +13,7 @@ Contact me if you need assistance: http://eloistree.page.link/discord
 ``` json     
 {                                                                                
   "name": "be.eloiexperiments.unitypackagefacilitator",                              
-  "displayName": "Unity Package Creator",                        
+  "displayName": "UnityPackageFacilitator",                        
   "version": "0.0.1",                         
   "unity": "2018.1",                             
   "description": "Tools to create the structure of new unity package under 2 minutes.",                         
