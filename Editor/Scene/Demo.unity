@@ -566,6 +566,31 @@ PrefabInstance:
       propertyPath: m_affectPackageManager
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6994810374120370347, guid: 8c0ea14d6fb1a5c4e859f8b1a532cce9,
+        type: 3}
+      propertyPath: m_packageJson.m_classicUnityPackageRequired.m_storeLink.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6994810374120370347, guid: 8c0ea14d6fb1a5c4e859f8b1a532cce9,
+        type: 3}
+      propertyPath: m_packageJson.m_classicUnityPackageRequired.m_customLink.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6994810374120370347, guid: 8c0ea14d6fb1a5c4e859f8b1a532cce9,
+        type: 3}
+      propertyPath: m_packageJson.m_classicUnityPackageRequired.m_storeLink.Array.data[0].m_pathOrLink
+      value: https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022
+      objectReference: {fileID: 0}
+    - target: {fileID: 6994810374120370347, guid: 8c0ea14d6fb1a5c4e859f8b1a532cce9,
+        type: 3}
+      propertyPath: m_packageJson.m_classicUnityPackageRequired.m_storeLink.Array.data[0].m_name
+      value: Oculus Integreation
+      objectReference: {fileID: 0}
+    - target: {fileID: 6994810374120370347, guid: 8c0ea14d6fb1a5c4e859f8b1a532cce9,
+        type: 3}
+      propertyPath: m_packageJson.m_classicUnityPackageRequired.m_customLink.Array.data[0].m_name
+      value: Oculus Integreation
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c0ea14d6fb1a5c4e859f8b1a532cce9, type: 3}
 --- !u!1001 &8964461702417962393

@@ -132,6 +132,7 @@ public class UnityPackageAutoBuildEditor : Editor
         CreateFolders(whereToCreate, myScript.m_directoriesStructure);
         CreateAssembly(myScript.m_packageJson.m_assemblyRuntime, whereToCreate);
         CreateAssembly(myScript.m_packageJson.m_assemblyEditor, whereToCreate);
+        File.WriteAllText(whereToCreate + "/requiredpackages.json", myScript.m_packageJson.m_classicUnityPackageRequired.ToJson());
         AssetDatabase.Refresh();
     }
 

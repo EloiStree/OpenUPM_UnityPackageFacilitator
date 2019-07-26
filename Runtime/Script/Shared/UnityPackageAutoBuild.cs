@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class UnityPackageAutoBuild : MonoBehaviour
     
     public UnityPackageBuilderJson m_packageJson;
     public string m_projectPath;
+
 
     [Header("Contact info")]
     public string m_patreonLink = "http://patreon.com/eloistree";
@@ -213,6 +215,13 @@ public class UnityPackageBuilderJson
     public string[] m_dependencies = new string[] { "be.eloiexperiments.randomtool" };
     public UnityPackageAssemblyBuilderJson m_assemblyRuntime;
     public UnityPackageAssemblyBuilderJson m_assemblyEditor = new UnityPackageAssemblyBuilderJson() { m_isEditorAssembly = true };
+    public RequiredClassicPackageJson m_classicUnityPackageRequired = new RequiredClassicPackageJson {
+        m_packageLinks = new ClassicPackageLink[] {
+            new ClassicPackageLink("Oculus Light","https://gitlab.com/eloistree/2019_07_23_OculusQuestLight/raw/master/OculusIntegrationLight.unitypackage")
+        ,
+            new ClassicPackageLink("Oculus Official","https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022")
+        }
+    };
 
 
     public string GetProjectDatedId(bool toLower)
@@ -239,4 +248,67 @@ public class UnityPackageBuilderJson
     }
 
     public enum CatergoryType { Script }
+}
+
+[System.Serializable]
+public class RequiredClassicPackageJson
+{
+    public ClassicPackageLink[] m_packageLinks = new ClassicPackageLink[] { };
+
+    public string ToJson() { return JsonUtility.ToJson(this); }
+    public static RequiredClassicPackageJson FromJsonPath(string path) {
+        if (File.Exists(path))
+            return FromJsonText(File.ReadAllText(path));
+        else return new RequiredClassicPackageJson();
+    }
+    public static RequiredClassicPackageJson FromJsonText(string jsonText) { return JsonUtility.FromJson<RequiredClassicPackageJson>(jsonText); }
+
+}
+[System.Serializable]
+public class ClassicPackageLink {
+    public string m_name="";
+    public string m_pathOrLink = "";
+
+    public ClassicPackageLink(string name, string pathOrLink)
+    {
+        m_name = name;
+        m_pathOrLink = pathOrLink;  
+    }
+
+    public bool IsRelativePath()
+    {
+        if (string.IsNullOrEmpty(m_pathOrLink))
+            return false;
+        return !IsWindowPath() && !IsWebPath();
+    }
+
+    public bool IsWebPath()
+    {
+        if (string.IsNullOrEmpty(m_pathOrLink))
+            return false;
+        return m_pathOrLink.ToLower().IndexOf("http://")>-1 || m_pathOrLink.ToLower().IndexOf("https://")>-1;
+    }
+
+    public bool IsWindowPath()
+    {
+        if (string.IsNullOrEmpty(m_pathOrLink))
+            return false;
+        return Path.IsPathRooted(m_pathOrLink) ;
+    }
+
+    public bool IsAssetStoreLink() {
+        if (string.IsNullOrEmpty(m_pathOrLink))
+            return false;
+        return IsWebPath() && m_pathOrLink.IndexOf("assetstore") > -1;
+    }
+
+    public bool IsUnityPackage() {
+        if (string.IsNullOrEmpty(m_pathOrLink))
+            return false;
+        int indexOfPackage = m_pathOrLink.ToLower().LastIndexOf(".unitypackage");
+        if (indexOfPackage < 0)
+            return false;
+        return m_pathOrLink.Substring(indexOfPackage) == ".unitypackage";
+    }
+    
 }
