@@ -138,10 +138,10 @@ public class UnityPackageUtility
     }
     public static string GetProjectNameFromGitLink(string gitLinkFormated)
     {
+        if (gitLinkFormated == null)
+            return "";
         // https://gitlab.com/eloistree/2019_07_22_oculusguardianidentity.git
         // https://github.com/EloiStree/CodeAndQuestsEveryDay.git
-
-        //gitLinkFormated = RemoveWhiteSpace(gitLinkFormated);
         int startProjectName = gitLinkFormated.LastIndexOf('/');
         if (startProjectName < 0)
             return "";

@@ -20,7 +20,7 @@ public class PackagePullPushEditor : Editor
         bool isGitFolderDefine = !string.IsNullOrEmpty(gitFolderUrl);
         string projectPathTmp = projectPath + "tmp";
         string requiredPathFile = projectPath + "/requiredpackages.json";
-        RequiredClassicPackageJson package = RequiredClassicPackageJson.FromJsonPath(requiredPathFile);
+        ListOfClassicPackages package = ListOfClassicPackages.FromJsonPath(requiredPathFile);
 
         if (string.IsNullOrEmpty(myScript.GetGitLink()))
             return;

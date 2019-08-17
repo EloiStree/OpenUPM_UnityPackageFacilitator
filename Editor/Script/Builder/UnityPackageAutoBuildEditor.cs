@@ -12,9 +12,16 @@ using UnityEngine;
 [CustomEditor(typeof(UnityPackageAutoBuild))]
 public class UnityPackageAutoBuildEditor : Editor
 {
+    public static string m_gitUserName;
+    public static bool m_seeDefaultOne;
     public override void OnInspectorGUI()
     {
-        DrawDefaultInspector();
+        if (GUILayout.Button("Default"))
+        {
+            m_seeDefaultOne = !m_seeDefaultOne;
+        }
+        if (m_seeDefaultOne)
+            DrawDefaultInspector();
 
         UnityPackageAutoBuild myScript = (UnityPackageAutoBuild)target;
 
@@ -27,8 +34,9 @@ public class UnityPackageAutoBuildEditor : Editor
         if (isGitUrlDefined && !isGitDirectoryDefined && GUILayout.Button("Clone"))
         {
             Directory.CreateDirectory(whereToCreate);
-            QuickGit.Clone(myScript.m_gitLink, whereToCreate);
-            CreateStructure(myScript);
+            throw new System.NotImplementedException(); 
+ //           QuickGit.Clone(myScript.m_gitLink, whereToCreate);
+  //          CreateStructure(myScript);
         }
         GUILayout.EndHorizontal();
         if (!isGitDirectoryDefined && !isGitUrlDefined)
@@ -47,7 +55,7 @@ public class UnityPackageAutoBuildEditor : Editor
             }
             if (GUILayout.Button("Local"))
             {
-                UnityEngine.Debug.Log(">>"+myScript.GetFolderPath());
+                UnityEngine.Debug.Log(">>" + myScript.GetFolderPath());
                 QuickGit.CreateLocal(myScript.GetFolderPath());
                 myScript.
         MakeSureThatPullPushScriptIsAssociatedToThisScript();
@@ -61,7 +69,7 @@ public class UnityPackageAutoBuildEditor : Editor
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            myScript.m_gitUserName = EditorGUILayout.TextField("User:", myScript.m_gitUserName);
+           m_gitUserName = EditorGUILayout.TextField("User:", m_gitUserName);
             GUILayout.EndHorizontal();
 
 
@@ -69,7 +77,7 @@ public class UnityPackageAutoBuildEditor : Editor
 
             if (GUILayout.Button("GitLab"))
             {
-                QuickGit.PushLocalToGitLab(whereToCreate, myScript.m_gitUserName, GetProjectDatedNameId(myScript), out myScript.m_gitLink);
+                QuickGit.PushLocalToGitLab(whereToCreate, m_gitUserName, myScript.m_packageInfo.m_data.m_projectId, out m_gitLink);
                 myScript.
       MakeSureThatPullPushScriptIsAssociatedToThisScript();
             }
@@ -97,46 +105,46 @@ public class UnityPackageAutoBuildEditor : Editor
 
     }
 
-    private static string GetProjectDatedNameId(UnityPackageAutoBuild myScript)
-    {
-        return myScript.m_packageJson.m_projectId.GetProjectDatedNameId(false);
-    }
 
     private static bool GetGitUrlDefined(UnityPackageAutoBuild myScript)
     {
-        return !string.IsNullOrEmpty(myScript.m_gitLink);
+        return !string.IsNullOrEmpty(m_gitLink);
     }
 
     private static string GetWhereToCreateProject(UnityPackageAutoBuild myScript)
     {
-        return myScript.m_projectPath + "/" + myScript.m_packageJson.GetProjectDatedId(false);
+        if (myScript == null || myScript.m_packageInfo == null)
+            return "";
+        return myScript.m_projectPath + "/" + myScript.m_packageInfo.m_data.m_projectId;
     }
 
     private static string GetProjectName(UnityPackageAutoBuild myScript)
     {
-        return myScript.m_packageJson.m_projectId.GetProjectNameWithoutSpace();
+        if (myScript == null || myScript.m_packageInfo == null)
+            return "" ;
+        return myScript.m_packageInfo.m_data.m_projectName;
     }
 
-    private void CreateLocalGit(UnityPackageAutoBuild myScript,string where)
+    private void CreateLocalGit(UnityPackageAutoBuild myScript, string where)
     {
-        QuickGit.CreateLocal(where + "/" + GetProjectDatedNameId(myScript));
+        QuickGit.CreateLocal(where + "/" + myScript.m_packageInfo.m_data.m_projectId);
     }
 
     public void CreateStructure(UnityPackageAutoBuild myScript)
     {
         myScript.MakeSureThatTheAssemblyEditorTargetTheRuntimeOne();
 
-        string whereToCreate = myScript.m_projectPath + "/" + GetProjectDatedNameId(myScript);
+        string whereToCreate = myScript.m_projectPath + "/" + myScript.m_packageInfo.m_data.m_projectId;
         QuickGit.AddFileInEmptyFolder(whereToCreate);
-        CreatePackageJson(myScript.m_packageJson, whereToCreate, myScript);
+        CreatePackageJson(myScript.m_packageInfo.m_data, whereToCreate, myScript);
         CreateFolders(whereToCreate, myScript.m_directoriesStructure);
-        CreateAssembly(myScript.m_packageJson.m_assemblyRuntime, whereToCreate);
-        CreateAssembly(myScript.m_packageJson.m_assemblyEditor, whereToCreate);
-        File.WriteAllText(whereToCreate + "/requiredpackages.json", myScript.m_packageJson.m_classicUnityPackageRequired.ToJson());
+        CreateAssembly(myScript.m_packageInfo.m_data.m_assemblyRuntime, whereToCreate);
+        CreateAssembly(myScript.m_packageInfo.m_data.m_assemblyEditor, whereToCreate);
+        File.WriteAllText(whereToCreate + "/requiredpackages.json", myScript.m_packageInfo.m_data.m_requiredAndAdviceClassicPackage.ToJson());
         AssetDatabase.Refresh();
     }
 
-    public void CreateAssembly( UnityPackageAssemblyBuilderJson assemblyInfo, string whereToCreate)
+    public void CreateAssembly(AssemblyBuildInformation assemblyInfo, string whereToCreate)
     {
         string[] dependenciesModificatedForJson = new string[assemblyInfo.m_reference.Length];
         for (int i = 0; i < assemblyInfo.m_reference.Length; i++)
@@ -153,7 +161,7 @@ public class UnityPackageAutoBuildEditor : Editor
         packageJson += string.Join(",", dependenciesModificatedForJson);
         packageJson += "\n],                                                              ";
         packageJson += "\n    \"optionalUnityReferences\": [],                                  ";
-        if (assemblyInfo.m_isEditorAssembly)
+        if (assemblyInfo.m_assemblyType == AssemblyBuildInformation.AssemblyType.Editor)
         {
             packageJson += "\n    \"includePlatforms\": [                                           ";
             packageJson += "\n        \"Editor\"                                                    ";
@@ -171,7 +179,7 @@ public class UnityPackageAutoBuildEditor : Editor
         packageJson += "\n    \"defineConstraints\": []                                         ";
         packageJson += "\n}                                                                   ";
 
-        if (assemblyInfo.m_isEditorAssembly)
+        if (assemblyInfo.m_assemblyType == AssemblyBuildInformation.AssemblyType.Editor)
         {
             Directory.CreateDirectory(whereToCreate + "/Editor");
             string name = whereToCreate + "/Editor/com.unity." + assemblyInfo.m_packageName + ".Editor.asmdef";
@@ -205,13 +213,13 @@ public class UnityPackageAutoBuildEditor : Editor
         }
     }
 
-    private void CreatePackageJson( UnityPackageBuilderJson packageInfo, string whereToCreate, UnityPackageAutoBuild additionalInfo, string fileName = "package.json")
+    private void CreatePackageJson(PackageBuildInformation packageInfo, string whereToCreate, UnityPackageAutoBuild additionalInfo, string fileName = "package.json")
     {
         string packageJson = "";
-        string[] dependenciesModificatedForJson = new string[packageInfo.m_dependencies.Length];
-        for (int i = 0; i < packageInfo.m_dependencies.Length; i++)
+        string[] dependenciesModificatedForJson = new string[packageInfo.m_otherPackageDependency.Length];
+        for (int i = 0; i < packageInfo.m_otherPackageDependency.Length; i++)
         {
-            dependenciesModificatedForJson[i] = "\"" + packageInfo.m_dependencies[i] + "\": \"0.0.1\"";
+            dependenciesModificatedForJson[i] = "\"" + packageInfo.m_otherPackageDependency[i] + "\": \"0.0.1\"";
         }
         string[] keywordForJson = new string[packageInfo.m_keywords.Length];
         for (int i = 0; i < packageInfo.m_keywords.Length; i++)
@@ -221,7 +229,7 @@ public class UnityPackageAutoBuildEditor : Editor
 
         packageJson += "\n{                                                                                ";
         packageJson += "\n  \"name\": \"" + packageInfo.GetProjectNamespaceId(true) + "\",                              ";
-        packageJson += "\n  \"displayName\": \"" + packageInfo.m_projectId.GetProjectDisplayName() + "\",                        ";
+        packageJson += "\n  \"displayName\": \"" + packageInfo.m_projectName + "\",                        ";
         packageJson += "\n  \"version\": \"" + packageInfo.m_packageVersion + "\",                         ";
         packageJson += "\n  \"unity\": \"" + packageInfo.m_unityVersion + "\",                             ";
         packageJson += "\n  \"description\": \"" + packageInfo.m_description + "\",                         ";
@@ -233,16 +241,16 @@ public class UnityPackageAutoBuildEditor : Editor
         File.Delete(whereToCreate + "/package.json");
         File.WriteAllText(whereToCreate + "/package.json", packageJson);
 
-        string m_howToUse = "# How to use: " + packageInfo.GetProjectDatedId(false) + "   " ;
+        string m_howToUse = "# How to use: " + packageInfo.m_projectName + "   ";
         m_howToUse += "\n   ";
 
         m_howToUse += "\nAdd the following line to the [UnityRoot]/Packages/manifest.json    ";
         m_howToUse += "\n``` json     ";
-        m_howToUse += "\n" + string.Format("\"{0}\":\"{1}\",", packageInfo.GetProjectNamespaceId(true), additionalInfo.m_gitLink) +  "    "  ;
+        m_howToUse += "\n" + string.Format("\"{0}\":\"{1}\",", packageInfo.GetProjectNamespaceId(true), additionalInfo.m_gitLink) + "    ";
         m_howToUse += "\n```    ";
         m_howToUse += "\n--------------------------------------    ";
         m_howToUse += "\n   ";
-        m_howToUse += "\nFeel free to support my work: " + additionalInfo.m_patreonLink+"   ";
+        m_howToUse += "\nFeel free to support my work: " + additionalInfo.m_patreonLink + "   ";
         m_howToUse += "\nContact me if you need assistance: " + additionalInfo.m_contact + "   ";
         m_howToUse += "\n   ";
         m_howToUse += "\n--------------------------------------    ";
@@ -275,6 +283,3 @@ public static class UnityPackageManagerUtility
         return Application.dataPath + "/../Packages/manifest.json";
     }
 }
-
-
-//// com.unity.unityprefsthemall.Runtime
