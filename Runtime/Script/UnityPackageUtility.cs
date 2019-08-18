@@ -73,6 +73,33 @@ public class UnityPackageUtility
 
     }
 
+    public static string GetPackageRootInParent(string currentPath)
+    {
+        while (!string.IsNullOrEmpty(currentPath))
+        {
+            if (IsFolderContainRootOfPackage(currentPath))
+                return currentPath;
+            currentPath = GoUpInPath(currentPath);
+        }
+        return null;
+    }
+
+    private static bool IsFolderContainRootOfPackage(string currentPath)
+    {
+       return  Directory.GetFiles(currentPath, "package.json").Length>0;
+    }
+
+    private static string GoUpInPath(string currentPath)
+    {
+        int lastIndex = currentPath.LastIndexOf('/');
+        if (lastIndex < 0)
+            lastIndex = currentPath.LastIndexOf('\\');
+        if (lastIndex < 0)
+            return "";
+        return currentPath.Substring(0, lastIndex);
+    }
+
+
     public static void OpenManifestFile()
     {
         Application.OpenURL(GetManifestPath());
@@ -109,7 +136,7 @@ public class UnityPackageUtility
     {
         string directoryPath = GetGitDirectoryPropositionRootPathInUnity(gitUrl);
         QuickGit.AddFileInEmptyFolder(directoryPath);
-        QuickGit.PullAddCommitAndPush(directoryPath, "Update: "+DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
+        QuickGit.PullPushWithAddAndCommit(directoryPath, "Update: "+DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
        
         #if UNITY_EDITOR
 

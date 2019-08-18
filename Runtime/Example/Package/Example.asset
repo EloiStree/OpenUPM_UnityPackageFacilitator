@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64d419697c372904cb375ea9c44443d8, type: 3}
+  m_Name: Example
+  m_EditorClassIdentifier: 
+  m_data:
+    m_projectId: ProjectExample
+    m_projectName: Project Example
+    m_country: com
+    m_company: youcompany
+    m_description: Description of the package.
+    m_keywords:
+    - Script
+    - Tool
+    m_category: 0
+    m_packageVersion: 0.0.1
+    m_unityVersion: 2018.1
+    m_otherPackageDependency: []
+    m_assemblyRuntime:
+      m_packageName: 
+      m_packageNamespaceId: 
+      m_reference: []
+      m_assemblyType: 0
+    m_assemblyEditor:
+      m_packageName: 
+      m_packageNamespaceId: 
+      m_reference: []
+      m_assemblyType: 1

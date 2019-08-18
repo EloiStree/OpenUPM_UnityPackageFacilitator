@@ -89,23 +89,22 @@ public class UnityPackageEditorDrawer
         }
     }
 
-    public static void DrawPackageEditor(ref string whereToCreate, PackageBuildInformation package)
+    public static void DrawPackageEditor(ref string relativePathOfProject, PackageBuildInformation package)
     {
-        GUILayout.Label("> " + package.m_projectId + ": " + package.GetProjectNamespaceId());
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Create Folder"))
+        //if (GUILayout.Button("Create Folder"))
+        //{
+        //    PackageBuilder.CreateFolder(relativePathOfProject);
+        //    AssetDatabase.Refresh();
+        //}
+        if (GUILayout.Button("Create "+package.m_projectName))
         {
-            PackageBuilder.CreateFolder(whereToCreate);
+            PackageBuilder.CreateUnityPackage(relativePathOfProject, package);
+            AssetDatabase.Refresh();
         }
-        whereToCreate = GUILayout.TextField(whereToCreate);
         GUILayout.EndHorizontal();
+        GUILayout.Label("" + package.m_projectId + ": " + package.GetProjectNamespaceId());
 
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Create Package: " + package.GetProjectNamespaceId()))
-        {
-            PackageBuilder.CreateUnityPackage(whereToCreate, package);
-        }
-        GUILayout.EndHorizontal();
 
     }
 }

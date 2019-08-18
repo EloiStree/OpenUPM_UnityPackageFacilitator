@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5865bfbc980854e9424f135b262a49, type: 3}
+  m_Name: Basic
+  m_EditorClassIdentifier: 
+  m_data:
+    m_defaultDirectory:
+    - Script
+    - Scene
+    - Prefab
+    m_defaultFiles:
+    - m_relativePath: Script/Hello.txt
+      m_text: Hello Sweaty
+    m_defaultFilesFromWeb:
+    - m_relativePath: 2D/test.jpg
+      m_url: https://i.redd.it/bd4f35h27qf31.jpg

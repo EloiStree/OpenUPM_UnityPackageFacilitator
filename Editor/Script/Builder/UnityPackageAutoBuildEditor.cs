@@ -136,11 +136,11 @@ public class UnityPackageAutoBuildEditor : Editor
 
         string whereToCreate = myScript.m_projectPath + "/" + myScript.m_packageInfo.m_data.m_projectId;
         QuickGit.AddFileInEmptyFolder(whereToCreate);
-   //     CreatePackageJson(myScript.m_packageInfo.m_data, whereToCreate, myScript);
+        //CreatePackageJson(myScript.m_packageInfo.m_data, whereToCreate, myScript);
         CreateFolders(whereToCreate, myScript.m_directoriesStructure.m_data);
         CreateAssembly(myScript.m_packageInfo.m_data.m_assemblyRuntime, whereToCreate);
         CreateAssembly(myScript.m_packageInfo.m_data.m_assemblyEditor, whereToCreate);
-        File.WriteAllText(whereToCreate + "/requiredpackages.json", myScript.m_packageInfo.m_data.m_requiredAndAdviceClassicPackage.ToJson());
+        //File.WriteAllText(whereToCreate + "/requiredpackages.json", myScript.m_packageInfo.m_data.m_requiredAndAdviceClassicPackage.ToJson());
         AssetDatabase.Refresh();
     }
 

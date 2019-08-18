@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222f3a02091867544810bc3eaffcea69, type: 3}
+  m_Name: FullPackageBuild
+  m_EditorClassIdentifier: be.eloiexperiments.unitypackagefacilitator::FullPackageBuildObject
+  m_gitLink: {fileID: 11400000, guid: 8842504ff16fdaf438dfa74969b11cb7, type: 2}
+  m_package: {fileID: 11400000, guid: 611ec1645fa9ab446842e745ed9433dd, type: 2}
+  m_structure: {fileID: 11400000, guid: 27082907f73d7f64cbe9ed7f76ab0d7b, type: 2}
+  m_links: {fileID: 11400000, guid: dd7598aab694a0241bb239393a170c98, type: 2}
+  m_contact: {fileID: 11400000, guid: bca2a369069a83c41aa2b5e750252338, type: 2}

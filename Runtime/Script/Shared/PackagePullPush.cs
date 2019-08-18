@@ -77,7 +77,7 @@ public class PackagePullPush : MonoBehaviour
     public void PullAndPush() {
 
         QuickGit.AddFileInEmptyFolder(GetProjectPathInUnity());
-        QuickGit.PullAddCommitAndPush(GetProjectPathInUnity(), DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
+        QuickGit.PullPushWithAddAndCommit(GetProjectPathInUnity(), DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
        
     }
     

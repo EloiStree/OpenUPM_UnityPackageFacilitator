@@ -18,45 +18,29 @@ public class PackageBuilder
 
     }
 
-    public static void CreateFolder(string folderName)
+    public static void CreateFolder(string relativePathFolder)
     {
-       Directory.CreateDirectory( Application.dataPath + "/" + folderName );
-       AssetDatabase.Refresh();
+        Directory.CreateDirectory(GetAbsolutPathInProject(relativePathFolder));
+        AssetDatabase.Refresh();
     }
 
-    public static void CreateUnityPackage(string whereToCreate, PackageBuildInformation package)
+   
+    public static void CreateUnityPackage(string relativePathFolder, PackageBuildInformation package)
     {
-        Directory.CreateDirectory(whereToCreate);
+        Directory.CreateDirectory(relativePathFolder);
         string packageJson = "WIP";
-        File.WriteAllText(whereToCreate+"/"+"package.json",packageJson);
+        File.WriteAllText(GetAbsolutPathInProject(relativePathFolder) + "/"+"package.json",packageJson);
         AssetDatabase.Refresh();
 
     }
+
+    private static string GetAbsolutPathInProject(string relativePathFolder)
+    {
+        return Application.dataPath + "/" + relativePathFolder;
+    }
+
 }
 
-
-[CreateAssetMenu(fileName = "PackageBuildInfo", menuName = "Facilitator/Create/Contact Information", order = 1)]
-public class ContactInformationObject : ScriptableObject
-{
-    public ContactInformation m_data;
-}
-
-
-[CreateAssetMenu(fileName = "PackageBuildInfo", menuName = "Facilitator/Create/Package Info", order = 1)]
-public class PackageBuildInformationObject : ScriptableObject
-{
-    public PackageBuildInformation m_data;
-}
-[CreateAssetMenu(fileName = "ListOfPackages", menuName = "Facilitator/Create/Classic packages", order = 1)]
-public class ListOfClassicPackagesObject : ScriptableObject
-{
-    public ListOfClassicPackages m_data;
-}
-[CreateAssetMenu(fileName = "ListOfPackages", menuName = "Facilitator/Create/Directories Structure", order = 1)]
-public class ProjectDirectoriesStructureObject : ScriptableObject
-{
-    public ProjectDirectoriesStructure m_data;
-}
 
 
 
@@ -95,17 +79,10 @@ public class PackageBuildInformation
     public string m_packageVersion = "0.0.1";
     public string m_unityVersion = "2018.1";
     [Tooltip("com.yourcompany.example")]
-    public string[] m_otherPackageDependency = new string[] { };
+    public PackageDependencyId[] m_otherPackageDependency = new PackageDependencyId[] { };
     public AssemblyBuildInformation m_assemblyRuntime = new AssemblyBuildInformation() { m_assemblyType = AssemblyBuildInformation.AssemblyType.Unity };
     public AssemblyBuildInformation m_assemblyEditor = new AssemblyBuildInformation() { m_assemblyType = AssemblyBuildInformation.AssemblyType.Editor };
 
-    public ListOfClassicPackages m_requiredAndAdviceClassicPackage = new ListOfClassicPackages
-    {
-        m_packageLinks = new ClassicPackageLink[] {
-           new ClassicPackageLink("Oculus Light","https://gitlab.com/eloistree/2019_07_23_OculusQuestLight/raw/master/OculusIntegrationLight.unitypackage")
-        ,  new ClassicPackageLink("Oculus Official","https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022")
-        }
-    };
 
     public string GetProjectNamespaceId(bool useLower = false)
     {
@@ -148,6 +125,22 @@ public class ClassicPackageLink
 {
     public string m_name = "";
     public string m_pathOrLink = "";
+
+    public void CreateWindowLinkFile(string folderPath, bool alphaNumeric)
+    {
+        string name = m_name;
+        if (alphaNumeric)
+            AlphaNumeric(m_name);
+
+        Directory.CreateDirectory(folderPath);
+        string fileFormat = "[InternetShortcut]\nURL ="+ m_pathOrLink;
+        File.WriteAllText(folderPath + "/"+ name + ".url", fileFormat);
+    }
+
+    private string AlphaNumeric(string name)
+    {
+        return name.Replace(" ", "").Replace(".", "").Replace("-","");
+    }
 
     public ClassicPackageLink(string name, string pathOrLink)
     {
@@ -203,7 +196,7 @@ public class ContactInformation
     public string m_profilPictureLink = "https://avatars0.githubusercontent.com/u/20149493?s=460&v=4";
     public string m_howToContact = "http://eloistree.page.link/discord";
     public string m_patreonLink = "http://patreon.com/eloistree";
-    public string m_paypalLink;
+    public string m_paypalLink= "http://paypal.me/eloistree";
     public List<AdditionalInformation> m_additionalInformations;
 }
 [System.Serializable]
@@ -227,9 +220,12 @@ public class ProjectDirectoriesStructure {
         if (string.IsNullOrWhiteSpace(whereToCreate) || whereToCreate.Length==0)
             return;
 
-        if (whereToCreate[whereToCreate.Length-1] != '/') {
+        char lastCharacer = whereToCreate[whereToCreate.Length - 1];
+        if (lastCharacer == '/' || lastCharacer =='\\') {
             whereToCreate = whereToCreate.Substring(0, whereToCreate.Length-1);
         }
+        whereToCreate+="/";
+        Directory.CreateDirectory(whereToCreate);
 
         for (int i = 0; i < m_defaultDirectory.Length; i++)
         {
@@ -239,18 +235,30 @@ public class ProjectDirectoriesStructure {
         for (int i = 0; i < m_defaultFiles.Length; i++)
         {
             string path = whereToCreate + m_defaultFiles[i].m_relativePath;
+           
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
             File.WriteAllText(path, m_defaultFiles[i].m_text);
         }
         for (int i = 0; i < m_defaultFilesFromWeb.Length; i++)
         {
             string path = whereToCreate + m_defaultFilesFromWeb[i].m_relativePath;
-            File.WriteAllText(path, GetTextFromUrl(m_defaultFilesFromWeb[i].m_url) );
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            GetTextFromUrl(m_defaultFilesFromWeb[i].m_url, path);
         }
+        AssetDatabase.Refresh();
     }
 
-    private string GetTextFromUrl(string url )
+    private string GetTextFromUrl( string url, string where)
     {
-        string contents="";
+        using (var wc = new System.Net.WebClient())
+        {
+            wc.DownloadFile(url, where);
+        }
+        return File.ReadAllText(where) ;
+    }
+    private string GetTextFromUrl(string url)
+    {
+        string contents = "";
         using (var wc = new System.Net.WebClient())
             contents = wc.DownloadString(url);
         return contents;
