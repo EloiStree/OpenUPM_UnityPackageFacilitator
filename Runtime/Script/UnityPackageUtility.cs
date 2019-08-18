@@ -86,6 +86,8 @@ public class UnityPackageUtility
 
     private static bool IsFolderContainRootOfPackage(string currentPath)
     {
+        if (!Directory.Exists(currentPath))
+            return false;
        return  Directory.GetFiles(currentPath, "package.json").Length>0;
     }
 
