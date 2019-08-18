@@ -20,8 +20,10 @@ class UnityPackageBuilderWindow : EditorWindow
     }
  
     public static FullPackageBuildObject m_fullPackage;
+    public static FullPackageBuildObject m_previousFullPackage;
     //public static ProjectGitLinkObject m_gitServerLink;
     public static PackageBuildInformationObject m_packageInformation;
+    
     public static ContactInformationObject           m_contactInformation;
     public static ProjectDirectoriesStructureObject  m_folderStructureWanted;
     public static ListOfClassicPackagesObject        m_linksAdvice;
@@ -115,23 +117,28 @@ class UnityPackageBuilderWindow : EditorWindow
         GUILayout.Label("Drag and drop:", EditorStyles.boldLabel);
         m_fullPackage = (FullPackageBuildObject)EditorGUILayout.ObjectField(m_fullPackage, typeof(FullPackageBuildObject));
         GUILayout.EndHorizontal();
-        if (m_fullPackage != null)
+        if (m_fullPackage != null && m_previousFullPackage != m_fullPackage)
         {
            // m_gitServerLink = m_fullPackage.m_gitLink;
+           if(m_fullPackage.m_package)
             m_packageInformation = m_fullPackage.m_package;
-            m_contactInformation = m_fullPackage.m_contact;
-            m_folderStructureWanted = m_fullPackage.m_structure;
-            m_linksAdvice = m_fullPackage.m_links;
+            if (m_fullPackage.m_contact)
+                m_contactInformation = m_fullPackage.m_contact;
+            if (m_fullPackage.m_structure)
+                m_folderStructureWanted = m_fullPackage.m_structure;
+            if (m_fullPackage.m_links)
+                m_linksAdvice = m_fullPackage.m_links;
             if(m_fullPackage.m_package && m_folderName=="")
               m_folderName = m_fullPackage.m_package.m_data.m_projectId;
             m_fullPackage = null;
             RefreshDatabase();
         }
+        m_previousFullPackage = m_fullPackage;
         if (m_fullPackage == null)
         {
             if (GUILayout.Button("Create Default"))
             {
-                m_fullPackage = (FullPackageBuildObject)CreateScritableAsset<FullPackageBuildObject>(m_folderName + "Builder/DefaultFullPackage");
+                m_fullPackage = (FullPackageBuildObject)CreateScritableAsset<FullPackageBuildObject>(m_folderName , "DefaultFullPackage");
             }
         }
 
@@ -310,7 +317,7 @@ class UnityPackageBuilderWindow : EditorWindow
         }
         if (m_packageInformation == null) { 
             if (GUILayout.Button("Create Default")) {
-                m_packageInformation = (PackageBuildInformationObject) CreateScritableAsset<PackageBuildInformationObject>(m_folderName+"Builder/DefaultPackage");
+                m_packageInformation = (PackageBuildInformationObject) CreateScritableAsset<PackageBuildInformationObject>(m_folderName,"DefaultPackage");
             }
         }
 
@@ -333,7 +340,7 @@ class UnityPackageBuilderWindow : EditorWindow
         {
             if (GUILayout.Button("Create Default"))
             {
-                m_folderStructureWanted = (ProjectDirectoriesStructureObject)CreateScritableAsset<ProjectDirectoriesStructureObject>(m_folderName + "Builder/DefaultStructure");
+                m_folderStructureWanted = (ProjectDirectoriesStructureObject)CreateScritableAsset<ProjectDirectoriesStructureObject>(m_folderName , "DefaultStructure");
             }
         }
         //////////////// Linked Assets ////////////////////////
@@ -357,13 +364,13 @@ class UnityPackageBuilderWindow : EditorWindow
         {
             if (GUILayout.Button("Create Default"))
             {
-                m_linksAdvice = (ListOfClassicPackagesObject)CreateScritableAsset<ListOfClassicPackagesObject>(m_folderName + "Builder/DefaultLinkPackage");
+                m_linksAdvice = (ListOfClassicPackagesObject)CreateScritableAsset<ListOfClassicPackagesObject>(m_folderName ,"DefaultLinkPackage");
             }
         }
         //////////////// Contact information ////////////////////////
         GUILayout.Label("How to contact", EditorStyles.boldLabel);
         m_contactInformation = (ContactInformationObject)EditorGUILayout.ObjectField(m_contactInformation, typeof(ContactInformationObject));
-        if (m_contactInformation != null)
+        if (m_contactInformation != null && m_contactInformation.m_data != null)
         {
             if (GUILayout.Button("Create Contact.md"))
             {
@@ -378,7 +385,7 @@ class UnityPackageBuilderWindow : EditorWindow
         {
             if (GUILayout.Button("Create Default"))
             {
-                m_contactInformation = (ContactInformationObject)CreateScritableAsset<ContactInformationObject>(m_folderName + "Builder/DefaultContact");
+                m_contactInformation = (ContactInformationObject)CreateScritableAsset<ContactInformationObject>(m_folderName ,"DefaultContact");
             }
         }
 
@@ -464,12 +471,11 @@ class UnityPackageBuilderWindow : EditorWindow
     }
 
 
-    public static ScriptableObject CreateScritableAsset<T>(string name) where T:ScriptableObject
+    public static ScriptableObject CreateScritableAsset<T>(string relative, string name) where T:ScriptableObject
     {
         T asset = ScriptableObject.CreateInstance<T>();
-        string relative = name ;
-        Directory.CreateDirectory(Application.dataPath + "/" + relative);
-        AssetDatabase.CreateAsset(asset, "Assets/"+ relative + ".asset");
+        Directory.CreateDirectory(Application.dataPath + "/Facilitator/" + relative);
+        AssetDatabase.CreateAsset(asset, "Assets/Facilitator/"+ relative+"/"+name + ".asset");
         AssetDatabase.SaveAssets();
 
         EditorUtility.FocusProjectWindow();
