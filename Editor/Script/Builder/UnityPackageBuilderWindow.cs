@@ -210,6 +210,7 @@ class UnityPackageBuilderWindow : EditorWindow
                 }
 
                 GUILayout.EndHorizontal();
+                
 
             }
             else
