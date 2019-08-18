@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using UnityEngine;
+using UnityEditor;
 
 public class PackageBuilder 
 {
@@ -12,6 +15,21 @@ public class PackageBuilder
 
     public void CreateThePackage(PackageBuildInformation package) {
 
+
+    }
+
+    public static void CreateFolder(string folderName)
+    {
+       Directory.CreateDirectory( Application.dataPath + "/" + folderName );
+       AssetDatabase.Refresh();
+    }
+
+    public static void CreateUnityPackage(string whereToCreate, PackageBuildInformation package)
+    {
+        Directory.CreateDirectory(whereToCreate);
+        string packageJson = "WIP";
+        File.WriteAllText(whereToCreate+"/"+"package.json",packageJson);
+        AssetDatabase.Refresh();
 
     }
 }
@@ -203,6 +221,40 @@ public class ProjectDirectoriesStructure {
     public string[] m_defaultDirectory;
     public FileFromText[] m_defaultFiles;
     public FileFromweb [] m_defaultFilesFromWeb;
+    
+    public void Create(string whereToCreate)
+    {
+        if (string.IsNullOrWhiteSpace(whereToCreate) || whereToCreate.Length==0)
+            return;
+
+        if (whereToCreate[whereToCreate.Length-1] != '/') {
+            whereToCreate = whereToCreate.Substring(0, whereToCreate.Length-1);
+        }
+
+        for (int i = 0; i < m_defaultDirectory.Length; i++)
+        {
+            string path = whereToCreate + m_defaultDirectory[i];
+            Directory.CreateDirectory(path);
+        }
+        for (int i = 0; i < m_defaultFiles.Length; i++)
+        {
+            string path = whereToCreate + m_defaultFiles[i].m_relativePath;
+            File.WriteAllText(path, m_defaultFiles[i].m_text);
+        }
+        for (int i = 0; i < m_defaultFilesFromWeb.Length; i++)
+        {
+            string path = whereToCreate + m_defaultFilesFromWeb[i].m_relativePath;
+            File.WriteAllText(path, GetTextFromUrl(m_defaultFilesFromWeb[i].m_url) );
+        }
+    }
+
+    private string GetTextFromUrl(string url )
+    {
+        string contents="";
+        using (var wc = new System.Net.WebClient())
+            contents = wc.DownloadString(url);
+        return contents;
+    }
 }
 
 [System.Serializable]
