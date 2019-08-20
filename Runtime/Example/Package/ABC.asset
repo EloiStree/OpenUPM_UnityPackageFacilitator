@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64d419697c372904cb375ea9c44443d8, type: 3}
-  m_Name: Example
+  m_Name: ABC
   m_EditorClassIdentifier: 
   m_data:
-    m_projectId: ProjectExample
-    m_projectName: Project Example
+    m_projectId: HeyGModfsniamitFacilitator
+    m_projectName: abc
     m_country: com
     m_company: youcompany
     m_description: Description of the package.
