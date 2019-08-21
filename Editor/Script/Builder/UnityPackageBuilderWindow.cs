@@ -10,7 +10,9 @@ class UnityPackageBuilderWindow : EditorWindow
     [MenuItem("Facilitator/Create Package")]
     public static void ShowWindow()
     {
-        EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));
+      EditorWindow win=  EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));
+        win.name = "Package Facilitator";
+        win.titleContent.text = "Package Builder";
     }
 
     [MenuItem("CONTEXT/FullPackageBuildObject/Open Editor")]
@@ -59,7 +61,7 @@ class UnityPackageBuilderWindow : EditorWindow
     {
 
         ResetInfo();
-
+        //UnlockIfFolderDontExist()
         // Find selected folder
         if (!m_lockSelection)
             m_relativeSelection = GetFolderSelectedInUnity();
@@ -503,9 +505,11 @@ class UnityPackageBuilderWindow : EditorWindow
     {
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Create folder:",GUILayout.Width(120))) {
-            Directory.CreateDirectory(Application.dataPath + "/" + folderName);
-            RefreshDatabase();
-            PingFolder(folderName);
+            if (!string.IsNullOrEmpty(folderName)) {
+                Directory.CreateDirectory(Application.dataPath + "/" + folderName);
+                RefreshDatabase();
+                PingFolder(folderName);
+            }
         }
         folderName = GUILayout.TextField(folderName);
         GUILayout.EndHorizontal();
