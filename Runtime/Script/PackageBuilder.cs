@@ -191,12 +191,12 @@ public class ClassicPackageLink
 public class ContactInformation
 {
     [Header("Contact info")]
-    public string m_firstName = "Eloi";
-    public string m_lastName = "Strée";
-    public string m_profilPictureLink = "https://avatars0.githubusercontent.com/u/20149493?s=460&v=4";
-    public string m_howToContact = "http://eloistree.page.link/discord";
-    public string m_patreonLink = "http://patreon.com/eloistree";
-    public string m_paypalLink= "http://paypal.me/eloistree";
+    public string m_firstName;//= "Eloi";
+    public string m_lastName;//= "Strée";
+    public string m_profilPictureLink;// = "https://avatars0.githubusercontent.com/u/20149493?s=460&v=4";
+    public string m_howToContact;//= "http://eloistree.page.link/discord";
+    public string m_patreonLink;//= "http://patreon.com/eloistree";
+    public string m_paypalLink;//= "http://paypal.me/eloistree";
     public List<AdditionalInformation> m_additionalInformations;
 }
 [System.Serializable]
