@@ -17,14 +17,11 @@ public class UnityPackageAutoBuild : MonoBehaviour
 
     public void Reset()
     {
-    
-
         m_projectPath = Application.dataPath;
         MakeSureThatPullPushScriptIsAssociatedToThisScript();
         m_packageInfo.m_data.m_projectId=EloiProjectIdFormat.GetProjectDateFormatFor( Application.productName);
         MakeSureThatTheAssemblyEditorTargetTheRuntimeOne();
-
-
+        
     }
 
     public void OnValidate()

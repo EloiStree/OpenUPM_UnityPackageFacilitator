@@ -25,11 +25,18 @@ public class PackageBuilder
     }
 
    
-    public static void CreateUnityPackage(string relativePathFolder, PackageBuildInformation package)
+    public static void CreateUnityPackage(string aboslutePath, PackageBuildInformation package)
     {
-        Directory.CreateDirectory(relativePathFolder);
+        Directory.CreateDirectory(aboslutePath);
+        CreateAssembly(aboslutePath , package.m_assemblyRuntime);
+        CreateAssembly(aboslutePath , package.m_assemblyEditor);
+
+        //File.WriteAllText(whereToCreate + "/requiredpackages.json", myScript.m_packageInfo.m_data.m_requiredAndAdviceClassicPackage.ToJson());
+        AssetDatabase.Refresh();
+
         string packageJson = "WIP";
-        File.WriteAllText(GetAbsolutPathInProject(relativePathFolder) + "/"+"package.json",packageJson);
+        File.WriteAllText(GetAbsolutPathInProject(aboslutePath) + "/"+"package.json",packageJson);
+
         AssetDatabase.Refresh();
 
     }
@@ -37,6 +44,138 @@ public class PackageBuilder
     private static string GetAbsolutPathInProject(string relativePathFolder)
     {
         return Application.dataPath + "/" + relativePathFolder;
+    }
+
+    public static void CreateAssembly(string absolutePath, AssemblyBuildInformation assemblyInfo)
+    {
+        string[] dependenciesModificatedForJson = new string[assemblyInfo.m_reference.Length];
+        for (int i = 0; i < assemblyInfo.m_reference.Length; i++)
+        {
+            dependenciesModificatedForJson[i] = "\"" + assemblyInfo.m_reference[i] + "\"";
+        }
+
+        string packageJson = "";
+        packageJson += "\n{                                                                   ";
+        packageJson += "\n            \"name\": \"" + assemblyInfo.m_packageNamespaceId + "\",          ";
+        packageJson += "\n    \"references\": [";
+        packageJson += string.Join(",", dependenciesModificatedForJson);
+        packageJson += "\n],                                                              ";
+        packageJson += "\n    \"optionalUnityReferences\": [],                                  ";
+        if (assemblyInfo.m_assemblyType == AssemblyBuildInformation.AssemblyType.Editor)
+        {
+            packageJson += "\n    \"includePlatforms\": [                                           ";
+            packageJson += "\n        \"Editor\"                                                    ";
+            packageJson += "\n    ],                                                              ";
+        }
+        else
+        {
+            packageJson += "\n    \"includePlatforms\": [],                                                  ";
+        }
+        packageJson += "\n    \"excludePlatforms\": [],                                         ";
+        packageJson += "\n    \"allowUnsafeCode\": false,                                       ";
+        packageJson += "\n    \"overrideReferences\": false,                                    ";
+        packageJson += "\n    \"precompiledReferences\": [],                                    ";
+        packageJson += "\n    \"autoReferenced\": true,                                         ";
+        packageJson += "\n    \"defineConstraints\": []                                         ";
+        packageJson += "\n}                                                                   ";
+
+        if (assemblyInfo.m_assemblyType == AssemblyBuildInformation.AssemblyType.Editor)
+        {
+            Directory.CreateDirectory(absolutePath + "/Editor");
+            string name = absolutePath + "/Editor/com.unity." + assemblyInfo.m_packageName + ".Editor.asmdef";
+            File.Delete(name);
+            File.WriteAllText(name, packageJson);
+
+        }
+        else
+        {
+            Directory.CreateDirectory(absolutePath + "/Runtime/");
+            string name = absolutePath + "/Runtime/com.unity." + assemblyInfo.m_packageName + ".Runtime.asmdef";
+            File.Delete(name);
+            File.WriteAllText(name, packageJson);
+
+        }
+
+
+
+    }
+
+
+
+
+
+    private void CreateFolders(string whereToCreate, ProjectDirectoriesStructure structure)
+    {
+        structure.Create(whereToCreate);
+    }
+
+
+    public static void CreatePackageJson(string absolutePath, string packageJson) {
+
+        Directory.CreateDirectory(absolutePath);
+        File.Delete(absolutePath + "/package.json");
+        File.WriteAllText(absolutePath + "/package.json", packageJson);
+    }
+
+    public  static string GetPackageAsJson( PackageBuildInformation packageInfo,  string fileName = "package.json")
+    {
+        string packageJson = "";
+        string[] dependenciesModificatedForJson = new string[packageInfo.m_otherPackageDependency.Length];
+        for (int i = 0; i < packageInfo.m_otherPackageDependency.Length; i++)
+        {
+            dependenciesModificatedForJson[i] = "\"" + packageInfo.m_otherPackageDependency[i] + "\": \"0.0.1\"";
+        }
+        string[] keywordForJson = new string[packageInfo.m_keywords.Length];
+        for (int i = 0; i < packageInfo.m_keywords.Length; i++)
+        {
+            keywordForJson[i] = "\"" + packageInfo.m_keywords[i] + "\"";
+        }
+
+        packageJson += "\n{                                                                                ";
+        packageJson += "\n  \"name\": \"" + packageInfo.GetProjectNamespaceId(true) + "\",                              ";
+        packageJson += "\n  \"displayName\": \"" + packageInfo.m_projectName + "\",                        ";
+        packageJson += "\n  \"version\": \"" + packageInfo.m_packageVersion + "\",                         ";
+        packageJson += "\n  \"unity\": \"" + packageInfo.m_unityVersion + "\",                             ";
+        packageJson += "\n  \"description\": \"" + packageInfo.m_description + "\",                         ";
+        packageJson += "\n  \"keywords\": [" + string.Join(",", keywordForJson) + "],                       ";
+        packageJson += "\n  \"category\": \"" + packageInfo.m_category.ToString() + "\",                   ";
+        packageJson += "\n  \"dependencies\":{" + string.Join(",", dependenciesModificatedForJson) + "}     ";
+        packageJson += "\n} ";
+
+        return packageJson;
+    }
+
+
+    public static string GetReadMeFilePropositionAsString(string gitUrl, PackageBuildInformation packageInfo, ContactInformation contactInfo , string additional) {
+
+        string m_howToUse = "# How to use: " + packageInfo.m_projectName + "   ";
+        m_howToUse += "\n   ";
+        m_howToUse += "\nAdd the following line to the [UnityRoot]/Packages/manifest.json    ";
+        m_howToUse += "\n``` json     ";
+        m_howToUse += "\n" + string.Format("\"{0}\":\"{1}\",", packageInfo.GetProjectNamespaceId(true), gitUrl) + "    ";
+        m_howToUse += "\n```    ";
+        m_howToUse += "\n--------------------------------------    ";
+        m_howToUse += "\n   ";
+        string patreonLink = contactInfo.m_patreonLink;
+        m_howToUse += "\nFeel free to support my work: " + patreonLink + "   ";
+        string paypalLink = contactInfo.m_paypalLink;
+        m_howToUse += "  " + paypalLink + "   ";
+        string contactLink = contactInfo.m_howToContact;
+        m_howToUse += "\nContact me if you need assistance: " + contactLink + "   ";
+        m_howToUse += "\n   ";
+        m_howToUse += "\n--------------------------------------    ";
+        m_howToUse += "\n``` json     ";
+        m_howToUse += GetPackageAsJson(packageInfo);
+        m_howToUse += "\n```    ";
+        m_howToUse += "\n   ";
+        if (additional.Length > 0) {
+            m_howToUse += "\n--------------------------------------    ";
+            m_howToUse += "\n     ";
+            m_howToUse += additional;
+            m_howToUse += "\n   ";
+        }
+
+        return m_howToUse;
     }
 
 }

@@ -14,6 +14,7 @@ public class UnityPackageAutoBuildEditor : Editor
 {
     public static string m_gitUserName;
     public static bool m_seeDefaultOne;
+
     public override void OnInspectorGUI()
     {
         if (GUILayout.Button("Default"))
@@ -22,7 +23,7 @@ public class UnityPackageAutoBuildEditor : Editor
         }
         if (m_seeDefaultOne)
             DrawDefaultInspector();
-
+   
         UnityPackageAutoBuild myScript = (UnityPackageAutoBuild)target;
 
         string projectName = GetProjectName(myScript);
