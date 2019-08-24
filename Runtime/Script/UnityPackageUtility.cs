@@ -120,11 +120,14 @@ public class UnityPackageUtility
     {
         return GetGitUnityPackageInDirectory(QuickGit.GetGitProjectsInDirectory(directoryPath));
     }
-
-    public static void Down(string gitUrl, bool affectManifest=true)
+    public static void Down(string gitUrl, bool affectManifest = true)
     {
-        
-        string directoryPath = GetGitDirectoryPropositionRootPathInUnity(gitUrl);
+        Down(GetGitDirectoryPropositionRootPathInUnity(gitUrl), gitUrl, affectManifest);
+     }
+    public static void Down(string directory, string gitUrl, bool affectManifest=true)
+    {
+
+        string directoryPath = directory;
         Directory.CreateDirectory(directoryPath);
         if (!Directory.Exists(directoryPath+"/.git"))
             QuickGit.Clone(gitUrl, directoryPath);
@@ -133,10 +136,23 @@ public class UnityPackageUtility
         if (affectManifest && !string.IsNullOrEmpty(gitUrl))
             UnityPackageUtility.RemovePackage(gitUrl);
     }
-
-    public static void Up(string namespaceId, string gitUrl, bool affectManifest=true)
+    public static void Up(string directory, bool affectManifest= true)
     {
-        string directoryPath = GetGitDirectoryPropositionRootPathInUnity(gitUrl);
+        string namespaceId="", gitUrl="";
+        namespaceId = TryToAccessNamespace(directory);
+         QuickGit.GetGitUrl(directory, out gitUrl);
+        Up(directory, namespaceId, gitUrl, affectManifest);
+    }
+
+    private static string TryToAccessNamespace(string packageJsonDirectory)
+    {
+        // try find in aquick way the namespace in package.json
+        throw new NotImplementedException();
+    }
+
+    public static void Up(string directory, string namespaceId, string gitUrl, bool affectManifest=true)
+    {
+        string directoryPath = directory;
         QuickGit.AddFileInEmptyFolder(directoryPath);
         QuickGit.PullPushWithAddAndCommit(directoryPath, "Update: "+DateTime.Now.ToString("yyyy/mm/dd -  hh:mm"));
        

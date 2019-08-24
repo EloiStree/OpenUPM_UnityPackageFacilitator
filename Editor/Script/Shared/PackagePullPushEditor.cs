@@ -35,12 +35,12 @@ public class PackagePullPushEditor : Editor
         if (GUILayout.Button("Down", isDirectoryCreated?disableStyle: enableStyle))
         {
             if(!isDirectoryCreated)
-                UnityPackageUtility.Down(myScript.GetGitLink(), myScript.m_affectPackageManager);
+                UnityPackageUtility.Down(projectPath,myScript.GetGitLink(), myScript.m_affectPackageManager);
         }
-        if (GUILayout.Button("Up", isDirectoryCreated && isGitFolderDefine ? enableStyle : disableStyle))
+        if (GUILayout.Button("Up", (isDirectoryCreated && isGitFolderDefine) ? enableStyle : disableStyle))
         {
-            if(isGitFolderDefine)
-                UnityPackageUtility.Up(myScript.m_namespaceId,myScript.GetGitLink(),  myScript.m_affectPackageManager);
+            if (isGitFolderDefine)
+                UnityPackageUtility.Up(projectPath, myScript.m_namespaceId, myScript.GetGitLink() , myScript.m_affectPackageManager);
         }
         GUILayout.EndHorizontal();
         GUILayout.Space(6);
