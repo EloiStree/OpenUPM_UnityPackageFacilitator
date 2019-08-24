@@ -5,14 +5,14 @@ using System.Net;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PackagePullPush))]
+[CustomEditor(typeof(PackagePullPushMono))]
 public class PackagePullPushEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        PackagePullPush myScript = (PackagePullPush) target;
+        PackagePullPushMono myScript = (PackagePullPushMono) target;
         string gitPath = myScript.GetProjectPathInUnity() + "/.git";
         string projectPath = myScript.GetProjectPathInUnity();
         string gitFolderUrl = "";
@@ -141,7 +141,7 @@ public class PackagePullPushEditor : Editor
 
     }
 
-    private static void RemoveFolderWithUnityTool(PackagePullPush myScript)
+    private static void RemoveFolderWithUnityTool(PackagePullPushMono myScript)
     {
         string directory = myScript.GetProjectPathInUnity();
         //myScript.RemoveProject();

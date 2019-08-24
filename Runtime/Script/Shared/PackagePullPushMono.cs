@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class PackagePullPush : MonoBehaviour
+public class PackagePullPushMono : MonoBehaviour
 {
     [SerializeField] string m_gitLink;
     public bool m_affectPackageManager=true;
@@ -14,7 +14,6 @@ public class PackagePullPush : MonoBehaviour
     public string m_projectName;
     public string m_namespaceId;
     public bool m_isValideLink;
-    public JsonUnityPackageMirror m_packageMirror;
     public bool m_useDebug;
 
 
@@ -95,8 +94,4 @@ public class PackagePullPush : MonoBehaviour
         return Directory.Exists(GetProjectPathInUnity());
     }
    
-}
-public class JsonUnityPackageMirror
-{
-
 }

@@ -7,10 +7,10 @@ using System;
 //https://learn.unity.com/tutorial/introduction-to-scriptable-objects#5cf187b7edbc2a31a3b9b123
 class UnityPackageBuilderWindow : EditorWindow
 {
-    [MenuItem("Facilitator/Create Package")]
+    [MenuItem("Window / Facilitator/Create Package")]
     public static void ShowWindow()
     {
-        EditorWindow win = EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));
+        UnityPackageBuilderWindow win =(UnityPackageBuilderWindow) EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));
         win.name = "Package Facilitator";
         win.titleContent.text = "Package Builder";
     }
@@ -18,7 +18,21 @@ class UnityPackageBuilderWindow : EditorWindow
     [MenuItem("CONTEXT/FullPackageBuildObject/Open Editor")]
     public static void ShowWindowd()
     {
-        UnityPackageBuilderWindow.ShowWindow();
+        UnityPackageBuilderWindow win = (UnityPackageBuilderWindow)EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));
+        win.name = "Package Facilitator";
+        win.titleContent.text = "Package Builder";
+    }
+
+    public static void ShowWindow(PackageBuildInformationObject package) {
+        UnityPackageBuilderWindow win = (UnityPackageBuilderWindow)EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));
+        win.name = "Package Facilitator";
+        win.titleContent.text = "Package Builder";
+        SelectAsset(package);
+    }
+
+    private static void SelectAsset(PackageBuildInformationObject package)
+    {
+        UnityPackageBuilderWindow.m_packageInformation = package;
     }
 
     public static FullPackageBuildObject m_fullPackage;
@@ -50,7 +64,10 @@ class UnityPackageBuilderWindow : EditorWindow
     public string m_proposeCreateFolderField;
     public bool m_lockSelection;
 
-    Vector2 scrollPos;
+
+    /// WINDOW EDITOR VALUE ///
+    bool m_createPackageFoldout;
+    Vector2 scollrPackagePosition;
 
 
     public void ResetInfo()
@@ -111,65 +128,36 @@ class UnityPackageBuilderWindow : EditorWindow
 
         if (m_gitLinkedToSelectedAsset == "")
             return;
-
-        GUILayout.Label("_______________________");
+        
 
         m_absolutPathOfFolderToWorkOn = m_gitLinkedToSelectedAsset;
 
+        m_createPackageFoldout = EditorGUILayout.Foldout(m_createPackageFoldout, "Structure package");
+        if( m_createPackageFoldout)
+        {
+            CreatePackageStructure();
+        }
+
+        m_dangerousButton = EditorGUILayout.Foldout(m_dangerousButton, "Dangerous Option");
+        if (m_dangerousButton) {
+
+            if (GUILayout.Button("Remove Repository"))
+            {
+                FileUtil.DeleteFileOrDirectory(m_gitLinkedToSelectedAsset);
+            }
+            if (GUILayout.Button("Remove .git"))
+            {
+                FileUtil.DeleteFileOrDirectory(m_gitLinkedToSelectedAsset + "/.git");
+            }
+        }
 
 
-
-
-        CreatePackageStructure();
-
-        GUILayout.Label("_______________________");
-        //m_relativeFolderToWorkOn = m_gitLinkedToSelectedAsset;
-
-        //DisplayButtonOpenAndSelection();
-
-        //GUILayout.Label("> Git", EditorStyles.boldLabel);
-        //DisplayGitInformation();
-
-
-
-        //If Not Folder
-        //// Propose to create
-        //// Return;
-
-        // If not git
-        //// propse to create
-        //// retrun
-
-        // Display: group affected
-        //// If null propose create default
-        // // else propose to edit;
-
-        // Display:  define package
-        //// If null propose create default
-        // // else propose to edit;
-
-        // Display:  folder structure
-        //// If null propose create default
-        // // else propose to edit;
-
-        // Display:  Link
-        //// If null propose create default
-        // // else propose to edit;
-
-        // Display:  Contact
-        //// If null propose create default
-        // // else propose to edit;
-
-
-        // Get read me proposition
-        // Display:  Read Me with proposition
-        //// If null propose create default
-        // // else propose to edit;
-
-
+        EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
 
 
     }
+
+    public static bool m_dangerousButton;
 
     private string GetGitFolderNameFromFolderPathInUnity()
     {
@@ -195,96 +183,54 @@ class UnityPackageBuilderWindow : EditorWindow
 
     private void CreatePackageStructure()
     {
-
-        scrollPos = GUILayout.BeginScrollView(scrollPos);
-        GUILayout.Space(20);
-        DisplayCollectionLink();
-
-
+        scollrPackagePosition = GUILayout.BeginScrollView(scollrPackagePosition);
+        CreatePackageCollectionLink();
 
         //////////////// Create Package ////////////////////////
-        GUILayout.Label("Create a package:", EditorStyles.boldLabel);
-        GUILayout.BeginHorizontal();
-        m_packageInformation = (PackageBuildInformationObject)EditorGUILayout.ObjectField(m_packageInformation, typeof(PackageBuildInformationObject));
-
-        //        RenameAsset();
-        GUILayout.EndHorizontal();
-        if (m_packageInformation != null)
-        {
-            PackageBuildInformation package = m_packageInformation.m_data;
-            UnityPackageEditorDrawer.DrawPackageEditor(ref m_absolutPathOfFolderToWorkOn, package);
-        }
-        if (m_packageInformation == null)
-        {
-
-            if (GUILayout.Button("Create Default"))
-            {
-                m_packageInformation = (PackageBuildInformationObject)CreateScritableAsset<PackageBuildInformationObject>(m_gitfolderName, "Package_" + m_gitfolderName, false);
-                if (m_fullPackage)
-                    m_fullPackage.m_package = m_packageInformation;
-            }
-        }
-        if (m_fullPackage && m_packageInformation)
-            m_fullPackage.m_package = m_packageInformation;
-
-
-
+        CreatePackageDirectories();
+        GUILayout.Space(10);
 
         //////////////// Folder structure ////////////////////////
-        GUILayout.Label("Folder structure", EditorStyles.boldLabel);
+        CreateDirectories();
+        //////////////// Links ////////////////////////
+        CreateLinks();
+        //////////////// Contact information ////////////////////////
+        CreateContactInformation();
+
+        GUILayout.Space(10);
+        //////////////// COMMUN ////////////////////////
+        CreateReadMe();
+
+        GUILayout.EndScrollView();
+    }
+
+    private void CreateReadMe()
+    {
+        GUILayout.Label("> Read Me", EditorStyles.boldLabel);
+        m_readMeSpecificInformation = GUILayout.TextArea(m_readMeSpecificInformation, GUILayout.Height(200));
 
 
         GUILayout.BeginHorizontal();
-        if (m_folderStructureWanted != null)
+        if (GUILayout.Button("Refresh Proposition"))
         {
-            if (GUILayout.Button("Create Runtime:"))
-            {
-                m_folderStructureWanted.m_data.Create(GetFolderWhereToWorkOn() + "/Runtime");
-                RefreshDatabase();
-            }
+
+
+            m_readMeSpecificInformation = "";
+            m_readMeSpecificInformation += string.Format("```\"{0}\":\"{1}\",```", m_packageInformation.m_data.GetProjectNamespaceId(), m_linkedGitUrl);
+
         }
-        m_folderStructureWanted = (ProjectDirectoriesStructureObject)EditorGUILayout.ObjectField(m_folderStructureWanted, typeof(ProjectDirectoriesStructureObject));
+        if (GUILayout.Button("Create ReadMe.md"))
+        {
+            Directory.CreateDirectory(m_gitLinkedToSelectedAsset);
+            File.WriteAllText(m_gitLinkedToSelectedAsset + "/ReadMe.md", m_readMeSpecificInformation);
+            RefreshDatabase();
+
+        }
         GUILayout.EndHorizontal();
-        if (m_folderStructureWanted == null)
-        {
-            if (GUILayout.Button("Create Default"))
-            {
-                m_folderStructureWanted = (ProjectDirectoriesStructureObject)CreateScritableAsset<ProjectDirectoriesStructureObject>(m_gitfolderName, "Folders_" + m_gitfolderName, false);
-                if (m_fullPackage)
-                    m_fullPackage.m_structure = m_folderStructureWanted;
-            }
-        }
-        if (m_fullPackage && m_folderStructureWanted)
-            m_fullPackage.m_structure = m_folderStructureWanted;
-        //////////////// Linked Assets ////////////////////////
-        GUILayout.Label("Linked assets", EditorStyles.boldLabel);
-        m_linksAdvice = (ListOfClassicPackagesObject)EditorGUILayout.ObjectField(m_linksAdvice, typeof(ListOfClassicPackagesObject));
-        if (m_linksAdvice != null)
-        {
-            if (GUILayout.Button("Create links"))
-            {
-                string path = GetFolderWhereToWorkOn() + "/Links";
-                Directory.CreateDirectory(path);
-                ClassicPackageLink[] links = m_linksAdvice.m_data.m_packageLinks;
-                for (int i = 0; i < links.Length; i++)
-                {
-                    links[i].CreateWindowLinkFile(path, false);
-                }
-                RefreshDatabase();
-            }
-        }
-        if (m_linksAdvice == null)
-        {
-            if (GUILayout.Button("Create Default"))
-            {
-                m_linksAdvice = (ListOfClassicPackagesObject)CreateScritableAsset<ListOfClassicPackagesObject>(m_gitfolderName, "Links_" + m_gitfolderName, false);
-                if (m_fullPackage)
-                    m_fullPackage.m_links = m_linksAdvice;
-            }
-        }
-        if (m_fullPackage && m_linksAdvice)
-            m_fullPackage.m_links = m_linksAdvice;
-        //////////////// Contact information ////////////////////////
+    }
+
+    private void CreateContactInformation()
+    {
         GUILayout.Label("How to contact", EditorStyles.boldLabel);
         m_contactInformation = (ContactInformationObject)EditorGUILayout.ObjectField(m_contactInformation, typeof(ContactInformationObject));
         if (m_contactInformation != null && m_contactInformation.m_data != null)
@@ -330,34 +276,143 @@ class UnityPackageBuilderWindow : EditorWindow
         }
         if (m_fullPackage && m_contactInformation)
             m_fullPackage.m_contact = m_contactInformation;
-
-        GUILayout.Space(20);
-        //////////////// COMMUN ////////////////////////
-        GUILayout.Label("> Additional", EditorStyles.boldLabel);
-        m_readMeSpecificInformation = GUILayout.TextArea(m_readMeSpecificInformation, GUILayout.Height(200));
-
-
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Refresh Proposition"))
-        {
-
-
-            m_readMeSpecificInformation = "";
-
-        }
-        if (GUILayout.Button("Create ReadMe.md"))
-        {
-            string path = GetFolderWhereToWorkOn();
-            Directory.CreateDirectory(path);
-            File.WriteAllText(path + "/ReadMe.md", m_readMeSpecificInformation);
-            RefreshDatabase();
-
-        }
-        GUILayout.EndHorizontal();
-        GUILayout.EndScrollView();
     }
 
-    private void DisplayCollectionLink()
+    public bool m_directoriesFoldout;
+    private void CreateDirectories()
+    {
+        GUILayout.Label("Folder structure", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        m_folderStructureWanted = (ProjectDirectoriesStructureObject)EditorGUILayout.ObjectField(m_folderStructureWanted, typeof(ProjectDirectoriesStructureObject));
+        GUILayout.EndHorizontal();
+        if (m_folderStructureWanted == null)
+        {
+            if (GUILayout.Button("Create Default"))
+            {
+                m_folderStructureWanted = (ProjectDirectoriesStructureObject)CreateScritableAsset<ProjectDirectoriesStructureObject>(m_gitfolderName, "Folders_" + m_gitfolderName, false);
+                if (m_fullPackage)
+                    m_fullPackage.m_structure = m_folderStructureWanted;
+            }
+        }
+        if (m_fullPackage && m_folderStructureWanted)
+            m_fullPackage.m_structure = m_folderStructureWanted;
+
+        if (m_folderStructureWanted != null)
+        {
+            m_directoriesFoldout = EditorGUILayout.Foldout(m_directoriesFoldout, "Files structure");
+            if (m_directoriesFoldout)
+            {
+                string[] folder = m_folderStructureWanted.m_data.m_defaultDirectory;
+                for (int i = 0; i < folder.Length; i++)
+                {
+                    GUILayout.Label("Folder: " + folder[i]);
+                }
+
+                FileFromText[] file = m_folderStructureWanted.m_data.m_defaultFiles;
+                for (int i = 0; i < file.Length; i++)
+                {
+                    GUILayout.Label("File: " + file[i].m_relativePath);
+                }
+
+
+                FileFromweb[] weblink = m_folderStructureWanted.m_data.m_defaultFilesFromWeb;
+                for (int i = 0; i < weblink.Length; i++)
+                {
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button(">", GUILayout.Width(20)))
+                    {
+                        Application.OpenURL(weblink[i].m_url);
+                    }
+                    GUILayout.Label("Web: " + weblink[i].m_relativePath);
+                   
+                    GUILayout.EndHorizontal();
+                }
+            }
+            if (GUILayout.Button("Create files in Runtime"))
+            {
+                m_folderStructureWanted.m_data.Create(GetFolderWhereToWorkOn() + "/Runtime");
+                RefreshDatabase();
+            }
+        }
+        
+       
+    }
+
+    public static bool m_linkFoldout;
+    private void CreateLinks() {
+        //////////////// Linked Assets ////////////////////////
+        GUILayout.Label("Linked assets", EditorStyles.boldLabel);
+        m_linksAdvice = (ListOfClassicPackagesObject)EditorGUILayout.ObjectField(m_linksAdvice, typeof(ListOfClassicPackagesObject));
+        if (m_linksAdvice != null)
+        {
+            ClassicPackageLink[] links = m_linksAdvice.m_data.m_packageLinks;
+            
+            m_linkFoldout = EditorGUILayout.Foldout(m_linkFoldout, "Links");
+            if (m_linkFoldout) {
+                for (int i = 0; i < links.Length; i++)
+                {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(25);
+                    if (GUILayout.Button(links[i].m_name)) {
+                        Application.OpenURL(links[i].m_pathOrLink);
+                    }
+                    GUILayout.EndHorizontal();
+                }
+            }
+            if (GUILayout.Button("Create links"))
+            {
+                string path = GetFolderWhereToWorkOn() + "/Links";
+                Directory.CreateDirectory(path);
+                for (int i = 0; i < links.Length; i++)
+                {
+                    links[i].CreateWindowLinkFile(path, false);
+                }
+                RefreshDatabase();
+            }
+        }
+
+
+        if (m_linksAdvice == null)
+        {
+            if (GUILayout.Button("Create Default"))
+            {
+                m_linksAdvice = (ListOfClassicPackagesObject)CreateScritableAsset<ListOfClassicPackagesObject>(m_gitfolderName, "Links_" + m_gitfolderName, false);
+                if (m_fullPackage)
+                    m_fullPackage.m_links = m_linksAdvice;
+            }
+        }
+        if (m_fullPackage && m_linksAdvice)
+            m_fullPackage.m_links = m_linksAdvice;
+    }
+
+    private void CreatePackageDirectories()
+    {
+        GUILayout.Label("Create a package:", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        m_packageInformation = (PackageBuildInformationObject)EditorGUILayout.ObjectField(m_packageInformation, typeof(PackageBuildInformationObject));
+
+        //        RenameAsset();
+        GUILayout.EndHorizontal();
+        if (m_packageInformation != null)
+        {
+            PackageBuildInformation package = m_packageInformation.m_data;
+            UnityPackageEditorDrawer.DrawPackageEditor(ref m_gitLinkedToSelectedAsset, package);
+        }
+        if (m_packageInformation == null)
+        {
+
+            if (GUILayout.Button("Create Default"))
+            {
+                m_packageInformation = (PackageBuildInformationObject)CreateScritableAsset<PackageBuildInformationObject>(m_gitfolderName, "Package_" + m_gitfolderName, false);
+                if (m_fullPackage)
+                    m_fullPackage.m_package = m_packageInformation;
+            }
+        }
+        if (m_fullPackage && m_packageInformation)
+            m_fullPackage.m_package = m_packageInformation;
+    }
+
+    private void CreatePackageCollectionLink()
     {
         GUILayout.BeginHorizontal();
         GUILayout.Label("Project information collection:", EditorStyles.boldLabel);
@@ -618,9 +673,9 @@ class UnityPackageBuilderWindow : EditorWindow
 
     private string GetFolderWhereToWorkOn()
     {
-        if (m_absolutPathOfFolderToWorkOn == "")
+        if (m_gitLinkedToSelectedAsset == "")
             return "";
-        return Application.dataPath + "/" + m_absolutPathOfFolderToWorkOn;
+        return m_gitLinkedToSelectedAsset;
     }
 
 

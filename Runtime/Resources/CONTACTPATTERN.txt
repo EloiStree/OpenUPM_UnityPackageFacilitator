@@ -1,0 +1,8 @@
+# ##FIRSTNAME## ##LASTNAME##  
+![Profil](##PROFILEIMAGEURL##)    
+Contact: ##HOWTOCONTACT##  
+Feel free to support this work:  
+- Paypal: ##PAYPALURL##  
+- Patreon: ##PATREONURL##  
+## Additional information
+##ADDITIONALINFOLINKS##

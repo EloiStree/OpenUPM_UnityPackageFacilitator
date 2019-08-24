@@ -1,0 +1,19 @@
+{
+  "name": "##PACKAGENAMESPACEID##",
+  "version": "0.0.1",
+  "displayName": "##DISPLAYNAME##",
+  "description": "##DESCRIPTION##",
+  "unity": "##UNITYVERSION##",
+  "unityRelease": "0b5",
+  "dependencies": {
+    ##DEPENDENCIES##
+ },
+ "keywords": [
+    ##KEYWORDS##
+  ],
+  "author": {
+    "name": "##AUTHORNAME##",
+    "email": "##AUTHORMAIL##",
+    "url": "##AUTHORURL##"
+  } 
+}

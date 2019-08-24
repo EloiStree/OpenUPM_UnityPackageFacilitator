@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 public class PackageBuilder 
 {
@@ -27,16 +28,27 @@ public class PackageBuilder
    
     public static void CreateUnityPackage(string aboslutePath, PackageBuildInformation package)
     {
+
+        package.CheckThatAssemblyAreDefined();
         Directory.CreateDirectory(aboslutePath);
-        CreateAssembly(aboslutePath , package.m_assemblyRuntime);
-        CreateAssembly(aboslutePath , package.m_assemblyEditor);
 
-        //File.WriteAllText(whereToCreate + "/requiredpackages.json", myScript.m_packageInfo.m_data.m_requiredAndAdviceClassicPackage.ToJson());
-        AssetDatabase.Refresh();
+        string packageJson = GetPackageAsJson(package);
+        File.WriteAllText(aboslutePath + "/" + "package.json", packageJson);
+        string path = "";
+        string absFile, absFolder;
 
-        string packageJson = "WIP";
-        File.WriteAllText(GetAbsolutPathInProject(aboslutePath) + "/"+"package.json",packageJson);
+       GetAssemblyFilepath(aboslutePath, package.m_assemblyRuntime,out absFolder, out absFile);
 
+        Directory.CreateDirectory(absFolder);
+        File.Delete(absFile);
+        File.WriteAllText(absFile, GetAssemblyAsJson( package.m_assemblyRuntime));
+
+
+        GetAssemblyFilepath(aboslutePath, package.m_assemblyEditor, out absFolder, out absFile);
+        Directory.CreateDirectory(absFolder);
+        File.Delete(absFile);
+        File.WriteAllText(absFile, GetAssemblyAsJson( package.m_assemblyEditor));
+  
         AssetDatabase.Refresh();
 
     }
@@ -46,7 +58,14 @@ public class PackageBuilder
         return Application.dataPath + "/" + relativePathFolder;
     }
 
-    public static void CreateAssembly(string absolutePath, AssemblyBuildInformation assemblyInfo)
+    public static void GetAssemblyFilepath(string absolutePath, AssemblyBuildInformation assembly, out string absFolder, out string absFile) {
+        string file, folder;
+        assembly.GetRelativePathOfAssembly(out folder, out file);
+        absFolder = absolutePath + "/" + folder;
+        absFile = absolutePath + "/" + file;
+    }
+
+    public static string GetAssemblyAsJson( AssemblyBuildInformation assemblyInfo)
     {
         string[] dependenciesModificatedForJson = new string[assemblyInfo.m_reference.Length];
         for (int i = 0; i < assemblyInfo.m_reference.Length; i++)
@@ -79,25 +98,7 @@ public class PackageBuilder
         packageJson += "\n    \"defineConstraints\": []                                         ";
         packageJson += "\n}                                                                   ";
 
-        if (assemblyInfo.m_assemblyType == AssemblyBuildInformation.AssemblyType.Editor)
-        {
-            Directory.CreateDirectory(absolutePath + "/Editor");
-            string name = absolutePath + "/Editor/com.unity." + assemblyInfo.m_packageName + ".Editor.asmdef";
-            File.Delete(name);
-            File.WriteAllText(name, packageJson);
-
-        }
-        else
-        {
-            Directory.CreateDirectory(absolutePath + "/Runtime/");
-            string name = absolutePath + "/Runtime/com.unity." + assemblyInfo.m_packageName + ".Runtime.asmdef";
-            File.Delete(name);
-            File.WriteAllText(name, packageJson);
-
-        }
-
-
-
+        return packageJson;
     }
 
 
@@ -194,12 +195,29 @@ public class AssemblyBuildInformation
 {
 
     [HideInInspector]
-    public string m_packageName;
+    public string m_packageName="";
     [HideInInspector]
-    public string m_packageNamespaceId;
-    public string[] m_reference;
+    public string m_packageNamespaceId="";
+    public string[] m_reference = new string [0];
     [HideInInspector]
-    public AssemblyType m_assemblyType;
+    public AssemblyType m_assemblyType = AssemblyType.Unity;
+
+    internal void GetRelativePathOfAssembly(out string folder, out string file)
+    {
+       
+            if (m_assemblyType == AssemblyBuildInformation.AssemblyType.Editor)
+            {
+                folder= "/Editor";
+                file =  "/Editor/com.unity." + m_packageNamespaceId + ".Editor.asmdef";
+            }
+            else
+            {
+                folder = "/Runtime/";
+                file =  "/Runtime/com.unity." + m_packageNamespaceId + ".Runtime.asmdef";
+            }
+        
+    }
+
     public enum AssemblyType { Unity, Editor, Test }
 }
 [System.Serializable]
@@ -221,7 +239,7 @@ public class PackageBuildInformation
     public PackageDependencyId[] m_otherPackageDependency = new PackageDependencyId[] { };
     public AssemblyBuildInformation m_assemblyRuntime = new AssemblyBuildInformation() { m_assemblyType = AssemblyBuildInformation.AssemblyType.Unity };
     public AssemblyBuildInformation m_assemblyEditor = new AssemblyBuildInformation() { m_assemblyType = AssemblyBuildInformation.AssemblyType.Editor };
-
+    public AuthorInformation m_author;
 
     public string GetProjectNamespaceId(bool useLower = false)
     {
@@ -229,6 +247,30 @@ public class PackageBuildInformation
         if (useLower)
             id = id.ToLower();
         return id;
+    }
+    
+
+    internal void CheckThatAssemblyAreDefined()
+    {
+        m_assemblyRuntime.m_packageName = this.m_projectId;
+        m_assemblyRuntime.m_packageNamespaceId = this.m_projectId;
+        m_assemblyRuntime.m_assemblyType = AssemblyBuildInformation.AssemblyType.Unity;
+
+        m_assemblyEditor.m_packageName = this.m_projectId + "Editor";
+        m_assemblyEditor.m_packageNamespaceId = this.m_projectId+"Editor";
+        m_assemblyEditor.m_assemblyType = AssemblyBuildInformation.AssemblyType.Editor;
+        CheckThatRuntimeIsInEditor(m_assemblyRuntime, m_assemblyEditor);
+    }
+
+    internal void CheckThatRuntimeIsInEditor( AssemblyBuildInformation runtime, AssemblyBuildInformation editor)
+    {
+
+
+        List<string> editorRef = editor.m_reference.ToList();
+        editorRef.Remove(runtime.m_packageNamespaceId);
+        editorRef.Insert(0, runtime.m_packageNamespaceId);
+        editor.m_reference = editorRef.ToArray();
+
     }
 
     internal string GetProjectNameId(bool toLower)
@@ -241,6 +283,14 @@ public class PackageBuildInformation
     }
 
     public enum CatergoryType { Script }
+}
+
+[System.Serializable]
+public class AuthorInformation {
+    public string m_name;
+    public string m_url;
+    public string m_mail;
+
 }
 
 [System.Serializable]
@@ -363,8 +413,8 @@ public class ProjectDirectoriesStructure {
         if (lastCharacer == '/' || lastCharacer =='\\') {
             whereToCreate = whereToCreate.Substring(0, whereToCreate.Length-1);
         }
-        whereToCreate+="/";
         Directory.CreateDirectory(whereToCreate);
+        whereToCreate +="/";
 
         for (int i = 0; i < m_defaultDirectory.Length; i++)
         {
