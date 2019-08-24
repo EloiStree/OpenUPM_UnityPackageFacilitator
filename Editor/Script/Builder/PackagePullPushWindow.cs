@@ -38,7 +38,7 @@ public class PackagePullPushWindow : EditorWindow
             GUILayout.TextArea(string.Format("\"{0}\":\"{1}\",", m_pushPull.m_packageNamespaceId, m_pushPull.m_gitUrl));
             GUILayout.EndHorizontal();
             
-            m_folderFoldout = EditorGUILayout.Foldout(m_folderFoldout ,"Folder");
+            m_folderFoldout = EditorGUILayout.Foldout(m_folderFoldout ,"Folder & Git");
             if (m_folderFoldout) {
 
                 GUILayout.BeginHorizontal();
