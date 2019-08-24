@@ -22,28 +22,34 @@ public class PackagePullPushWindow : EditorWindow
     void OnGUI()
     {
         m_pushPullInfo = (PackagePullPushObject)EditorGUILayout.ObjectField(m_pushPullInfo, typeof(PackagePullPushObject));
+        if (m_pushPullInfo == null)
+            return;
         m_pushPull = m_pushPullInfo.m_data;
         if (m_pushPull != null)
         {
            
             GUILayout.BeginHorizontal();
             GUILayout.Label("Namespace", GUILayout.Width(70));
-            m_pushPull.m_packageNamespaceId = GUILayout.TextArea(m_pushPull.m_packageNamespaceId);
-         
-            GUILayout.Label("Git", GUILayout.Width(40));
-            m_pushPull.m_gitUrl = GUILayout.TextArea(m_pushPull.m_gitUrl);
+            m_pushPull.m_packageNamespaceId = GUILayout.TextArea(m_pushPull.m_packageNamespaceId  );
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Share", GUILayout.Width(40));
+            GUILayout.Label("Git", GUILayout.Width(40)  );
+            m_pushPull.m_gitUrl = GUILayout.TextArea(m_pushPull.m_gitUrl  );
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Share", GUILayout.Width(40)  );
             GUILayout.TextArea(string.Format("\"{0}\":\"{1}\",", m_pushPull.m_packageNamespaceId, m_pushPull.m_gitUrl));
             GUILayout.EndHorizontal();
-            
+            GUILayout.Space(15);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Folder", GUILayout.Width(40));
+            m_pushPull.m_relativeFolderPath = GUILayout.TextArea(m_pushPull.m_relativeFolderPath);
+            GUILayout.EndHorizontal();
             m_folderFoldout = EditorGUILayout.Foldout(m_folderFoldout ,"Folder & Git");
             if (m_folderFoldout) {
 
                 GUILayout.BeginHorizontal();
                 string pathToWork = GetPathOfFolder();
-                m_pushPull.m_relativeFolderPath = GUILayout.TextArea(m_pushPull.m_relativeFolderPath);
                 if (!Directory.Exists(pathToWork) && GUILayout.Button("Create folder"))
                 {
                     Directory.CreateDirectory(GetPathOfFolder());
@@ -51,7 +57,7 @@ public class PackagePullPushWindow : EditorWindow
                 }
                 else if(Directory.Exists(pathToWork) && GUILayout.Button("Remove Folder"))
                 {
-                    Directory.Delete(GetPathOfFolder());
+                    FileUtil.DeleteFileOrDirectory(GetPathOfFolder());
                     RefreshDataBase();
                 }
 
