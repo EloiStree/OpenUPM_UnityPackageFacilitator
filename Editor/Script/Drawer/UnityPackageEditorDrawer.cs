@@ -9,10 +9,11 @@ public class UnityPackageEditorDrawer
 {
 
 
-    public static void DrawManifrest(ref UnityPackageManifest manifestInfo, ref string remove, ref string addname, ref string addvalue, bool withButtonToPushAndLoad = true, bool withDirectoryButton = true)
+    
+    public static void DrawManifrest(ref UnityPackageManifest manifestInfo, ref string addname, ref string addvalue, bool withButtonToPushAndLoad = true)
     {
         int buttonlenght = 30;
-        int nameLength = 200;
+        int nameLength = 140;
         if (withButtonToPushAndLoad)
         {
             GUILayout.BeginHorizontal();
@@ -25,12 +26,23 @@ public class UnityPackageEditorDrawer
                 UnityPackageUtility.SetManifest(manifestInfo);
                 AssetDatabase.Refresh();
             }
+             if (GUILayout.Button("Go 2 Manifest"))
+            {
+                UnityPackageUtility.OpenManifestFile();
+            }
             GUILayout.EndHorizontal();
         }
+        //GUILayout.BeginHorizontal();
+        //GUILayout.Label("Add");
+        //GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Add & Remove");
-        GUILayout.EndHorizontal();
+        GUILayout.Label("", GUILayout.Width(buttonlenght));    
+        GUILayout.Label("Namespace Id", GUILayout.Width(nameLength));
+        GUILayout.Label("https://server.com/user/project.git#branch" );
 
+
+
+        GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("+", GUILayout.Width(buttonlenght)))
         {
@@ -44,26 +56,18 @@ public class UnityPackageEditorDrawer
         GUILayout.EndHorizontal();
 
 
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("-", GUILayout.Width(buttonlenght)))
-        {
-            manifestInfo.Remove(remove);
-        }
-        remove = GUILayout.TextField(remove);
+        //GUILayout.BeginHorizontal();
+        //if (GUILayout.Button("-", GUILayout.Width(buttonlenght)))
+        //{
+        //    manifestInfo.Remove(remove);
+        //}
+        //remove = GUILayout.TextField(remove);
 
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-        if (withDirectoryButton)
-        {
-            if (GUILayout.Button("Go to package manifest", GUILayout.Width(150)))
-            {
-                UnityPackageUtility.OpenManifestFile();
-            }
-        }
-        GUILayout.EndHorizontal();
+        //GUILayout.EndHorizontal();
+        
         GUILayout.Label("Current package");
         List<DependencyJson> m_dependencies = manifestInfo.dependencies;
+        if( m_dependencies!=null)
         for (int i = 0; i < m_dependencies.Count; i++)
         {
             GUILayout.BeginHorizontal();

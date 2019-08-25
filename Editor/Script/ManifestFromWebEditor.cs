@@ -32,7 +32,7 @@ public class ManifestFromWebEditor : Editor
             AssetDatabase.Refresh();
         }
         GUILayout.EndHorizontal();
-        UnityPackageEditorDrawer.DrawManifrest(ref myScript.m_manifest, ref myScript.m_toRemove, ref myScript.m_toAddName, ref myScript.m_toAddValue,false );
+        UnityPackageEditorDrawer.DrawManifrest(ref myScript.m_manifest, ref myScript.m_toAddName, ref myScript.m_toAddValue,false );
 
     }
 }

@@ -10,7 +10,7 @@ public class CurrentProjectManifestEditor : Editor
 
 
         CurrentProjectManifest myScript = (CurrentProjectManifest)target;
-        UnityPackageEditorDrawer.DrawManifrest(ref myScript.m_manifestInfo, ref myScript.m_toRemove, ref myScript.m_toAddName, ref myScript.m_toAddValue);
+        UnityPackageEditorDrawer.DrawManifrest(ref myScript.m_manifestInfo, ref myScript.m_toAddName, ref myScript.m_toAddValue);
        
 
     }

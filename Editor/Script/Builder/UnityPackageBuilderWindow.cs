@@ -90,6 +90,19 @@ class UnityPackageBuilderWindow : EditorWindow
     void OnGUI()
     {
 
+        DrawPackageManager();
+
+        m_currentManifest = EditorGUILayout.Foldout(m_currentManifest, "Current manifest");
+        if (m_currentManifest) {
+            UnityPackageEditorDrawer.DrawManifrest(ref m_manifestInfo, ref m_manifestaddNamespace, ref m_manifestaddgitlink);
+        }
+        EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
+
+
+    }
+
+    private void DrawPackageManager()
+    {
         ResetInfo();
         //UnlockIfFolderDontExist()
         // Find selected folder
@@ -128,7 +141,7 @@ class UnityPackageBuilderWindow : EditorWindow
         DisplayGitPathAndLink();
         DisplayGitProjectName();
 
-        
+
         UnityPackageUtility.TryToAccessPackageNamespaceIdFromFolder(m_absoluteSelection, out m_packageNamespaceId);
         DisplayPackageInformation();
 
@@ -147,18 +160,19 @@ class UnityPackageBuilderWindow : EditorWindow
 
         if (m_gitLinkedToSelectedAsset == "")
             return;
-        
+
 
         m_absolutPathOfFolderToWorkOn = m_gitLinkedToSelectedAsset;
 
         m_createPackageFoldout = EditorGUILayout.Foldout(m_createPackageFoldout, "Structure package");
-        if( m_createPackageFoldout)
+        if (m_createPackageFoldout)
         {
             CreatePackageStructure();
         }
 
         m_dangerousButton = EditorGUILayout.Foldout(m_dangerousButton, "Dangerous Option");
-        if (m_dangerousButton) {
+        if (m_dangerousButton)
+        {
 
             if (GUILayout.Button("Remove Repository"))
             {
@@ -171,10 +185,13 @@ class UnityPackageBuilderWindow : EditorWindow
         }
 
 
-        EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
-
-
     }
+
+    public static string m_manifestaddNamespace;
+    public static string m_manifestaddgitlink;
+    public static UnityPackageManifest m_manifestInfo = new UnityPackageManifest();
+    public static bool m_currentManifest;
+
 
     private void DisplayPackageInformation()
     {
