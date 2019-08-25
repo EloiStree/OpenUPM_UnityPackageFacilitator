@@ -114,6 +114,78 @@ public class UnityPackageUtility
        return UnityPackageUtility.CreateManifestFrom(received);
     }
 
+
+    public static bool TryToAccessPackageNamespaceIdFrom(TextAsset textAsset, out string namespaceID)
+    {
+        if (textAsset == null) {
+            namespaceID = "";
+            return false;
+        }
+        return TryToAccessPackageNamespaceIdFromText(textAsset.text, out namespaceID);
+    }
+
+
+    public static bool TryToAccessPackageNamespaceIdFromFile(string projectRootPath, out string namespaceID)
+    {
+        namespaceID = "";
+        if (!Directory.Exists(projectRootPath))
+            return false;
+        if (!File.Exists(projectRootPath+"/package.json"))
+            return false;
+
+        string text = File.ReadAllText(projectRootPath); 
+        return TryToAccessPackageNamespaceIdFromText(text, out namespaceID);
+    }
+
+    public static bool TryToAccessPackageNamespaceIdFromWebPage(string url, out string namespaceID)
+    {
+        namespaceID = "";
+        string link = "";
+        if (url.ToLower().IndexOf("gitlab.com") > -1) {
+
+            //https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git
+            //https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator/raw/master/package.json
+            link = url.Replace(".git", "/raw/master/package.json");
+        }
+        if (url.ToLower().IndexOf("github.com") > -1)
+        {
+        //https://github.com/EloiStree/2019_07_21_UnityPackageFacilitator.git
+        //https://raw.githubusercontent.com/EloiStree/2019_07_21_UnityPackageFacilitator/master/README.md
+          link = "https://raw.githubusercontent" + url.Substring(url.IndexOf(".com"));
+            link = link.Replace(".git", "/master/package.json");
+        }
+        
+        try
+        {
+            WebClient c = new WebClient();
+            return TryToAccessPackageNamespaceIdFromText(c.DownloadString(link), out namespaceID);
+
+        }
+        catch (Exception)
+        {
+            //Debug.Log("Nope: "+ link);
+        }
+        namespaceID = "";
+        return false;
+
+    }
+    public static bool TryToAccessPackageNamespaceIdFromText(string text, out string namespaceID)
+    {
+        string packagejonAsText = Regex.Match(text, "\"name\":\\s*\".*\"").Value;
+        string[] token = Regex.Split(packagejonAsText, "\"\\s*:\\s*\"");
+        if (token.Length == 2)
+        {
+            namespaceID = token[1].Trim().Trim('"');
+            return true;
+        }
+
+        namespaceID = "";
+        return false;
+    }
+
+
+
+
     #region GIT PACKAGE ACCESS 
 
     public static List<GitUnityPackageLinkOnDisk> GetGitUnityPackageInDirectory(string directoryPath)
@@ -252,6 +324,11 @@ public class UnityPackageManifest
     //      "revision": "HEAD"
     //    }
     //}}
+
+
+
+    
+
 
 
     public void Add(string nameId, int v1, int v2, int v3) {
