@@ -7,7 +7,15 @@ using System;
 //https://learn.unity.com/tutorial/introduction-to-scriptable-objects#5cf187b7edbc2a31a3b9b123
 class UnityPackageBuilderWindow : EditorWindow
 {
-    [MenuItem("Window / Facilitator/Create Package")]
+
+    [MenuItem("Window / Facilitator/ Help ?")]
+    public static void AccesstutorialOnPackageManager()
+    {
+        Application.OpenURL("https://github.com/EloiStree/2019_01_30_HelloUnityPackageToolbox/wiki");
+    }
+
+
+    [MenuItem("Window / Facilitator/ Create Package")]
     public static void ShowWindow()
     {
         UnityPackageBuilderWindow win =(UnityPackageBuilderWindow) EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));

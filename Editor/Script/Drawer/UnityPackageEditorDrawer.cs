@@ -76,14 +76,12 @@ public class UnityPackageEditorDrawer
             {
 
                 if (GUILayout.Button("Down", GUILayout.Width(40))) {
-                    throw new NotImplementedException();
-                    //UnityPackageUtility.Down(m_dependencies[i].value);
+                    UnityPackageUtility.Down(m_dependencies[i].value);
                 }
-                if (GUILayout.Button("Up", GUILayout.Width(40)))
-                {
-                    throw new NotImplementedException();
-                    //UnityPackageUtility.Up(directory);
-                }
+                //if (GUILayout.Button("Up", GUILayout.Width(40)))
+                //{
+                //    UnityPackageUtility.Up(directory);
+                //}
                 if (GUILayout.Button("Go", GUILayout.Width(25)))
                 {
                     Application.OpenURL(m_dependencies[i].value);
