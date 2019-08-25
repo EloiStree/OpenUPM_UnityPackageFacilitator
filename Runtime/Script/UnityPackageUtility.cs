@@ -125,7 +125,7 @@ public class UnityPackageUtility
     }
 
 
-    public static bool TryToAccessPackageNamespaceIdFromFile(string projectRootPath, out string namespaceID)
+    public static bool TryToAccessPackageNamespaceIdFromFolder(string projectRootPath, out string namespaceID)
     {
         namespaceID = "";
         if (!Directory.Exists(projectRootPath))
@@ -133,25 +133,25 @@ public class UnityPackageUtility
         if (!File.Exists(projectRootPath+"/package.json"))
             return false;
 
-        string text = File.ReadAllText(projectRootPath); 
+        string text = File.ReadAllText(projectRootPath + "/package.json"); 
         return TryToAccessPackageNamespaceIdFromText(text, out namespaceID);
     }
 
-    public static bool TryToAccessPackageNamespaceIdFromWebPage(string url, out string namespaceID)
+    public static bool TryToAccessPackageNamespaceIdFromGitCloneUrl(string gitCloneUrl, out string namespaceID)
     {
         namespaceID = "";
-        string link = "";
-        if (url.ToLower().IndexOf("gitlab.com") > -1) {
+        string link = gitCloneUrl;
+        if (gitCloneUrl.ToLower().IndexOf("gitlab.com") > -1) {
 
             //https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator.git
             //https://gitlab.com/eloistree/2019_07_21_UnityPackageFacilitator/raw/master/package.json
-            link = url.Replace(".git", "/raw/master/package.json");
+            link = gitCloneUrl.Replace(".git", "/raw/master/package.json");
         }
-        if (url.ToLower().IndexOf("github.com") > -1)
+        if (gitCloneUrl.ToLower().IndexOf("github.com") > -1)
         {
         //https://github.com/EloiStree/2019_07_21_UnityPackageFacilitator.git
         //https://raw.githubusercontent.com/EloiStree/2019_07_21_UnityPackageFacilitator/master/README.md
-          link = "https://raw.githubusercontent" + url.Substring(url.IndexOf(".com"));
+          link = "https://raw.githubusercontent" + gitCloneUrl.Substring(gitCloneUrl.IndexOf(".com"));
             link = link.Replace(".git", "/master/package.json");
         }
         
@@ -211,17 +211,13 @@ public class UnityPackageUtility
     public static void Up(string directory, bool affectManifest= true)
     {
         string namespaceId="", gitUrl="";
-        namespaceId = TryToAccessNamespace(directory);
-         QuickGit.GetGitUrl(directory, out gitUrl);
+
+        TryToAccessPackageNamespaceIdFromFolder(directory, out namespaceId);
+        QuickGit.GetGitUrl(directory, out gitUrl);
         Up(directory, namespaceId, gitUrl, affectManifest);
     }
 
-    private static string TryToAccessNamespace(string packageJsonDirectory)
-    {
-        // try find in aquick way the namespace in package.json
-        throw new NotImplementedException();
-    }
-
+    
     public static void Up(string directory, string namespaceId, string gitUrl, bool affectManifest=true)
     {
         string directoryPath = directory;

@@ -32,18 +32,9 @@ public class PackagePullPushWindow : EditorWindow
     Vector2 scroll;
     void OnGUI()
     {
-        DisplayPullPushInProject();
+       // DisplayPullPushInProject();
 
-        if (m_pushPullInfo == null)
-        {
-
-            if (GUILayout.Button("Create Default"))
-            {
-                m_pushPullInfo = GetDefaultPullPushObject();
-                m_pushPullInfo.m_data.m_gitUrl = m_copyPastShortCut;
-                m_pushPullInfo.m_data.m_packageNamespaceId = m_nameSpaceToCreate;
-            }
-        }
+      
 
 
         m_pushPullInfo = (PackagePullPushObject)EditorGUILayout.ObjectField(m_pushPullInfo, typeof(PackagePullPushObject));
@@ -51,13 +42,24 @@ public class PackagePullPushWindow : EditorWindow
             m_pushPull = m_pushPullInfo.m_data;
         else m_pushPull = null;
 
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Copy>Past Shortcut", GUILayout.Width(100));
-        m_copyPastShortCut = GUILayout.TextArea(m_copyPastShortCut);
-        m_copyPastShortCut = m_copyPastShortCut.Trim();
-        GUILayout.EndHorizontal();
 
-        GUILayout.Button("", GUILayout.Height(1));
+        if (m_pushPullInfo == null)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Name:", GUILayout.Width(50));
+            m_folderToCreate = GUILayout.TextArea(m_folderToCreate);
+            GUILayout.EndHorizontal();
+
+            DisplayCopyPastField();
+
+            if (GUILayout.Button("Create Default"))
+            {
+                m_pushPullInfo = GetDefaultPullPushObject(m_folderToCreate);
+                m_pushPullInfo.m_data.m_gitUrl = m_copyPastShortCut;
+                m_pushPullInfo.m_data.m_packageNamespaceId = m_nameSpaceToCreate;
+            }
+        }
+
 
         if (!string.IsNullOrEmpty(m_copyPastShortCut))
         {
@@ -81,12 +83,15 @@ public class PackagePullPushWindow : EditorWindow
                 m_copyPastShortCut = "";
 
             }
+            //https://gitlab.com/eloistree/HeyMyFriend
             //https://gitlab.com/eloistree/2019_06_30_overrideandroidvolume.git
             else if (MathRegex(m_copyPastShortCut, isGitLink))
             {
                 CheckOrCreateDefault();
                 m_pushPullInfo.m_data.m_gitUrl = m_copyPastShortCut;
-                m_pushPullInfo.m_data.m_packageNamespaceId = TryToGetNameSpaceFromPublicWebPackageInRoot(m_copyPastShortCut);
+                UnityPackageUtility.TryToAccessPackageNamespaceIdFromGitCloneUrl(m_copyPastShortCut, out  m_pushPullInfo.m_data.m_packageNamespaceId);
+
+                if(string.IsNullOrEmpty(m_pushPullInfo.m_data.m_relativeFolderPath))
                 m_pushPullInfo.m_data.m_relativeFolderPath = GetGitProjectName(m_copyPastShortCut);
                 m_copyPastShortCut = "";
             }
@@ -100,52 +105,52 @@ public class PackagePullPushWindow : EditorWindow
 
         if (m_pushPull != null)
         {
+          
+            GUILayout.BeginHorizontal();
+            string pathToWork = GetPathOfFolder();
+            if (!Directory.Exists(pathToWork) && GUILayout.Button("Create folder"))
+            {
+                Directory.CreateDirectory(GetPathOfFolder());
+                RefreshDataBase();
+            }
+            else if (Directory.Exists(pathToWork) && GUILayout.Button("Remove Folder"))
+            {
+                FileUtil.DeleteFileOrDirectory(GetPathOfFolder());
+                RefreshDataBase();
+            }
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Namespace", GUILayout.Width(70));
-            m_pushPull.m_packageNamespaceId = GUILayout.TextArea(m_pushPull.m_packageNamespaceId);
+            if (!(Directory.Exists(pathToWork) && Directory.GetFiles(pathToWork).Length > 0) && GUILayout.Button("Clone Git"))
+            {
+                Directory.CreateDirectory(GetPathOfFolder());
+                QuickGit.Clone(m_pushPull.m_gitUrl, GetPathOfFolder());
+                RefreshDataBase();
+            }
+
             GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Git", GUILayout.Width(40));
-            m_pushPull.m_gitUrl = GUILayout.TextArea(m_pushPull.m_gitUrl);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Share", GUILayout.Width(40));
-            GUILayout.TextArea(string.Format("\"{0}\":\"{1}\",", m_pushPull.m_packageNamespaceId, m_pushPull.m_gitUrl));
-            GUILayout.EndHorizontal();
-            GUILayout.Space(15);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Folder", GUILayout.Width(40));
-            m_pushPull.m_relativeFolderPath = GUILayout.TextArea(m_pushPull.m_relativeFolderPath);
-            GUILayout.EndHorizontal();
+
+            UnityPackageEditorDrawer.DrawPackageDownUpButton(GetPathOfFolder(), m_pushPull.m_gitUrl, true);
+            QuickGit.DisplayEditorCommands(GetPathOfFolder());
+
+
             m_folderFoldout = EditorGUILayout.Foldout(m_folderFoldout, "Folder & Git");
             if (m_folderFoldout)
             {
+                DisplayCopyPastField();
 
                 GUILayout.BeginHorizontal();
-                string pathToWork = GetPathOfFolder();
-                if (!Directory.Exists(pathToWork) && GUILayout.Button("Create folder"))
-                {
-                    Directory.CreateDirectory(GetPathOfFolder());
-                    RefreshDataBase();
-                }
-                else if (Directory.Exists(pathToWork) && GUILayout.Button("Remove Folder"))
-                {
-                    FileUtil.DeleteFileOrDirectory(GetPathOfFolder());
-                    RefreshDataBase();
-                }
-
-                if (!(Directory.Exists(pathToWork) && Directory.GetFiles(pathToWork).Length > 0) && GUILayout.Button("Clone Git"))
-                {
-                    Directory.CreateDirectory(GetPathOfFolder());
-                    QuickGit.Clone(m_pushPull.m_gitUrl, GetPathOfFolder());
-                    RefreshDataBase();
-                }
-
+                GUILayout.Label("Folder", GUILayout.Width(40));
+                m_pushPull.m_relativeFolderPath = GUILayout.TextArea(m_pushPull.m_relativeFolderPath);
                 GUILayout.EndHorizontal();
 
-                CreateDownUpButton();
-                QuickGit.DisplayEditorCommands(GetPathOfFolder());
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Namespace", GUILayout.Width(70));
+                m_pushPull.m_packageNamespaceId = GUILayout.TextArea(m_pushPull.m_packageNamespaceId);
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Git", GUILayout.Width(40));
+                m_pushPull.m_gitUrl = GUILayout.TextArea(m_pushPull.m_gitUrl);
+                GUILayout.EndHorizontal();
+
             }
 
             //m_upDownFoldout = EditorGUILayout.Foldout(m_upDownFoldout, "Pull Push");
@@ -158,6 +163,15 @@ public class PackagePullPushWindow : EditorWindow
 
         }
         EditorGUILayout.EndScrollView();
+    }
+
+    private void DisplayCopyPastField()
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Past .git", GUILayout.Width(50));
+        m_copyPastShortCut = GUILayout.TextArea(m_copyPastShortCut);
+        m_copyPastShortCut = m_copyPastShortCut.Trim();
+        GUILayout.EndHorizontal();
     }
 
     private static void DisplayPullPushInProject()
@@ -184,30 +198,7 @@ public class PackagePullPushWindow : EditorWindow
         return pullPush.m_path ;
     }
 
-    private string TryToGetNameSpaceFromPublicWebPackageInRoot(string gitLink)
-    {
-        string link = gitLink.Replace(".git", "/raw/master/package.json");
-        try
-        {
-            WebClient c = new WebClient();
-            string text = c.DownloadString(link);
-            //Debug.Log("Yes: " + link);
-            //Debug.Log("Text:" + text);
-            string namespaceRaw = Regex.Match(text,"\"name\":\\s*\".*\"").Value;
-            string[] token = Regex.Split(namespaceRaw, "\"\\s*:\\s*\"");
-            if (token.Length == 2)
-            {
-                return token[1].Trim().Trim('"');
-            }
-
-            return "";
-        }
-        catch (Exception) {
-            //Debug.Log("Nope: "+ link);
-            return "";
-        }
-        
-    }
+   
 
     //https://gitlab.com/eloistree/2019_06_30_overrideandroidvolume.git
     private string GetGitProjectName(string text)
@@ -222,7 +213,7 @@ public class PackagePullPushWindow : EditorWindow
     {
         if (name == "")
             name = "Default";
-        return (PackagePullPushObject)ScriptableUtility.CreateScritableAsset<PackagePullPushObject>("Facilitator", "Default", true);
+        return (PackagePullPushObject)ScriptableUtility.CreateScritableAsset<PackagePullPushObject>("Facilitator/WebLink", name, true);
     }
 
     private bool MathRegex(string text, string regex)
@@ -232,63 +223,18 @@ public class PackagePullPushWindow : EditorWindow
 
     private void CheckOrCreateDefault()
     {
+        string assetName = m_folderToCreate;
+    
+
         if(m_pushPullInfo == null)
-            m_pushPullInfo = GetDefaultPullPushObject(); 
+            m_pushPullInfo = GetDefaultPullPushObject(assetName); 
     }
 
     int affectPackageManager = 0;
-    private  void CreateDownUpButton()
-    {
+   
 
 
-        string link = m_pushPull.m_gitUrl;
-        string directoryPath = GetPathOfFolder();
-        string namespaceid = m_pushPull.m_packageNamespaceId;
-        bool affectPackage = true;
-        bool isDirectoryCreated = Directory.Exists(directoryPath);
-        string folderUrl = "";
-        bool isGitFolderPresent = QuickGit.GetGitUrl(directoryPath, out folderUrl);
-        GUIStyle disableStyle = GetDisableStyle();
-        GUIStyle enableStyle = GetEnableStyle();
-
-     //   string[] options = new string[]
-     //   {
-     //"Affect package", "Just Down or Upload"
-     //   };
-        //affectPackageManager = EditorGUILayout.Popup( affectPackageManager, options, GUILayout.Width(200));
-        //affectPackage = affectPackageManager == 0;
-        
-        GUILayout.BeginHorizontal();
-        bool downAllow = isDirectoryCreated;
-        if (GUILayout.Button("Down", downAllow ? enableStyle: disableStyle))
-        {
-            if (downAllow)
-                UnityPackageUtility.Down(directoryPath, link, affectPackage);
-        }
-        bool upAllow= isDirectoryCreated && isGitFolderPresent ;
-        if (GUILayout.Button("Up", upAllow ? enableStyle : disableStyle))
-        {
-            if (upAllow)
-                UnityPackageUtility.Up(directoryPath,namespaceid, link, affectPackage);
-        }
-        GUILayout.EndHorizontal();
-    }
-
-    private static GUIStyle GetDisableStyle()
-    {
-        var disableStyle = new GUIStyle(GUI.skin.button);
-        disableStyle.normal.textColor = new Color(0.6627451f, 0.6627451f, 0.6627451f);
-        return disableStyle;
-    }
-
-    private static GUIStyle GetEnableStyle()
-    {
-        var enableStyle = new GUIStyle(GUI.skin.button);
-        enableStyle.normal.textColor = new Color(0f, 0.4f, 0f);
-        return enableStyle;
-    }
-
-    public static bool m_folderFoldout;
+    public static bool m_folderFoldout=true;
     public static bool m_upDownFoldout;
 
     private void RefreshDataBase()

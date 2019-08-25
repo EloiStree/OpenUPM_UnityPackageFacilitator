@@ -61,6 +61,8 @@ class UnityPackageBuilderWindow : EditorWindow
     public string m_absoluteSelection;
     public string m_gitfolderName;
 
+    public string m_packageNamespaceId;
+
     public string m_proposeCreateFolderField;
     public bool m_lockSelection;
 
@@ -117,6 +119,12 @@ class UnityPackageBuilderWindow : EditorWindow
         QuickGit.GetGitUrl(m_gitLinkedToSelectedAsset, out m_linkedGitUrl);
         DisplayGitPathAndLink();
         DisplayGitProjectName();
+
+        
+        UnityPackageUtility.TryToAccessPackageNamespaceIdFromFolder(m_absoluteSelection, out m_packageNamespaceId);
+        DisplayPackageInformation();
+
+
         if (string.IsNullOrEmpty(m_linkedGitUrl))
         {
             PushLocalGitToOnlineAccount();
@@ -124,6 +132,7 @@ class UnityPackageBuilderWindow : EditorWindow
         if (!string.IsNullOrEmpty(m_linkedGitUrl))
         {
             QuickGit.DisplayEditorCommands(m_gitLinkedToSelectedAsset);
+            UnityPackageEditorDrawer.DrawPackageDownUpButton(m_absoluteSelection, m_gitLinkedToSelectedAsset, true);
 
         }
 
@@ -157,6 +166,15 @@ class UnityPackageBuilderWindow : EditorWindow
         EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
 
 
+    }
+
+    private void DisplayPackageInformation()
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Package ID", GUILayout.Width(120));
+        GUILayout.TextField(m_packageNamespaceId);
+        GUILayout.EndHorizontal();
+        
     }
 
     public static bool m_dangerousButton;

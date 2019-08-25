@@ -14,13 +14,15 @@ public class ScriptableUtility
         if (name == null)
             name = "Default";
 
-        bool hasRelativePath = string.IsNullOrEmpty(relative);
+        bool hasRelativePath = !string.IsNullOrEmpty(relative);
         T asset = ScriptableObject.CreateInstance<T>();
         Directory.CreateDirectory(Application.dataPath + "/" + relative);
-        AssetDatabase.CreateAsset(asset, "Assets/" + (hasRelativePath? (relative + "/"):"") + name + ".asset");
+        string t = "Assets/" + (hasRelativePath ? (relative + "/") : "") + name + ".asset";
+        //Debug.Log("DS " + t);
+        AssetDatabase.CreateAsset(asset,t );
         AssetDatabase.SaveAssets();
 
-        if (selectAsset)
+        if (selectAsset)    
         {
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = asset;

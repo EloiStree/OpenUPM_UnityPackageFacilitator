@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -95,6 +96,53 @@ public class UnityPackageEditorDrawer
             GUILayout.EndHorizontal();
 
         }
+    }
+
+
+    private static GUIStyle GetDisableStyle()
+    {
+        var disableStyle = new GUIStyle(GUI.skin.button);
+        disableStyle.normal.textColor = new Color(0.6627451f, 0.6627451f, 0.6627451f);
+        return disableStyle;
+    }
+
+    private static GUIStyle GetEnableStyle()
+    {
+        var enableStyle = new GUIStyle(GUI.skin.button);
+        enableStyle.normal.textColor = new Color(0f, 0.4f, 0f);
+        return enableStyle;
+    }
+    public static  void DrawPackageDownUpButton(string directoryPath, string gitUrl, bool affectPackage = true)
+    {
+
+        
+        bool isDirectoryCreated = Directory.Exists(directoryPath);
+        string folderUrl = "";
+        bool isGitFolderPresent = QuickGit.GetGitUrl(directoryPath, out folderUrl);
+        GUIStyle disableStyle = GetDisableStyle();
+        GUIStyle enableStyle = GetEnableStyle();
+
+        //   string[] options = new string[]
+        //   {
+        //"Affect package", "Just Down or Upload"
+        //   };
+        //affectPackageManager = EditorGUILayout.Popup( affectPackageManager, options, GUILayout.Width(200));
+        //affectPackage = affectPackageManager == 0;
+
+        GUILayout.BeginHorizontal();
+        bool downAllow = true;// isDirectoryCreated;
+        if (GUILayout.Button("Down", downAllow ? enableStyle : disableStyle))
+        {
+            //if (downAllow)
+                UnityPackageUtility.Down(directoryPath, gitUrl, affectPackage);
+        }
+        bool upAllow = isDirectoryCreated && isGitFolderPresent;
+        if (GUILayout.Button("Up", upAllow ? enableStyle : disableStyle))
+        {
+            if (upAllow)
+                UnityPackageUtility.Up(directoryPath, affectPackage);
+        }
+        GUILayout.EndHorizontal();
     }
 
     public static void DrawPackageEditor(ref string relativePathOfProject, PackageBuildInformation package)
