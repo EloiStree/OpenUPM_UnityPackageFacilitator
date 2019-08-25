@@ -68,6 +68,8 @@ class UnityPackageBuilderWindow : EditorWindow
     /// WINDOW EDITOR VALUE ///
     bool m_createPackageFoldout;
     Vector2 scollrPackagePosition;
+    string m_whereToCreateScritpable = "Facilitator";
+
 
 
     public void ResetInfo()
@@ -269,7 +271,7 @@ class UnityPackageBuilderWindow : EditorWindow
         {
             if (GUILayout.Button("Create Default"))
             {
-                m_contactInformation = (ContactInformationObject)CreateScritableAsset<ContactInformationObject>(m_gitfolderName, "Contact_" + m_gitfolderName, false);
+                m_contactInformation = (ContactInformationObject)ScriptableUtility.CreateScritableAsset<ContactInformationObject>(m_gitfolderName+"/"+ m_whereToCreateScritpable,"Contact_" + m_gitfolderName, false);
                 if (m_fullPackage)
                     m_fullPackage.m_contact = m_contactInformation;
             }
@@ -283,13 +285,17 @@ class UnityPackageBuilderWindow : EditorWindow
     {
         GUILayout.Label("Folder structure", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        m_folderStructureWanted = (ProjectDirectoriesStructureObject)EditorGUILayout.ObjectField(m_folderStructureWanted, typeof(ProjectDirectoriesStructureObject));
+        m_folderStructureWanted = (ProjectDirectoriesStructureObject) EditorGUILayout.ObjectField(m_folderStructureWanted, typeof(ProjectDirectoriesStructureObject));
         GUILayout.EndHorizontal();
+
+
         if (m_folderStructureWanted == null)
         {
+
+
             if (GUILayout.Button("Create Default"))
             {
-                m_folderStructureWanted = (ProjectDirectoriesStructureObject)CreateScritableAsset<ProjectDirectoriesStructureObject>(m_gitfolderName, "Folders_" + m_gitfolderName, false);
+                m_folderStructureWanted = (ProjectDirectoriesStructureObject) ScriptableUtility.CreateScritableAsset<ProjectDirectoriesStructureObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Folders_" + m_gitfolderName, false);
                 if (m_fullPackage)
                     m_fullPackage.m_structure = m_folderStructureWanted;
             }
@@ -376,7 +382,7 @@ class UnityPackageBuilderWindow : EditorWindow
         {
             if (GUILayout.Button("Create Default"))
             {
-                m_linksAdvice = (ListOfClassicPackagesObject)CreateScritableAsset<ListOfClassicPackagesObject>(m_gitfolderName, "Links_" + m_gitfolderName, false);
+                m_linksAdvice = (ListOfClassicPackagesObject)ScriptableUtility. CreateScritableAsset<ListOfClassicPackagesObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Links_" + m_gitfolderName, false);
                 if (m_fullPackage)
                     m_fullPackage.m_links = m_linksAdvice;
             }
@@ -403,7 +409,7 @@ class UnityPackageBuilderWindow : EditorWindow
 
             if (GUILayout.Button("Create Default"))
             {
-                m_packageInformation = (PackageBuildInformationObject)CreateScritableAsset<PackageBuildInformationObject>(m_gitfolderName, "Package_" + m_gitfolderName, false);
+                m_packageInformation = (PackageBuildInformationObject)ScriptableUtility. CreateScritableAsset<PackageBuildInformationObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Package_" + m_gitfolderName, false);
                 if (m_fullPackage)
                     m_fullPackage.m_package = m_packageInformation;
             }
@@ -437,7 +443,7 @@ class UnityPackageBuilderWindow : EditorWindow
         {
             if (GUILayout.Button("Create collection"))
             {
-                m_fullPackage = (FullPackageBuildObject)CreateScritableAsset<FullPackageBuildObject>(m_gitfolderName, "Collection_" + m_gitfolderName, false);
+                m_fullPackage = (FullPackageBuildObject) ScriptableUtility. CreateScritableAsset<FullPackageBuildObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Collection_" + m_gitfolderName, false);
             }
         }
     }
@@ -680,35 +686,6 @@ class UnityPackageBuilderWindow : EditorWindow
 
 
 
-    public static ScriptableObject CreateScritableAsset<T>(string relative, string name, bool selectAsset) where T : ScriptableObject
-    {
-        T asset = ScriptableObject.CreateInstance<T>();
-        Directory.CreateDirectory(Application.dataPath + "/Facilitator/" + relative);
-        AssetDatabase.CreateAsset(asset, "Assets/Facilitator/" + relative + "/" + name + ".asset");
-        AssetDatabase.SaveAssets();
-
-        if (selectAsset)
-        {
-            EditorUtility.FocusProjectWindow();
-            Selection.activeObject = asset;
-        }
-        AssetDatabase.Refresh();
-        return asset;
-    }
-
-    public static T[] GetAllInstances<T>() where T : ScriptableObject
-    {
-        string[] guids = AssetDatabase.FindAssets("" + typeof(T).Name);  //FindAssets uses tags check documentation for more info
-        T[] a = new T[guids.Length];
-        for (int i = 0; i < guids.Length; i++)         //probably could get optimized 
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-            a[i] = AssetDatabase.LoadAssetAtPath<T>(path);
-        }
-
-        return a;
-
-    }
     void OnSelectionChange()
     {
         //Debug.Log("DD");
