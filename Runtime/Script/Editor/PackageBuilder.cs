@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using UnityEngine;
-using UnityEditor;
 using System.Linq;
+
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class PackageBuilder 
 {
@@ -22,7 +26,10 @@ public class PackageBuilder
     public static void CreateFolder(string relativePathFolder)
     {
         Directory.CreateDirectory(GetAbsolutPathInProject(relativePathFolder));
+#if UNITY_EDITOR
         AssetDatabase.Refresh();
+#endif
+
     }
 
    
@@ -48,8 +55,10 @@ public class PackageBuilder
         Directory.CreateDirectory(absFolder);
         File.Delete(absFile);
         File.WriteAllText(absFile, GetAssemblyAsJson( package.m_assemblyEditor));
-  
+#if UNITY_EDITOR
+
         AssetDatabase.Refresh();
+#endif
 
     }
 
@@ -434,7 +443,9 @@ public class ProjectDirectoriesStructure {
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             GetTextFromUrl(m_defaultFilesFromWeb[i].m_url, path);
         }
+#if UNITY_EDITOR
         AssetDatabase.Refresh();
+#endif
     }
 
     private string GetTextFromUrl( string url, string where)
