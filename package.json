@@ -1,11 +1,15 @@
-
-{                                                                                
-  "name": "be.eloiexperiments.unitypackagefacilitator",                              
-  "displayName": "UnityPackageFacilitator",                        
-  "version": "0.0.1",                         
-  "unity": "2018.1",                             
-  "description": "Tools to create the structure of new unity package under 2 minutes.",                         
-  "keywords": ["Script","Tool","Productivity","Git","Unity Package"],                       
-  "category": "Script",                   
-  "dependencies":{"be.eloiexperiments.quickgitutility": "0.0.1"}     
-  }                                                                                
+{
+    "name": "be.eloiexperiments.unitypackagefacilitator",
+    "displayName": "UnityPackageFacilitator",
+    "version": "0.0.1",
+    "unity": "2018.1",
+    "description": "Tools to create the structure of new unity package under 2 minutes.",
+    "keywords": [
+        "Script",
+        "Tool",
+        "Productivity",
+        "Git",
+        "Unity Package"
+    ],
+    "category": "Script"
+}
