@@ -1,10 +1,12 @@
 
 {                                                                   
-            "name": "be.eloiexperiments.unitypackagefacilitator",          
-    "references": ["be.eloiexperiments.quickgitutility","be.eloiexperiments.quickgitutilityeditor"
+            "name": "be.eloistree.unitypackagefacilitatoreditor",          
+    "references": ["be.eloistree.unitypackagefacilitator","be.eloistree.quickgitutility","be.eloistree.quickgitutilityeditor"
 ],                                                              
     "optionalUnityReferences": [],                                  
-    "includePlatforms": [],                                                  
+    "includePlatforms": [                                           
+        "Editor"                                                    
+    ],                                                              
     "excludePlatforms": [],                                         
     "allowUnsafeCode": false,                                       
     "overrideReferences": false,                                    

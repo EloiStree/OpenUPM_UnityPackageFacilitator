@@ -69,6 +69,7 @@ public class UnityPackageUtility
 
     public static void SetPackageFile(string packageFilePath , GitUnityPackageJson package)
     {
+        File.Delete(packageFilePath);
         File.WriteAllText(packageFilePath, package.ToJson());
 
     }
@@ -302,8 +303,8 @@ public class UnityPackageManifest
    
     //{{
     // "dependencies": {
-    //        "be.eloiexperiments.randomtool": "https://gitlab.com/eloistree/2019_01_15_randomtool.git",
-    //        "be.eloiexperiments.unityprefsthemall": "https://gitlab.com/eloistree/2019_06_10_unityprefsthemall.git",
+    //        "be.eloistree.randomtool": "https://gitlab.com/eloistree/2019_01_15_randomtool.git",
+    //        "be.eloistree.unityprefsthemall": "https://gitlab.com/eloistree/2019_06_10_unityprefsthemall.git",
     //        "com.unity.ads": "2.0.8",
     //        "com.unity.analytics": "3.3.2",
     //        "com.unity.collab-proxy": "1.2.16",
@@ -311,11 +312,11 @@ public class UnityPackageManifest
     //        "com.unity.modules.xr": "1.0.0"
     //  },
     //  "lock": {
-    //    "be.eloiexperiments.randomtool": {
+    //    "be.eloistree.randomtool": {
     //      "hash": "39187c85824aa974aa6791fdfe34158989907b7e",
     //      "revision": "HEAD"
     //    },
-    //    "be.eloiexperiments.unityprefsthemall": {
+    //    "be.eloistree.unityprefsthemall": {
     //      "hash": "bc3801d94db295e2c391dfc35b29487d683be7f2",
     //      "revision": "HEAD"
     //    }
@@ -432,7 +433,7 @@ public class UnityPackageManifest
 [System.Serializable]
 public class GitUnityPackageJson
 {
-    //"name": "be.eloiexperiments.unitypackagefacilitator",                              
+    //"name": "be.eloistree.unitypackagefacilitator",                              
     public string name;
     public string GetNamespaceID() { return name; }
     //"displayName": "Unity Package Creator",                        

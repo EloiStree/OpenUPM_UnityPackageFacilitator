@@ -69,7 +69,7 @@ public class PackagePullPushWindow : EditorWindow
             string isPackageManagerLink = "\".*\"\\s*:\\s*\".*\\.git[\"\\s\\n\\r\\a,]";
 
 
-            //"be.eloiexperiments.overrideandroidvolume":"https://gitlab.com/eloistree/2019_06_30_overrideandroidvolume.git",
+            //"be.eloistree.overrideandroidvolume":"https://gitlab.com/eloistree/2019_06_30_overrideandroidvolume.git",
             if (MathRegex(m_copyPastShortCut, isPackageManagerLink))
             {
                 string[] tokens = Regex.Split(m_copyPastShortCut, "\"\\s*:\\s*\"");
