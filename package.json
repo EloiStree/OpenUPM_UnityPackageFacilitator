@@ -1,6 +1,6 @@
 {
     "name": "be.eloistree.unitypackagefacilitator",
-    "displayName": "UnityPackageFacilitator",
+    "displayName": "Unity Package Facilitator",
     "version": "0.0.1",
     "unity": "2018.1",
     "description": "Tools to create the structure of new unity package under 2 minutes.",
