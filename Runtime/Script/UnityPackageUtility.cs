@@ -191,7 +191,9 @@ public class UnityPackageUtility
 
     public static List<GitUnityPackageLinkOnDisk> GetGitUnityPackageInDirectory(string directoryPath)
     {
-        return GetGitUnityPackageInDirectory(QuickGit.GetGitsInDirectory(directoryPath));
+        List<GitLinkOnDisk> links;
+        QuickGit.GetGitsInDirectory(directoryPath, out links);
+        return GetGitUnityPackageInDirectory(links);
     }
     public static void Down(string gitUrl, bool affectManifest = true)
     {

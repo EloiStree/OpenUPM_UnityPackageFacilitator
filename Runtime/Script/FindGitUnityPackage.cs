@@ -14,7 +14,7 @@ public class FindGitUnityPackage : MonoBehaviour
         if (string.IsNullOrEmpty(m_directory))
             m_directory = Application.dataPath+"/../";
             m_gitLinksPath = QuickGit.GetAllFolders(m_directory, true);
-            m_gitLinks = QuickGit.GetGitsInDirectory(m_directory);
+            QuickGit.GetGitsInDirectory(m_directory, out m_gitLinks);
             m_packageInfo = UnityPackageUtility.GetGitUnityPackageInDirectory(m_directory);
         }
     }
