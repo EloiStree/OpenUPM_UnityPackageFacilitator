@@ -152,9 +152,9 @@ class UnityPackageBuilderWindow : EditorWindow
         }
         if (!string.IsNullOrEmpty(m_linkedGitUrl))
         {
-            QuickGit.DisplayEditorCommands(m_gitLinkedToSelectedAsset);
+            GitLinkOnDisk gd = new GitLinkOnDisk(m_gitLinkedToSelectedAsset);
+            GitEditorDrawer.DisplayGitCommands(gd);
             UnityPackageEditorDrawer.DrawPackageDownUpButton(m_absoluteSelection, m_gitLinkedToSelectedAsset, true);
-
         }
 
 
@@ -510,9 +510,15 @@ class UnityPackageBuilderWindow : EditorWindow
 
     private string GetGitFolderAbsolutPath(out bool hasGitInParent)
     {
-        string path = QuickGit.GetGitRootInParent(m_absoluteSelection, out hasGitInParent);
-        if (!hasGitInParent)
-            path = "";
+        string path="";
+        hasGitInParent = false;
+        GitLinkOnDisk gd;
+        QuickGit.GetGitInParents(m_absoluteSelection,QuickGit.PathReadDirection.LeafToRoot , out gd);
+        if (gd != null)
+        {
+            hasGitInParent = true;
+            path = gd.GetDirectoryPath();
+        }
         return path;
     }
 

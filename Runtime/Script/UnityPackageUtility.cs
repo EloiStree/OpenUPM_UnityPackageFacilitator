@@ -191,7 +191,7 @@ public class UnityPackageUtility
 
     public static List<GitUnityPackageLinkOnDisk> GetGitUnityPackageInDirectory(string directoryPath)
     {
-        return GetGitUnityPackageInDirectory(QuickGit.GetGitProjectsInDirectory(directoryPath));
+        return GetGitUnityPackageInDirectory(QuickGit.GetGitsInDirectory(directoryPath));
     }
     public static void Down(string gitUrl, bool affectManifest = true)
     {
@@ -271,7 +271,7 @@ public class UnityPackageUtility
 
     public static List<GitUnityPackageLinkOnDisk> GetGitUnityPackageInDirectory(string[] directoriesPath)
     {
-        return GetGitUnityPackageInDirectory(QuickGit.GetGitProjectsInDirectory(directoriesPath));
+        return GetGitUnityPackageInDirectory(QuickGit.GetGitsInGivenDirectories(directoriesPath));
     }
     public static List<GitUnityPackageLinkOnDisk> GetGitUnityPackageInDirectory(List<GitLinkOnDisk> packages)
     {

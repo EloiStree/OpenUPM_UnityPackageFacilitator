@@ -129,10 +129,11 @@ public class PackagePullPushWindow : EditorWindow
             GUILayout.EndHorizontal();
 
             UnityPackageEditorDrawer.DrawPackageDownUpButton(GetPathOfFolder(), m_pushPull.m_gitUrl, true);
-            QuickGit.DisplayEditorCommands(GetPathOfFolder());
+            GitLinkOnDisk gd = new GitLinkOnDisk(GetPathOfFolder());
+            GitEditorDrawer.DisplayGitCommands(gd);
 
 
-            m_folderFoldout = EditorGUILayout.Foldout(m_folderFoldout, "Folder & Git");
+           m_folderFoldout = EditorGUILayout.Foldout(m_folderFoldout, "Folder & Git");
             if (m_folderFoldout)
             {
                 DisplayCopyPastField();
