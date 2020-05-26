@@ -10,10 +10,10 @@ public class UnityPackageEditorDrawer
 
 
     
-    public static void DrawManifrest(ref UnityPackageManifest manifestInfo, ref string addname, ref string addvalue, bool withButtonToPushAndLoad = true)
+    public static void DrawManifrest(ref Utility_ManifestJson manifestInfo, ref string addname, ref string addvalue, bool withButtonToPushAndLoad = true)
     {
         int buttonlenght = 30;
-        int nameLength = 140;
+        int nameLength = 250;
         if (withButtonToPushAndLoad)
         {
             GUILayout.BeginHorizontal();
@@ -32,14 +32,11 @@ public class UnityPackageEditorDrawer
             }
             GUILayout.EndHorizontal();
         }
-        //GUILayout.BeginHorizontal();
-        //GUILayout.Label("Add");
-        //GUILayout.EndHorizontal();
+       
         GUILayout.BeginHorizontal();
         GUILayout.Label("", GUILayout.Width(buttonlenght));    
         GUILayout.Label("Namespace Id", GUILayout.Width(nameLength));
         GUILayout.Label("https://server.com/user/project.git#branch" );
-
 
 
         GUILayout.EndHorizontal();
@@ -50,21 +47,23 @@ public class UnityPackageEditorDrawer
         }
         addname = GUILayout.TextField(addname, GUILayout.Width(nameLength));
         addvalue = GUILayout.TextField(addvalue);
-
+        if (addvalue.Length > 0 && addname.Length<=0)
+        {
+            bool found;
+            string nameId;
+            DownloadInfoFromGitServer.LoadNamespaceFromProjectGitLink(addvalue, out found, out nameId);
+            if (found)
+            {
+                if (addvalue.ToLower().IndexOf(".git") < 0)
+                    addvalue += ".git";
+                addname = nameId;
+            }
+            else addvalue = "";
+        }
 
 
         GUILayout.EndHorizontal();
 
-
-        //GUILayout.BeginHorizontal();
-        //if (GUILayout.Button("-", GUILayout.Width(buttonlenght)))
-        //{
-        //    manifestInfo.Remove(remove);
-        //}
-        //remove = GUILayout.TextField(remove);
-
-        //GUILayout.EndHorizontal();
-        
         GUILayout.Label("Current package");
         List<DependencyJson> m_dependencies = manifestInfo.dependencies;
         if( m_dependencies!=null)
@@ -79,14 +78,11 @@ public class UnityPackageEditorDrawer
             if (m_dependencies[i].value.IndexOf("http") > -1)
             {
 
-                if (GUILayout.Button("Down", GUILayout.Width(40))) {
+                if (GUILayout.Button("Down", GUILayout.Width(50))) {
                     UnityPackageUtility.Down(m_dependencies[i].value);
                 }
-                //if (GUILayout.Button("Up", GUILayout.Width(40)))
-                //{
-                //    UnityPackageUtility.Up(directory);
-                //}
-                if (GUILayout.Button("Go", GUILayout.Width(25)))
+            
+                if (GUILayout.Button("Go", GUILayout.Width(30)))
                 {
                     Application.OpenURL(m_dependencies[i].value);
                 }

@@ -4,16 +4,31 @@
   "displayName": "##DISPLAYNAME##",
   "description": "##DESCRIPTION##",
   "unity": "##UNITYVERSION##",
-  "unityRelease": "0b5",
+  "unityRelease": "##UNITYRELEASEID##",
   "dependencies": {
     ##DEPENDENCIES##
  },
  "keywords": [
     ##KEYWORDS##
   ],
+  "repository": {
+    "type": "git",
+    "url": "##GITURL##",
+    "revision": "##GITREVISION##"
+  },
+  "relatedPackages": {
+    ##RELATEDPACKAGES##
+  },
   "author": {
     "name": "##AUTHORNAME##",
     "email": "##AUTHORMAIL##",
     "url": "##AUTHORURL##"
   } 
+  "samples": [
+    {
+      "displayName": "Cinemachine Example Scenes",
+      "description": "Sample scenes illustrating various ways to use Cinemachine",
+      "path": "Samples~/Cinemachine Example Scenes"
+    }
+  ]
 }
