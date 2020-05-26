@@ -10,7 +10,7 @@ public class SampleEditor : EditorWindow
         public string m_yo;
 
     }
-    [MenuItem("Window/Package Utility/Sample")]
+    //[MenuItem("Window/Package Utility/Sample")]
     static void Init()
     {
         SampleEditor window = (SampleEditor)EditorWindow.GetWindow(typeof(SampleEditor));

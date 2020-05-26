@@ -12,8 +12,8 @@ public class ChangeLogEditor : EditorWindow
     private string m_version="";
     private string m_title = "";
     private string m_logs = "";
+    private bool m_hide;
 
-    
     [MenuItem("Window/Package Utility/Change Log")]
     static void Init()
     {
@@ -25,38 +25,40 @@ public class ChangeLogEditor : EditorWindow
     void OnGUI()
     {
         UnityPathSelectionInfo.Get(out m_pathFound, out m_selector);
-        DrawEditorDefaultInterface(new ChangeLogFileStream(m_selector.GetAbsolutePath(false)),ref m_version, ref m_title,ref  m_logs);
+        GUILayout.Label("Focus: "+ m_selector.GetRelativePath(false), EditorStyles.boldLabel);
+        DrawEditorDefaultInterface(new ChangeLogFileStream(m_selector.GetAbsolutePath(false)),ref m_version, ref m_title,ref  m_logs,ref m_hide);
     }
 
 
 
-    public static void DrawEditorDefaultInterface(ChangeLogFileStream changelog, ref string version, ref string title, ref string logs) {
-        GUILayout.Label("Log", EditorStyles.boldLabel);
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("V:", GUILayout.MaxWidth(60));
-        if (version == null || version.Length <= 0)
-            version = ChangeLogUtility.GetLastVersion(changelog); 
-        version = ChangeLogUtility.OnlyDigitsAndPoints(
-            EditorGUILayout.TextField(version, GUILayout.MaxWidth(300)));
-        GUILayout.Label("Title:", GUILayout.MaxWidth(60));
-        title = EditorGUILayout.TextField(title, GUILayout.MaxWidth(300));
-        GUILayout.EndHorizontal();
-        GUILayout.Label("New(s):", GUILayout.MaxWidth(60));
-        logs = ChangeLogUtility.StartWithDash(
-            EditorGUILayout.TextArea( logs, GUILayout.MinHeight(80)));
-        GUILayout.BeginHorizontal();
-        if (!changelog.Exist() &&  GUILayout.Button("Create ChangeLog.md"))
-        {
-            ChangeLogUtility.Create(changelog, "# Change Log ", "Find here developer log of this package.  ");
-        }
-        if (changelog.Exist() && GUILayout.Button("Push to log"))
-        {
+    public static void DrawEditorDefaultInterface(ChangeLogFileStream changelog, ref string version, ref string title, ref string logs, ref bool hide) {
+        hide = EditorGUILayout.Foldout(hide, hide? "→ Log" : "↓ Log", EditorStyles.boldLabel);
+        if (!hide) { 
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Version:", GUILayout.MaxWidth(60));
+            if (version == null || version.Length <= 0)
+                version = ChangeLogUtility.GetLastVersion(changelog); 
+            version = ChangeLogUtility.OnlyDigitsAndPoints(
+                EditorGUILayout.TextField(version, GUILayout.MaxWidth(80)));
+            GUILayout.Label("Title:", GUILayout.MaxWidth(40));
+            title = EditorGUILayout.TextField(title, GUILayout.MaxWidth(1000));
+            GUILayout.EndHorizontal();
+            GUILayout.Label("New(s):", GUILayout.MaxWidth(60));
+            logs = ChangeLogUtility.StartWithDash(
+                EditorGUILayout.TextArea( logs, GUILayout.MinHeight(80)));
+            GUILayout.BeginHorizontal();
+            if (!changelog.Exist() &&  GUILayout.Button("Create ChangeLog.md"))
+            {
+                ChangeLogUtility.Create(changelog, "# Change Log ", "Find here developer log of this package.  ");
+            }
+            if (changelog.Exist() && GUILayout.Button("Push to log"))
+            {
 
-            ChangeLogUtility.AppendLog(changelog, version, title, logs);
+                ChangeLogUtility.AppendLog(changelog, version, title, logs);
+            }
+            if (changelog.Exist() && GUILayout.Button("Open")) { if (changelog.Exist()) changelog.Open(); }
+            GUILayout.EndHorizontal();
         }
-        if (changelog.Exist() && GUILayout.Button("Open")) { if (changelog.Exist()) changelog.Open(); }
-        GUILayout.EndHorizontal();
-
 
     }
 

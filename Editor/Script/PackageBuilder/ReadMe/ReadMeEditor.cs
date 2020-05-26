@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -14,21 +15,55 @@ public class ReadMeEditor : EditorWindow
     [MenuItem("Window/Package Utility/Read Me")]
     static void Init()
     {
-        SampleEditor window = (SampleEditor)EditorWindow.GetWindow(typeof(SampleEditor));
+        ReadMeEditor window = (ReadMeEditor)EditorWindow.GetWindow(typeof(ReadMeEditor));
+        window.titleContent = new GUIContent("Read Me");
         window.Show();
     }
 
 
     public UnityPathSelectionInfo m_selector;
+    private bool m_pathFound;
+    private GitLinkOnDisk m_gitLink;
+    private bool m_hide;
+    private string m_text;
+
     void OnGUI()
     {
-      ReadMeFileStream f = ReadMeUtility.GetReadMeFile(m_selector);
-      
-        if (GUILayout.Button("Refresh")) { }
-        GUILayout.Label("Base Settings", EditorStyles.boldLabel);
-        m_info.m_yo = EditorGUILayout.TextField("Read Me Content", m_info.m_yo, GUILayout.MinHeight(100)) ;
+
+        UnityPathSelectionInfo.Get(out m_pathFound, out m_selector);
+        GUILayout.Label("Read Me: " + m_selector.GetRelativePath(false), EditorStyles.boldLabel);
+        ReadMeFileStream f = ReadMeUtility.GetReadMeFile(m_selector);
+        QuickGit.GetGitInParents(m_selector.GetAbsolutePath(false),QuickGit.PathReadDirection.LeafToRoot, out m_gitLink);
+        DrawEditorDefaultInterface(f, ref m_gitLink, ref m_text, ref m_hide) ;
 
     }
 
-  
+    public  static void DrawEditorDefaultInterface(ReadMeFileStream readme,ref  GitLinkOnDisk gitLink, ref string readMeText, ref bool hide)
+    {
+        hide = EditorGUILayout.Foldout(hide, hide ? "→ Read Me" : "↓ Read Me", EditorStyles.boldLabel);
+        if (!hide)
+        {
+            GUILayout.Label("Read Me:", EditorStyles.boldLabel);
+            readMeText = EditorGUILayout.TextArea(readMeText, GUILayout.MinHeight(100));
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Create Default"))
+            {
+                if (gitLink != null)
+                    readme.Create(ReadMeUtility.CreateBasicDefaultOnFrom(gitLink));
+                else readme.Create("# Read Me  \n Hey buddy!  \nWhat 's up ?");
+                readMeText = readme.Get();
+            }
+            if (GUILayout.Button("Load")) {readMeText = readme.Get(); }
+            if (GUILayout.Button("Override"))
+            {
+                readme.Set(readMeText);
+            }
+            if (GUILayout.Button("Open"))
+            {
+                readme.Open();
+            }
+            GUILayout.EndHorizontal();
+        }
+    }
+
 }

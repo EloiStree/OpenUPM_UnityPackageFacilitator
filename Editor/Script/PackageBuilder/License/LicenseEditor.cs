@@ -10,6 +10,7 @@ public class LicenseEditor : EditorWindow
     private UnityPathSelectionInfo m_selector;
     private string m_licenseText;
     private string m_licenseLink;
+    private bool m_hide;
 
     [MenuItem("Window/Package Utility/License")]
     static void Init()
@@ -21,7 +22,7 @@ public class LicenseEditor : EditorWindow
     void OnGUI()
     {
         UnityPathSelectionInfo.Get(out m_pathFound, out m_selector);
-        DrawEditorDefaultInterface(new LicenseFileStream(m_selector.GetAbsolutePath(false)), ref m_licenseLink, ref m_licenseText);
+        DrawEditorDefaultInterface(new LicenseFileStream(m_selector.GetAbsolutePath(false)), ref m_licenseLink, ref m_licenseText,ref m_hide);
     }
 
     private static void DrawEditorLicenseCreationLinks()
@@ -34,24 +35,27 @@ public class LicenseEditor : EditorWindow
         GUILayout.EndHorizontal();
     }
 
-    public static void DrawEditorDefaultInterface(LicenseFileStream license,  ref string licenseLink, ref string licenseText) {
-
-        GUILayout.Label("License", EditorStyles.boldLabel);
-        DrawEditorLicenseCreationLinks();
-        GUILayout.Label("Have a link:");
-        licenseLink = EditorGUILayout.TextField(licenseLink);
-        GUILayout.Label("Have text:");
-        licenseText = EditorGUILayout.TextArea(licenseText, GUILayout.MinHeight(60));
-        GUILayout.BeginHorizontal();
-        if (license.Exist() &&  GUILayout.Button("Open")) {
-                license.Open(); 
-        }
-        if ( GUILayout.Button("Create / Override"))
+    public static void DrawEditorDefaultInterface(LicenseFileStream license,  ref string licenseLink, ref string licenseText, ref bool hide)
+    {
+        hide = EditorGUILayout.Foldout(hide, hide ? "→ License" : "↓ License", EditorStyles.boldLabel);
+        if (!hide)
         {
+            DrawEditorLicenseCreationLinks();
+            GUILayout.Label("Have a link:");
+            licenseLink = EditorGUILayout.TextField(licenseLink);
+            GUILayout.Label("Have text:");
+            licenseText = EditorGUILayout.TextArea(licenseText, GUILayout.MinHeight(60));
+            GUILayout.BeginHorizontal();
+            if (license.Exist() && GUILayout.Button("Open"))
+            {
+                license.Open();
+            }
+            if (GUILayout.Button("Create / Override"))
+            {
                 license.Set("# Tool License  \n> " + licenseLink + "  \n  \n" + licenseText);
+            }
+            GUILayout.EndHorizontal();
         }
-        GUILayout.EndHorizontal();
-
 
     }
 }

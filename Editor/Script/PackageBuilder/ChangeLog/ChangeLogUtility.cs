@@ -49,20 +49,20 @@ public class ChangeLogUtility
 
     public static string GetLastVersion(ChangeLogFileStream changelog)
     {
-        if (changelog == null) return "0.0.0";
+        if (changelog == null || !changelog.Exist()) return "0.0.0";
+
         string t = changelog.Get();
         Regex regex = new Regex("([\\n\\r]##\\s\\s*[\\d\\.]+)");
 
-        Debug.Log("T: " +t);
+
         Match match = regex.Match(t);
 
         if (match.Success)
         {
-            Debug.Log("MATCH VALUE: " + match.Value);
             return ChangeLogUtility.OnlyDigitsAndPoints( match.Value);
         }
 
-        return "0.0.1";
+        return "0.0.0";
     }
 
     public static  string StartWithDash(string text)

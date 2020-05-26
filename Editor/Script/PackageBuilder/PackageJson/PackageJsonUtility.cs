@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PackageJsonUtility : MonoBehaviour
+public class PackageJsonUtility 
 {
-    // Start is called before the first frame update
-    void Start()
+    public static PackageJsonFileStream GetPackageFile(UnityPathSelectionInfo selector)
     {
-        
+        GitLinkOnDisk git;
+        QuickGit.GetGitInParents(selector.GetAbsolutePath(true), QuickGit.PathReadDirection.LeafToRoot, out git);
+        return new PackageJsonFileStream(git.GetDirectoryPath());
     }
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public class PackageJsonFileStream : FileStream {
+    public PackageJsonFileStream(string packageAndGitRoot) : base(packageAndGitRoot+"/package.json") { }
+   
 }
