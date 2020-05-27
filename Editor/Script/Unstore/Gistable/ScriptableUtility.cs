@@ -33,9 +33,9 @@ public class ScriptableUtility
 
     public static T[] GetAllInstances<T>() where T : ScriptableObject
     {
-        string[] guids = AssetDatabase.FindAssets("" + typeof(T).Name);  //FindAssets uses tags check documentation for more info
+        string[] guids = AssetDatabase.FindAssets("" + typeof(T).Name);  
         T[] a = new T[guids.Length];
-        for (int i = 0; i < guids.Length; i++)         //probably could get optimized 
+        for (int i = 0; i < guids.Length; i++)  
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[i]);
             a[i] = AssetDatabase.LoadAssetAtPath<T>(path);
@@ -48,13 +48,11 @@ public class ScriptableUtility
     public static List<ScritableFound<T>> GetAllInstancesWithInfo<T>() where T : ScriptableObject
     {
 
-       // throw new System.NotImplementedException();
         string[] guids = AssetDatabase.FindAssets("" + typeof(T).Name);  //FindAssets uses tags check documentation for more info
-        //Debug.Log("GUIDS: " + guids.Length);
         T[] a = new T[guids.Length];
 
         List<ScritableFound<T>> list = new List<ScritableFound<T>>();
-        for (int i = 0; i < guids.Length; i++)         //probably could get optimized 
+        for (int i = 0; i < guids.Length; i++)     
         {
             string path = AssetDatabase.GUIDToAssetPath(guids[i]);
             a[i] = AssetDatabase.LoadAssetAtPath<T>(path);

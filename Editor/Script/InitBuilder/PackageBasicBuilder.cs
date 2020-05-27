@@ -1,24 +1,24 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
-using System;
+using UnityEditor;
+using UnityEngine;
 
-//https://learn.unity.com/tutorial/introduction-to-scriptable-objects#5cf187b7edbc2a31a3b9b123
-class UnityPackageBuilderWindow : EditorWindow
+public class PackageBasicBuilder : EditorWindow
 {
 
-    
 
-    [MenuItem("Window/Package Utility/Archive/Create Package")]
+
+    [MenuItem("Window/Package Utility/Init. & Struct")]
     public static void ShowWindow()
     {
-        UnityPackageBuilderWindow win =(UnityPackageBuilderWindow) EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));
-        win.name = "Package Facilitator";
-        win.titleContent.text = "Package Builder";
+        PackageBasicBuilder win = (PackageBasicBuilder)EditorWindow.GetWindow(typeof(PackageBasicBuilder));
+        win.name = "Package Init Builder";
+        win.titleContent.text = "Package Init Builder";
     }
 
-   
+
     private static void SelectAsset(PackageBuildInformationObject package)
     {
         UnityPackageBuilderWindow.m_packageInformation = package;
@@ -62,6 +62,20 @@ class UnityPackageBuilderWindow : EditorWindow
     string m_whereToCreateScritpable = "Facilitator";
 
 
+    public Info m_info = new Info();
+    public class Info {
+        public bool m_selectorpathFound;
+        public UnityPathSelectionInfo m_selector;
+        public PackageJsonFileStream m_packageTargeted;
+        public GitLinkOnDisk m_targetedGit;
+        public PackageBuildInformation m_packageBuilder;
+        public bool m_hidePackageBuilder;
+        public bool m_hideGitUtilitary;
+        public int m_dropDownSelectionServer;
+        public string m_projectNameToCreate;
+        public string m_userNameToCreateGit;
+        internal string m_tmpFolderToCreate;
+    }
 
     public void ResetInfo()
     {
@@ -70,23 +84,63 @@ class UnityPackageBuilderWindow : EditorWindow
 
     void OnGUI()
     {
+        m_info.m_selector = null;
+        m_info.m_targetedGit = null;
+        UnityPathSelectionInfo.Get(out m_info.m_selectorpathFound, out m_info.m_selector);
+        AccessGitWithPathSelector.GetAffectedGit(m_info.m_selector, out m_info.m_targetedGit);
 
-        DrawPackageManager();
-
-        m_currentManifest = EditorGUILayout.Foldout(m_currentManifest, "Current manifest");
-        if (m_currentManifest) {
-            UnityPackageEditorDrawer.DrawManifrest(ref m_manifestInfo, ref m_manifestaddNamespace, ref m_manifestaddgitlink);
+        if (m_info.m_targetedGit != null) {
+            string p = m_info.m_targetedGit.GetRelativeDirectoryPath();
+            m_info.m_selector = new UnityPathSelectionInfo(p);
         }
-        EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
 
+        EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
+        m_info.m_packageTargeted = PackageJsonUtility.GetPackageFile(m_info.m_selector);
+        if (GUILayout.Button("Select: " + m_info.m_selector.GetSelectName(false) )) {
+            m_info.m_selector.Open();
+        }
+        if (m_info.m_targetedGit == null)
+        {
+            string path = m_info.m_selector.GetAbsolutePath(true);
+            
+            if (GUILayout.Button("Git Init. in "+ m_info.m_selector.GetSelectName(true)))
+            {
+                QuickGit.CreateLocal(path);
+            }
+             GitForFacilitationEditor.ProposeToCreateFolder(m_info.m_selector, ref m_info.m_tmpFolderToCreate);
+
+        }
+        else {
+
+            if (!m_info.m_targetedGit.IsHosted())
+            {
+                GitForFacilitationEditor.PushLocalGitToOnlineAccount(m_info.m_targetedGit,
+                    ref m_info.m_userNameToCreateGit,
+                    ref m_info.m_projectNameToCreate,
+                    ref m_info.m_dropDownSelectionServer,
+                    ref m_info.m_hideGitUtilitary) ;
+            }
+            GUILayout.Space(20);
+            if (GUILayout.Button("Git: " + m_info.m_selector.GetSelectName(true), EditorStyles.boldLabel)) {
+                Application.OpenURL(m_info.m_selector.GetAbsolutePath(false));
+            }
+            if (QuickGit.IsPathHasGitRootFolder(m_info.m_selector.GetAbsolutePath(true)))
+            { 
+                GitEditorDrawer.DisplayGitCommands(m_info.m_targetedGit);
+                UnityPackageEditorDrawer.DrawPackageDownUpButton(m_info.m_targetedGit, true);
+            }
+            PackageJsonEditor.DrawEditorDefaultInterface(m_info.m_packageTargeted, ref m_info.m_targetedGit, ref m_info.m_packageBuilder, ref m_info.m_hidePackageBuilder);
+
+        }
 
     }
 
-    private void DrawPackageManager()
+
+
+    private void DrawGitIniCreateAndPush()
     {
         ResetInfo();
-        //UnlockIfFolderDontExist()
-        // Find selected folder
+    
         if (!m_lockSelection)
             m_relativeSelection = GetFolderSelectedInUnity();
         m_absoluteSelection = Application.dataPath + "/" + m_relativeSelection;
@@ -94,8 +148,9 @@ class UnityPackageBuilderWindow : EditorWindow
         // propose to create folder if none are selected
         if (m_relativeSelection == "")
         {
-            ProposeToCreateFolder(ref m_proposeCreateFolderField);
-            DisplayMessageToHelp("Please select or create a empty folder");
+           GitForFacilitationEditor.ProposeToCreateFolder( m_info.m_selector, ref m_info.m_tmpFolderToCreate);
+           GitForFacilitationEditor.DisplayMessageToHelp("Please select or create a empty folder");
+           
             return;
         }
         DisplayLocker();
@@ -129,7 +184,7 @@ class UnityPackageBuilderWindow : EditorWindow
 
         if (string.IsNullOrEmpty(m_linkedGitUrl))
         {
-            PushLocalGitToOnlineAccount();
+           //PushLocalGitToOnlineAccount(ref m_info.m_hideGitUtilitary);
         }
         if (!string.IsNullOrEmpty(m_linkedGitUrl))
         {
@@ -158,6 +213,7 @@ class UnityPackageBuilderWindow : EditorWindow
             if (GUILayout.Button("Remove Repository"))
             {
                 FileUtil.DeleteFileOrDirectory(m_gitLinkedToSelectedAsset);
+                
             }
             if (GUILayout.Button("Remove .git"))
             {
@@ -180,7 +236,7 @@ class UnityPackageBuilderWindow : EditorWindow
         GUILayout.Label("Package ID", GUILayout.Width(120));
         GUILayout.TextField(m_packageNamespaceId);
         GUILayout.EndHorizontal();
-        
+
     }
 
     public static bool m_dangerousButton;
@@ -210,7 +266,7 @@ class UnityPackageBuilderWindow : EditorWindow
     private void CreatePackageStructure()
     {
         scollrPackagePosition = GUILayout.BeginScrollView(scollrPackagePosition);
-       
+
         CreatePackageCollectionLink();
 
         //////////////// Create Package ////////////////////////
@@ -221,7 +277,7 @@ class UnityPackageBuilderWindow : EditorWindow
         CreateDirectories();
         //////////////// Links ////////////////////////
         CreateLinks();
- 
+
         GUILayout.Space(10);
         //////////////// COMMUN ////////////////////////
         CreateReadMe();
@@ -248,7 +304,7 @@ class UnityPackageBuilderWindow : EditorWindow
         {
             Directory.CreateDirectory(m_gitLinkedToSelectedAsset);
             File.WriteAllText(m_gitLinkedToSelectedAsset + "/ReadMe.md", m_readMeSpecificInformation);
-            RefreshDatabase();
+            //RefreshDatabase();
 
         }
         GUILayout.EndHorizontal();
@@ -259,7 +315,7 @@ class UnityPackageBuilderWindow : EditorWindow
     {
         GUILayout.Label("Folder structure", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        m_folderStructureWanted = (ProjectDirectoriesStructureObject) EditorGUILayout.ObjectField(m_folderStructureWanted, typeof(ProjectDirectoriesStructureObject));
+        m_folderStructureWanted = (ProjectDirectoriesStructureObject)EditorGUILayout.ObjectField(m_folderStructureWanted, typeof(ProjectDirectoriesStructureObject));
         GUILayout.EndHorizontal();
 
 
@@ -269,7 +325,7 @@ class UnityPackageBuilderWindow : EditorWindow
 
             if (GUILayout.Button("Create Default"))
             {
-                m_folderStructureWanted = (ProjectDirectoriesStructureObject) ScriptableUtility.CreateScritableAsset<ProjectDirectoriesStructureObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Folders_" + m_gitfolderName, false);
+                m_folderStructureWanted = (ProjectDirectoriesStructureObject)ScriptableUtility.CreateScritableAsset<ProjectDirectoriesStructureObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Folders_" + m_gitfolderName, false);
                 if (m_fullPackage)
                     m_fullPackage.m_structure = m_folderStructureWanted;
             }
@@ -304,36 +360,39 @@ class UnityPackageBuilderWindow : EditorWindow
                         Application.OpenURL(weblink[i].m_url);
                     }
                     GUILayout.Label("Web: " + weblink[i].m_relativePath);
-                   
+
                     GUILayout.EndHorizontal();
                 }
             }
             if (GUILayout.Button("Create files in Runtime"))
             {
                 m_folderStructureWanted.m_data.Create(GetFolderWhereToWorkOn() + "/Runtime");
-                RefreshDatabase();
+                // RefreshDatabase();
             }
         }
-        
-       
+
+
     }
 
     public static bool m_linkFoldout;
-    private void CreateLinks() {
+    private void CreateLinks()
+    {
         //////////////// Linked Assets ////////////////////////
         GUILayout.Label("Linked assets", EditorStyles.boldLabel);
         m_linksAdvice = (ListOfClassicPackagesObject)EditorGUILayout.ObjectField(m_linksAdvice, typeof(ListOfClassicPackagesObject));
         if (m_linksAdvice != null)
         {
             ClassicUnityPackageLink[] links = m_linksAdvice.m_data.m_packageLinks;
-            
+
             m_linkFoldout = EditorGUILayout.Foldout(m_linkFoldout, "Links");
-            if (m_linkFoldout) {
+            if (m_linkFoldout)
+            {
                 for (int i = 0; i < links.Length; i++)
                 {
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(25);
-                    if (GUILayout.Button(links[i].m_name)) {
+                    if (GUILayout.Button(links[i].m_name))
+                    {
                         Application.OpenURL(links[i].m_pathOrLink);
                     }
                     GUILayout.EndHorizontal();
@@ -347,7 +406,7 @@ class UnityPackageBuilderWindow : EditorWindow
                 {
                     links[i].CreateWindowLinkFile(path, false);
                 }
-                RefreshDatabase();
+                // RefreshDatabase();
             }
         }
 
@@ -356,7 +415,7 @@ class UnityPackageBuilderWindow : EditorWindow
         {
             if (GUILayout.Button("Create Default"))
             {
-                m_linksAdvice = (ListOfClassicPackagesObject)ScriptableUtility. CreateScritableAsset<ListOfClassicPackagesObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Links_" + m_gitfolderName, false);
+                m_linksAdvice = (ListOfClassicPackagesObject)ScriptableUtility.CreateScritableAsset<ListOfClassicPackagesObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Links_" + m_gitfolderName, false);
                 if (m_fullPackage)
                     m_fullPackage.m_links = m_linksAdvice;
             }
@@ -383,7 +442,7 @@ class UnityPackageBuilderWindow : EditorWindow
 
             if (GUILayout.Button("Create Default"))
             {
-                m_packageInformation = (PackageBuildInformationObject)ScriptableUtility. CreateScritableAsset<PackageBuildInformationObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Package_" + m_gitfolderName, false);
+                m_packageInformation = (PackageBuildInformationObject)ScriptableUtility.CreateScritableAsset<PackageBuildInformationObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Package_" + m_gitfolderName, false);
                 if (m_fullPackage)
                     m_fullPackage.m_package = m_packageInformation;
             }
@@ -410,14 +469,14 @@ class UnityPackageBuilderWindow : EditorWindow
                 m_linksAdvice = m_fullPackage.m_links;
             if (m_fullPackage.m_package && m_absolutPathOfFolderToWorkOn == "")
                 m_absolutPathOfFolderToWorkOn = m_fullPackage.m_package.m_data.m_projectId;
-            RefreshDatabase();
+            //RefreshDatabase();
         }
         m_previousFullPackage = m_fullPackage;
         if (m_fullPackage == null)
         {
             if (GUILayout.Button("Create collection"))
             {
-                m_fullPackage = (FullPackageBuildObject) ScriptableUtility. CreateScritableAsset<FullPackageBuildObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Collection_" + m_gitfolderName, false);
+                m_fullPackage = (FullPackageBuildObject)ScriptableUtility.CreateScritableAsset<FullPackageBuildObject>(m_gitfolderName + "/" + m_whereToCreateScritpable, "Collection_" + m_gitfolderName, false);
             }
         }
     }
@@ -441,10 +500,10 @@ class UnityPackageBuilderWindow : EditorWindow
 
     private string GetGitFolderAbsolutPath(out bool hasGitInParent)
     {
-        string path="";
+        string path = "";
         hasGitInParent = false;
         GitLinkOnDisk gd;
-        QuickGit.GetGitInParents(m_absoluteSelection,QuickGit.PathReadDirection.LeafToRoot , out gd);
+        QuickGit.GetGitInParents(m_absoluteSelection, QuickGit.PathReadDirection.LeafToRoot, out gd);
         if (gd != null)
         {
             hasGitInParent = true;
@@ -470,6 +529,19 @@ class UnityPackageBuilderWindow : EditorWindow
 
 
         GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("GitLab"))
+        {
+            Application.OpenURL("https://gitlab.com/dashboard/projects");
+        }
+        if (GUILayout.Button("GitHub"))
+        {
+            Application.OpenURL("https://github.com/");
+        }
+
+        GUILayout.EndHorizontal();
+
     }
 
     private void DisplayButtonOpenAndSelection()
@@ -477,47 +549,16 @@ class UnityPackageBuilderWindow : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Open Explorer"))
         {
-
             Application.OpenURL(GetFolderWhereToWorkOn());
         }
         if (GUILayout.Button("Select in Unity"))
         {
-           Ping. PingFolder(m_absolutPathOfFolderToWorkOn,true);
+            Ping.PingFolder(m_absolutPathOfFolderToWorkOn, true);
         }
-
         GUILayout.EndHorizontal();
     }
 
 
-
-    private void PushLocalGitToOnlineAccount()
-    {
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("User id ");
-        m_gitlabprojectAuthor = GUILayout.TextField(m_gitlabprojectAuthor);
-
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Project id ");
-        m_gitlabprojectId = GUILayout.TextField(m_gitlabprojectId);
-        string urlToCrate = string.Format("https://gitlab.com/{0}/{1}.git", m_gitlabprojectAuthor, m_gitlabprojectId);
-
-
-        GUILayout.EndHorizontal();
-        if (m_gitlabprojectAuthor != "" && m_gitlabprojectId != "")
-
-        {
-            if (GUILayout.Button("Create/Push Online"))
-            {
-                string url = "";
-                QuickGit.PushLocalToGitLab(m_gitLinkedToSelectedAsset, m_gitlabprojectAuthor, m_gitlabprojectId, out url);
-            }
-
-        }
-        DisplayMessageToHelp("Please enter your account id and the name of the project in the git link: " + urlToCrate);
-    }
 
     private void DisplayFoldoutWihtGitAndPackage()
     {
@@ -544,27 +585,9 @@ class UnityPackageBuilderWindow : EditorWindow
         }
     }
 
-    private void ProposeToCreateFolder(ref string folderName)
-    {
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Create folder:", GUILayout.Width(120)))
-        {
-            if (!string.IsNullOrEmpty(folderName))
-            {
-                Directory.CreateDirectory(Application.dataPath + "/" + folderName);
-                RefreshDatabase();
-               Ping. PingFolder(folderName, true);
-            }
-        }
-        folderName = GUILayout.TextField(folderName);
-        GUILayout.EndHorizontal();
+  
 
-    }
-
-    private static void DisplayMessageToHelp(string msg)
-    {
-        EditorGUILayout.HelpBox(msg, MessageType.Info);
-    }
+ 
 
     private void DisplayFolderSelectionnedToWorkIn()
     {
@@ -638,13 +661,9 @@ class UnityPackageBuilderWindow : EditorWindow
         return Directory.Exists(path) && Directory.GetFiles(path).Length > 0;
     }
 
-   
 
-    private void RefreshDatabase()
-    {
-        AssetDatabase.Refresh();
-    }
 
+    
     private string GetFolderWhereToWorkOn()
     {
         if (m_gitLinkedToSelectedAsset == "")

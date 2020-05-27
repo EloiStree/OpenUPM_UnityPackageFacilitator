@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Ping 
 {
-    public static void PingFolder(string relativeFolderName)
+    public static void PingFolder(string relativeFolderName, bool fromAssets)
     {
         if (relativeFolderName[relativeFolderName.Length - 1] == '/')
             relativeFolderName = relativeFolderName.Substring(0, relativeFolderName.Length - 1);
-        UnityEngine.Object obj = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/" + relativeFolderName, typeof(UnityEngine.Object));
+        
+        UnityEngine.Object obj = UnityEditor.AssetDatabase.LoadAssetAtPath((fromAssets?"Assets/":"") + relativeFolderName, typeof(UnityEngine.Object));
         Selection.activeObject = obj;
         EditorGUIUtility.PingObject(obj);
 

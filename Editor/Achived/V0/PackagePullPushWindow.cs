@@ -128,7 +128,7 @@ public class PackagePullPushWindow : EditorWindow
 
             GUILayout.EndHorizontal();
 
-            UnityPackageEditorDrawer.DrawPackageDownUpButton(GetPathOfFolder(), m_pushPull.m_gitUrl, true);
+           // UnityPackageEditorDrawer.DrawPackageDownUpButton(GetPathOfFolder(), m_pushPull.m_gitUrl, true);
             GitLinkOnDisk gd = new GitLinkOnDisk(GetPathOfFolder());
             GitEditorDrawer.DisplayGitCommands(gd);
 

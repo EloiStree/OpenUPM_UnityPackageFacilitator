@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -36,6 +37,8 @@ public class PackageJsonEditor : EditorWindow
         hide = EditorGUILayout.Foldout(hide, hide ? "→ Package.json" : "↓ Package.json", EditorStyles.boldLabel);
         if (!hide)
         {
+            GUILayout.Label("Found Pack: " + package.Exist(), EditorStyles.boldLabel);
+            GUILayout.Label("Found Git: " + package.GetLinkedGit().Exist(), EditorStyles.boldLabel);
             //GUILayout.Label("Read Me:", EditorStyles.boldLabel);
             //readMeText = EditorGUILayout.TextArea(readMeText, GUILayout.MinHeight(100));
             //GUILayout.BeginHorizontal();
@@ -57,5 +60,15 @@ public class PackageJsonEditor : EditorWindow
             //}
             //GUILayout.EndHorizontal();
         }
+    }
+
+    internal static void DrawEditorDefaultInterface(PackageJsonFileStream m_packageTargeted, ref GitLinkOnDisk m_targetedGit, ref object m_packageBuilder, ref object m_hidePackageBuilder)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static void DrawEditorDefaultInterface(PackageJsonFileStream m_packageTargeted, ref GitLinkOnDisk m_targetedGit, ref PackageBuildInformation m_packageBuilder, ref object m_hidePackageBuilder)
+    {
+        throw new NotImplementedException();
     }
 }

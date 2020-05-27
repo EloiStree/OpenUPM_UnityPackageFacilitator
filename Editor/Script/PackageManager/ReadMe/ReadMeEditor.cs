@@ -34,6 +34,8 @@ public class ReadMeEditor : EditorWindow
         GUILayout.Label("Read Me: " + m_selector.GetRelativePath(false), EditorStyles.boldLabel);
         ReadMeFileStream f = ReadMeUtility.GetReadMeFile(m_selector);
         QuickGit.GetGitInParents(m_selector.GetAbsolutePath(false),QuickGit.PathReadDirection.LeafToRoot, out m_gitLink);
+
+        //QuickGit.GetGitInDirectory(m_selector.GetAbsolutePath(false), out m_gitLink, true);
         DrawEditorDefaultInterface(f, ref m_gitLink, ref m_text, ref m_hide) ;
 
     }
@@ -44,6 +46,7 @@ public class ReadMeEditor : EditorWindow
         if (!hide)
         {
             GUILayout.Label("Read Me:", EditorStyles.boldLabel);
+            GUILayout.Label("Linked git:" +(gitLink==null?"None":gitLink.GetName()), EditorStyles.boldLabel); ;
             readMeText = EditorGUILayout.TextArea(readMeText, GUILayout.MinHeight(100));
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Create Default"))

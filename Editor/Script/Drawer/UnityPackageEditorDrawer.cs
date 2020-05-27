@@ -110,35 +110,28 @@ public class UnityPackageEditorDrawer
         enableStyle.normal.textColor = new Color(0f, 0.4f, 0f);
         return enableStyle;
     }
-    public static  void DrawPackageDownUpButton(string directoryPath, string gitUrl, bool affectPackage = true)
+    public static  void DrawPackageDownUpButton(GitLinkOnDisk disk, bool affectPackage = true)
     {
-
+        if (!disk.HasUrl()) return;
         
-        bool isDirectoryCreated = Directory.Exists(directoryPath);
+        bool isDirectoryCreated = Directory.Exists(disk.GetDirectoryPath());
         string folderUrl = "";
-        bool isGitFolderPresent = QuickGit.GetGitUrl(directoryPath, out folderUrl);
+        bool isGitFolderPresent = QuickGit.GetGitUrl(disk.GetUrl(), out folderUrl);
         GUIStyle disableStyle = GetDisableStyle();
         GUIStyle enableStyle = GetEnableStyle();
 
-        //   string[] options = new string[]
-        //   {
-        //"Affect package", "Just Down or Upload"
-        //   };
-        //affectPackageManager = EditorGUILayout.Popup( affectPackageManager, options, GUILayout.Width(200));
-        //affectPackage = affectPackageManager == 0;
 
         GUILayout.BeginHorizontal();
-        bool downAllow = true;// isDirectoryCreated;
+        bool downAllow = true;
         if (GUILayout.Button("Down", downAllow ? enableStyle : disableStyle))
         {
-            //if (downAllow)
-                UnityPackageUtility.Down(directoryPath, gitUrl, affectPackage);
+             UnityPackageUtility.Down(disk.GetDirectoryPath(), disk.GetUrl(), affectPackage);
         }
         bool upAllow = isDirectoryCreated && isGitFolderPresent;
         if (GUILayout.Button("Up", upAllow ? enableStyle : disableStyle))
         {
             if (upAllow)
-                UnityPackageUtility.Up(directoryPath, affectPackage);
+              UnityPackageUtility.Up(disk.GetDirectoryPath(), affectPackage);
         }
         GUILayout.EndHorizontal();
     }
