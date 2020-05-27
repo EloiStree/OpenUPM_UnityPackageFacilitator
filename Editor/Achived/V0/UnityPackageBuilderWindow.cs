@@ -10,7 +10,7 @@ class UnityPackageBuilderWindow : EditorWindow
 
     
 
-    [MenuItem("Window/Package Utility/Archive/Create Package")]
+    [MenuItem("Window/Package Utility/Archive/Create Package",false, 100)]
     public static void ShowWindow()
     {
         UnityPackageBuilderWindow win =(UnityPackageBuilderWindow) EditorWindow.GetWindow(typeof(UnityPackageBuilderWindow));

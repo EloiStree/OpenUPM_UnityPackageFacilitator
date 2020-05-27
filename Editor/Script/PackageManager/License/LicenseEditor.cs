@@ -12,7 +12,7 @@ public class LicenseEditor : EditorWindow
     private string m_licenseLink;
     private bool m_hide;
 
-    [MenuItem("Window/Package Utility/License")]
+    [MenuItem("Window/Package Utility/Window/License", false, 20)]
     static void Init()
     {
         LicenseEditor window = (LicenseEditor) EditorWindow.GetWindow(typeof(LicenseEditor));

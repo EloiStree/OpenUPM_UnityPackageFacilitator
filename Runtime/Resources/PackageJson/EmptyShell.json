@@ -1,0 +1,32 @@
+{                                                                                
+  "name": "country.company.packagename",                              
+  "displayName": "",                        
+  "version": "0.0.1",                         
+  "unity": "2018.1",                             
+  "unityRelease": "",                             
+  "description": "",                         
+  "keywords": ["",""],                       
+  "dependencies":{},     
+  "relatedPackages":{
+  "be.company.related": "0.0.0"
+  },     
+  "samples" : [
+      {
+        "displayName":"" ,
+        "description":"" ,
+        "path":"Samples~/Default"
+    }],     
+  "author" : {
+    "name":"",
+    "mail":"",
+    "url":""
+  },   
+
+  "repository":{
+    "type":"Git",
+    "url":"https:// ... .git",
+    "footprint":"",
+    "revision":""
+    },     
+  "category": "Script"                   
+} 

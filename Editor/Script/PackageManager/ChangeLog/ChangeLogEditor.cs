@@ -14,7 +14,7 @@ public class ChangeLogEditor : EditorWindow
     private string m_logs = "";
     private bool m_hide;
 
-    [MenuItem("Window/Package Utility/Change Log")]
+    [MenuItem("Window/Package Utility/Window/Change Log", false, 20)]
     static void Init()
     {
         ChangeLogEditor window = (ChangeLogEditor)EditorWindow.GetWindow(typeof(ChangeLogEditor));

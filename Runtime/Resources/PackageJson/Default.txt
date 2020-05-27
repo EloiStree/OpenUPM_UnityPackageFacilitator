@@ -1,15 +1,19 @@
-# How to use: ##PROJECTNAME##
-   
-Add the following line to the [UnityRoot]/Packages/manifest.json    
-``` json     
-"##PACKAGENAMESPACEID##":"##GITURL##",    
-```    
---------------------------------------    
-   
-Feel free to support this work: ##PATREON## ##PAYPAL##   
-If you need assistance: ##DISCORD##   
-   
---------------------------------------    
-``` json     
-##PACKAGEJSON##                                                                             
-```    
+{                                                                                
+  "name":           "country.company.heymyfriendyoulikepatato",                              
+  "displayName":    "Hey My Friend You Like Patato",                        
+  "version":        "0.0.2",                         
+  "unity":          "2018.1",                             
+  "unityRelease":   "",                             
+  "description":    "Hey man do you like Patato ?",                         
+  "keywords":       ["Script","Tool"],                       
+  "dependencies":{  },     
+  "relatedPackages":{
+        "be.eloistree.example2": "0.0.0"
+  }, 
+  "author" : {
+        "name":"Vodka French Fries",
+        "mail":"lovepatato@gmail.com",
+        "url":"https://youtu.be/5XRiGi1eofQ"
+    },    
+        "category": "Script"                   
+} 

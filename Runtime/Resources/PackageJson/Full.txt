@@ -1,15 +1,39 @@
-# How to use: ##PROJECTNAME##
-   
-Add the following line to the [UnityRoot]/Packages/manifest.json    
-``` json     
-"##PACKAGENAMESPACEID##":"##GITURL##",    
-```    
---------------------------------------    
-   
-Feel free to support this work: ##PATREON## ##PAYPAL##   
-If you need assistance: ##DISCORD##   
-   
---------------------------------------    
-``` json     
-##PACKAGEJSON##                                                                             
-```    
+{                                                                                
+  "name": "country.company.heymyfriendyoulikepatato",                              
+  "displayName": "Hey My Friend You Like Patato",                        
+  "version": "0.0.2",                         
+  "unity": "2018.1",                             
+  "unityRelease": "",                             
+  "description": "Hey man do you like Patato ?",                         
+  "keywords": ["Script","Tool"],                       
+  "dependencies":{
+      "be.eloistree.example1": "0.0.0",
+      "be.eloistree.example1": "0.0.0"
+  },     
+  "relatedPackages":{
+    "be.eloistree.example2": "0.0.0",
+    "be.eloistree.example2": "0.0.0"
+  },     
+  "samples" : [
+{
+"displayName":"Patato Demo" ,
+"description":"Hey my friend you like patato ?" ,
+"path":"Samples~/PatatoSample"
+},
+
+{
+"displayName":"More Patato Demo" ,
+"description":"Big demo with plenty of patato." ,
+"path":"Samples~/BigPatatoSample"
+}],     
+  "author" : {
+"name":"Vodka French Fries",
+"mail":"lovepatato@gmail.com",
+"url":"https://youtu.be/5XRiGi1eofQ"},     
+  "repository":{
+"type":"Git",
+"url":"https://gitlab.com/eloistree/HeyMyFriendYouLikePatato.git",
+"footprint":"",
+"revision":"fe4bea262ad15d8bf321a0c56cae801ec6c90325"},     
+  "category": "Script"                   
+} 

@@ -12,7 +12,7 @@ public class ManifestJsonEditor : EditorWindow
         internal string m_manifestaddNamespace="";
         internal string m_manifestaddgitlink="";
     }
-    [MenuItem("Window/Package Utility/Manifest")]
+    [MenuItem("Window/Package Utility/2. Manifest", false, 10)]
     static void Init()
     {
         ManifestJsonEditor window = (ManifestJsonEditor)EditorWindow.GetWindow(typeof(ManifestJsonEditor));

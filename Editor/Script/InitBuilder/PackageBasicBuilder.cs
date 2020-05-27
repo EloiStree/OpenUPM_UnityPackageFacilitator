@@ -10,14 +10,37 @@ public class PackageBasicBuilder : EditorWindow
 
 
 
-    [MenuItem("Window/Package Utility/Init. & Struct")]
+    [MenuItem("Window/Package Utility/0. Init. & Struct", false, 10)]
     public static void ShowWindow()
     {
-        PackageBasicBuilder win = (PackageBasicBuilder)EditorWindow.GetWindow(typeof(PackageBasicBuilder));
-        win.name = "Package Init Builder";
-        win.titleContent.text = "Package Init Builder";
+        PackageBasicBuilder window = (PackageBasicBuilder)EditorWindow.GetWindow(typeof(PackageBasicBuilder));
+        window.Show();
+       
+        window.name = "Package Init Builder";
+        window.titleContent.text = "Package Init Builder"; 
+        window.RefreshAccess();
+        try
+        {
+            string json = WindowPlayerPref.Load("PackageBasicBuilder");
+            Info i = JsonUtility.FromJson<Info>(json);
+            if (i != null)
+               m_info = i;
+        }
+        catch (Exception) { }
+        Debug.Log("Load");
     }
 
+    private void RefreshAccess()
+    {
+        m_info.m_selector = new UnityPathSelectionInfo();
+        m_info.m_packageBuilder = new PackageBuildInformation();
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Save");
+        WindowPlayerPref.Save("PackageBasicBuilder", JsonUtility.ToJson(m_info));
+    }
 
     private static void SelectAsset(PackageBuildInformationObject package)
     {
@@ -62,7 +85,7 @@ public class PackageBasicBuilder : EditorWindow
     string m_whereToCreateScritpable = "Facilitator";
 
 
-    public Info m_info = new Info();
+    public static Info m_info = new Info();
     public class Info {
         public bool m_selectorpathFound;
         public UnityPathSelectionInfo m_selector;
@@ -71,13 +94,13 @@ public class PackageBasicBuilder : EditorWindow
         public PackageBuildInformation m_packageBuilder= new PackageBuildInformation();
         public bool m_hidePackageBuilder;
         public bool m_hideGitUtilitary;
-        public int m_dropDownSelectionServer;
-        public string m_projectNameToCreate;
-        public string m_userNameToCreateGit;
-        public string m_tmpFolderToCreate;
-        public string m_tmpCloneProposed;
-        internal bool m_tmp_rawDisplayJsonPackage;
-        internal string m_tmpPackageJsonProposition;
+        public int m_dropDownSelectionServer=0;
+        public string m_projectNameToCreate="";
+        public string m_userNameToCreateGit="";
+        public string m_tmpFolderToCreate="";
+        public string m_tmpCloneProposed="";
+        internal bool m_tmp_rawDisplayJsonPackage=true;
+        internal string m_tmpPackageJsonProposition="";
     }
 
     public void ResetInfo()
@@ -87,6 +110,28 @@ public class PackageBasicBuilder : EditorWindow
 
     void OnGUI()
     {
+
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Back-up:", EditorStyles.boldLabel);
+        if (GUILayout.Button("Save"))
+        {
+            WindowPlayerPref.Save("PackageBasicBuilderBackup", JsonUtility.ToJson(m_info));
+        }
+        if (WindowPlayerPref.Has("PackageBasicBuilderBackup") && GUILayout.Button("Load"))
+        {
+            try
+            {
+                string json = WindowPlayerPref.Load("PackageBasicBuilderBackup");
+                Info i = JsonUtility.FromJson<Info>(json);
+                if (i != null)
+                    m_info = i;
+            }
+            catch (Exception) { }
+        }
+
+        EditorGUILayout.EndHorizontal();
+
         m_info.m_selector = null;
         m_info.m_targetedGit = null;
         UnityPathSelectionInfo.Get(out m_info.m_selectorpathFound, out m_info.m_selector);
@@ -99,6 +144,9 @@ public class PackageBasicBuilder : EditorWindow
 
         EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
         m_info.m_packageTargeted = PackageJsonUtility.GetPackageFile(m_info.m_selector);
+
+    
+
         if (GUILayout.Button("Select: " + m_info.m_selector.GetSelectName(false) )) {
             m_info.m_selector.Open();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -20,5 +21,11 @@ public class WindowPlayerPref
         if (File.Exists(path))
             return  File.ReadAllText(path);
         return "";
+    }
+
+    public static bool Has(string id)
+    {
+        return File.Exists(Application.persistentDataPath + "/" + id + ".txt");
+
     }
 }

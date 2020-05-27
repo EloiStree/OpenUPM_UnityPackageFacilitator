@@ -31,24 +31,28 @@ public class AllBuilderInOnEditor : EditorWindow
         internal bool m_tmpReadMeHide;
         internal bool m_hideHiddenTool;
     }
-    [MenuItem("Window/Package Utility/All")]
+    [MenuItem("Window/Package Utility/1. Update & Save", false, 10)]
     static void Init()
     {
         AllBuilderInOnEditor window = (AllBuilderInOnEditor)EditorWindow.GetWindow(typeof(AllBuilderInOnEditor));
         window.Show();
 
 
+
+        window.titleContent = new GUIContent ("All Package Info");
+            window.RefreshAccess();
+
+
         try
         {
-        string json =WindowPlayerPref.Load("PackageManagerAllBuildInOnEditor");
+            string json = WindowPlayerPref.Load("PackageManagerAllBuildInOnEditor");
             Info i = JsonUtility.FromJson<Info>(json);
-            if (i != null) 
+            if (i != null)
                 window.m_info = i;
-            window.titleContent = new GUIContent ("All Package Info");
-            window.RefreshAccess();
-            Debug.Log("Load");
         }
         catch (Exception) { }
+        Debug.Log("Load");
+       
 
 
     }

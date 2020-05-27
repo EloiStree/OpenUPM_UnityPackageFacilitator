@@ -39,7 +39,7 @@ public class ChangeLogUtility
 
         string toAppend = "";
 
-        toAppend += string.Format("\n\n## {0} - {1}\n", OnlyDigitsAndPoints(version), DateTime.Now.ToString("yyyy’-‘MM’-‘dd"));
+        toAppend += string.Format("\n\n## {0} - {1}\n", OnlyDigitsAndPoints(version), DateTime.Now.ToString("yyyy-MM-dd"));
         toAppend += "### "+title+ "\n";
         toAppend += StartWithDash(logs);
         toAppend += "\n";
