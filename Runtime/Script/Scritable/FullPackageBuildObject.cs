@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "FullPackageBuild", menuName = "Facilitator/Create/Full Package Build", order = 1)]
+//[CreateAssetMenu(fileName = "FullPackageBuild", menuName = "Facilitator/Create/Full Package Build", order = 1)]
 public class FullPackageBuildObject : ScriptableObject
 {
 

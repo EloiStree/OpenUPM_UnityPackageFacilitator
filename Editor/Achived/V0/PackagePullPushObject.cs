@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PullPushLink", menuName = "Facilitator/Create/Pull Push Link", order = 1)]
+//[CreateAssetMenu(fileName = "PullPushLink", menuName = "Facilitator/Create/Pull Push Link", order = 1)]
 public class PackagePullPushObject : ScriptableObject
 {
 

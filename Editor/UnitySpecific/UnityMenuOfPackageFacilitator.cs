@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEngine;
 
 public static class UnityMenuOfPackageFacilitator
 {
@@ -13,6 +14,12 @@ public static class UnityMenuOfPackageFacilitator
     {
         UnityPackageUtility.OpenManifestFile();
     }
-   
+    [MenuItem("Window /Package Utility/What? Help !?", false, 0)]
+    public static void OpenHelloPackageTutorial()
+    {
+        Application.OpenURL("http://eloistree.page.link/hellopackage");
+    }
+
+    
 
 }
