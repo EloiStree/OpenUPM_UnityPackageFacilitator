@@ -15,7 +15,7 @@ public class AllBuilderInOnEditor : EditorWindow
         public GitLinkOnDisk m_gitLink;
         public ReadMeFileStream m_readMe;
         public SampleDirectoryStream m_sample;
-        public DocumentDirectoryStream m_documentation;
+        public DocumentationDirectoryStream m_documentation;
         public string m_tmpReadMeText="";
         public string m_tmpLicenseLink = "";
         public string m_tmpLicenseText = "";
@@ -123,7 +123,7 @@ public class AllBuilderInOnEditor : EditorWindow
         {
             DocumentationUtility.Create(m_selector, false); Refresh();
         }
-        if (GUILayout.Button("Sample"))
+        if (GUILayout.Button("Samples"))
         {
             SampleUtility.Create(m_selector, false);
             Refresh();
@@ -132,11 +132,11 @@ public class AllBuilderInOnEditor : EditorWindow
         GUILayout.BeginHorizontal();
         GUILayout.Label("Toogle:", EditorStyles.boldLabel);
         if (GUILayout.Button("Documentation")) { DocumentationUtility.Toggle(m_selector); Refresh(); }
-        if (GUILayout.Button("Sample")) { SampleUtility.Toggle(m_selector); Refresh(); }
+        if (GUILayout.Button("Samples")) { SampleUtility.Toggle(m_selector); Refresh(); }
         GUILayout.EndHorizontal(); GUILayout.BeginHorizontal();
         GUILayout.Label("Delete:", EditorStyles.boldLabel);
         if (GUILayout.Button("Documentation")) { m_info.m_documentation.Delete(); Refresh(); }
-        if (GUILayout.Button("Sample")) { m_info.m_sample.Delete(); Refresh(); }
+        if (GUILayout.Button("Samples")) { m_info.m_sample.Delete(); Refresh(); }
         GUILayout.EndHorizontal();
     }
 

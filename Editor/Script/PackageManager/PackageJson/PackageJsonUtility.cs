@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -9,14 +10,23 @@ public class PackageJsonUtility
     {
         return new PackageJsonFileStream(selector.GetAbsolutePath(true));
     }
+
 }
 
 public class PackageJsonFileStream : FileStream {
-    public string m_rootPath="";
+     string m_rootPath="";
     public PackageJsonFileStream(string packageAndGitRoot) : base(packageAndGitRoot+"/package.json") {
         m_rootPath = packageAndGitRoot;
     }
 
 
-    public GitLinkOnDisk GetLinkedGit() { return new GitLinkOnDisk(m_rootPath); }   
+    public bool HasGitLinked() {
+        return QuickGit.IsPathHasGitRootFolder(m_rootPath);
+    }
+    public GitLinkOnDisk GetLinkedGit() { return new GitLinkOnDisk(m_rootPath); }
+
+    public string GetPackageProjectRoot() {
+        return m_rootPath;
+    }
+    
 }

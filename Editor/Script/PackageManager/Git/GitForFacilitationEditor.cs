@@ -119,6 +119,22 @@ public class GitForFacilitationEditor : MonoBehaviour
 
 
     }
+
+    public static void ProposeCloneProject(UnityPathSelectionInfo selector, ref string cloneProposed)
+    {
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Clone"))
+        {
+
+            QuickGit.Clone(cloneProposed, selector.GetAbsolutePath(true) );
+        }
+        cloneProposed = GUILayout.TextField(
+                cloneProposed);
+
+
+        GUILayout.EndHorizontal();
+    }
+
     public static void RefreshDatabase()
     {
         AssetDatabase.Refresh();

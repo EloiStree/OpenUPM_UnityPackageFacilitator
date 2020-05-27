@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SampleUtility : MonoBehaviour
@@ -15,17 +16,37 @@ public class SampleUtility : MonoBehaviour
         SampleDirectoryStream tmp = new SampleDirectoryStream(selector.GetAbsolutePath(true));
         tmp.Create(asHidden);
     }
+
+
     public static void Toggle(UnityPathSelectionInfo selector)
     {
         SampleDirectoryStream tmp = new SampleDirectoryStream(selector.GetAbsolutePath(true));
         if (tmp.Exist())
             tmp.ToggleVisiblity();
     }
+
+    internal static string[] GetRelativeFoldersIn(SampleDirectoryStream samplesDir)
+    {
+        if (!samplesDir.Exist())
+            return new string[0];
+        string path = samplesDir.GetCurrentPath();
+        string [] folders =  Directory.GetDirectories(path);
+        for (int i = 0; i < folders.Length; i++)
+        {
+            folders[i] = (samplesDir.IsVisible() ? "Samples/" : "Samples~/")+UnityPaths.GetRelativePath(path, folders[i]);
+            
+                Debug.Log(">>" + folders[i]);
+        }
+        return folders;
+        
+
+
+    }
 }
 
 public class SampleDirectoryStream : HiddenDirectoryStream
 {
-    public SampleDirectoryStream(string absoluteFolderPath) : base(absoluteFolderPath, "Sample")
+    public SampleDirectoryStream(string absoluteFolderPath) : base(absoluteFolderPath, "Samples")
     {
 
     }

@@ -409,7 +409,7 @@ class UnityPackageBuilderWindow : EditorWindow
             if (m_fullPackage.m_links)
                 m_linksAdvice = m_fullPackage.m_links;
             if (m_fullPackage.m_package && m_absolutPathOfFolderToWorkOn == "")
-                m_absolutPathOfFolderToWorkOn = m_fullPackage.m_package.m_data.m_projectId;
+                m_absolutPathOfFolderToWorkOn = m_fullPackage.m_package.m_data.m_projectAlphNumId;
             RefreshDatabase();
         }
         m_previousFullPackage = m_fullPackage;
@@ -604,7 +604,7 @@ class UnityPackageBuilderWindow : EditorWindow
             {
 
                 string path = AssetDatabase.GetAssetPath(m_packageInformation.GetInstanceID());
-                AssetDatabase.RenameAsset(path, m_packageInformation.m_data.m_projectId);
+                AssetDatabase.RenameAsset(path, m_packageInformation.m_data.m_projectAlphNumId);
             }
         }
     }

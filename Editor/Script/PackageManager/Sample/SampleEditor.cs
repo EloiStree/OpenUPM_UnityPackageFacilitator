@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -22,6 +23,13 @@ public class SampleEditor : EditorWindow
         if (GUILayout.Button("Refresh")) { }
         GUILayout.Label("Base Settings", EditorStyles.boldLabel);
         m_info.m_yo = EditorGUILayout.TextField("Text Field", m_info.m_yo);
+
+    }
+
+    public static void DrawInfoAboutInterface(SampleDirectoryStream sample)
+    {
+
+
 
     }
 }

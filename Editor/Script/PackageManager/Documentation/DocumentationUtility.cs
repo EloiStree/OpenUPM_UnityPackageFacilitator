@@ -8,29 +8,28 @@ using UnityEngine.WSA;
 
 public class DocumentationUtility : MonoBehaviour
 {
-    public static DocumentDirectoryStream GetDocumentFolder(UnityPathSelectionInfo selector)
+    public static DocumentationDirectoryStream GetDocumentFolder(UnityPathSelectionInfo selector)
     {
-        return new DocumentDirectoryStream(selector.GetAbsolutePath(true));
+        return new DocumentationDirectoryStream(selector.GetAbsolutePath(true));
     }
 
     public static void Create(UnityPathSelectionInfo selector, bool asHidden)
     {
-        DocumentDirectoryStream tmp = new DocumentDirectoryStream(selector.GetAbsolutePath(true));
+        DocumentationDirectoryStream tmp = new DocumentationDirectoryStream(selector.GetAbsolutePath(true));
         tmp.Create(asHidden);
     }
     public static void Toggle(UnityPathSelectionInfo selector)
     {
         Debug.Log("Test>:" + selector.GetAbsolutePath(true));
-        DocumentDirectoryStream tmp = new DocumentDirectoryStream(selector.GetAbsolutePath(true));
+        DocumentationDirectoryStream tmp = new DocumentationDirectoryStream(selector.GetAbsolutePath(true));
         if(tmp.Exist())
         tmp.ToggleVisiblity(); 
     }
 
-   
 }
-public class DocumentDirectoryStream : HiddenDirectoryStream
+public class DocumentationDirectoryStream : HiddenDirectoryStream
 {
-    public DocumentDirectoryStream(string absoluteFolderPath): base(absoluteFolderPath,  "Documentation")
+    public DocumentationDirectoryStream(string absoluteFolderPath): base(absoluteFolderPath,  "Documentation")
     { 
     
     }

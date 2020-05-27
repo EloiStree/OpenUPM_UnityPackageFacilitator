@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using UnityEngine;
 using System.Linq;
+using UnityEditor.PackageManager;
 
 
 #if UNITY_EDITOR
@@ -36,7 +37,7 @@ public class PackageBuilder
         string path = "";
         string absFile, absFolder;
 
-       GetAssemblyFilepath(aboslutePath, package.m_assemblyRuntime,out absFolder, out absFile);
+        GetAssemblyFilepath(aboslutePath, package.m_assemblyRuntime,out absFolder, out absFile);
 
         Directory.CreateDirectory(absFolder);
         File.Delete(absFile);
@@ -122,11 +123,9 @@ public class PackageBuilder
     public  static string GetPackageAsJson( PackageBuildInformation packageInfo,  string fileName = "package.json")
     {
         string packageJson = "";
-        string[] dependenciesModificatedForJson = new string[packageInfo.m_otherPackageDependency.Length];
-        for (int i = 0; i < packageInfo.m_otherPackageDependency.Length; i++)
-        {
-            dependenciesModificatedForJson[i] = "\"" + packageInfo.m_otherPackageDependency[i] + "\": \"0.0.1\"";
-        }
+        string[] dependenciesModificatedForJson = CompressDependenciesToString(packageInfo.m_otherPackageDependency);
+        string[] dependenciesRelationModificatedForJson = CompressDependenciesToString(packageInfo.m_otherPackageRelation);
+
         string[] keywordForJson = new string[packageInfo.m_keywords.Length];
         for (int i = 0; i < packageInfo.m_keywords.Length; i++)
         {
@@ -138,16 +137,60 @@ public class PackageBuilder
         packageJson += "\n  \"displayName\": \"" + packageInfo.m_projectName + "\",                        ";
         packageJson += "\n  \"version\": \"" + packageInfo.m_packageVersion + "\",                         ";
         packageJson += "\n  \"unity\": \"" + packageInfo.m_unityVersion + "\",                             ";
+        packageJson += "\n  \"unityRelease\": \"" + packageInfo.m_unityVersionRelease + "\",                             ";
         packageJson += "\n  \"description\": \"" + packageInfo.m_description + "\",                         ";
         packageJson += "\n  \"keywords\": [" + string.Join(",", keywordForJson) + "],                       ";
-        packageJson += "\n  \"category\": \"" + packageInfo.m_category.ToString() + "\",                   ";
-        packageJson += "\n  \"dependencies\":{" + string.Join(",", dependenciesModificatedForJson) + "}     ";
+        packageJson += "\n  \"dependencies\":{" + string.Join(",", dependenciesModificatedForJson) + "},     ";
+        packageJson += "\n  \"relatedPackages\":{" + string.Join(",", dependenciesRelationModificatedForJson) + "},     ";
+        packageJson += "\n  \"samples\" : [" + GetSamplesCompress(packageInfo.m_samples.m_samples.ToArray()) + "],     ";
+        packageJson += "\n  \"author\" : {" +
+            "\n\"name\":\"" + packageInfo.m_author.m_name + "\"," +
+            "\n\"mail\":\"" + packageInfo.m_author.m_mail + "\"," +
+            "\n\"url\":\"" + packageInfo.m_author.m_url + "\"" + "},     "; 
+        
+        packageJson += "\n  \"repository\":{" +
+           "\n\"type\":\"" + packageInfo.m_repositoryLink.m_type + "\"," +
+           "\n\"url\":\"" + packageInfo.m_repositoryLink.m_url + "\"," +
+           "\n\"footprint\":\"" + packageInfo.m_repositoryLink.m_footprint + "\"," +
+           "\n\"revision\":\"" + packageInfo.m_repositoryLink.m_revision + "\"" + "},     ";
+
+
+        packageJson += "\n  \"category\": \"" + packageInfo.m_category.ToString().Replace("_", " ") + "\"                   ";
         packageJson += "\n} ";
 
         return packageJson;
     }
 
+   
+    private static string GetSamplesCompress(SampleInfo[] samples)
+    {
+        string[] tokens = new string[samples.Length];
+        string result = "";
+        for (int i = 0; i < samples.Length; i++)
+        {
+            result = "";
+            result += "\n{";
+            result += string.Format("\n\"displayName\":\"{0}\" ,", samples[i].m_displayName);
+            result += string.Format("\n\"description\":\"{0}\" ,", samples[i].m_description);
+            result += string.Format("\n\"path\":\"{0}\"", UnityPaths.ReplaceByBackslash( samples[i].m_assetRelativePath));
+            result += "\n}";
+            tokens[i] = result;
+        }
+        return string.Join(",\n", tokens);
+    }
 
+    private static string[] CompressDependenciesToString(PackageDependencyId[] dependencies)
+    {
+        string[] dependenciesModificatedForJson = new string[dependencies.Length];
+        for (int i = 0; i < dependencies.Length; i++)
+        {
+            dependenciesModificatedForJson[i] =
+                "\"" + dependencies[i].m_nameId +
+                "\": \"" + dependencies[i].GetVersionOrUrl() + "\"";
+        }
+
+        return dependenciesModificatedForJson;
+    }
 }
 
 
@@ -177,12 +220,12 @@ public class AssemblyBuildInformation
             if (m_assemblyType == AssemblyBuildInformation.AssemblyType.Editor)
             {
                 folder= "/Editor";
-                file =  "/Editor/com.unity." + m_packageNamespaceId + ".Editor.asmdef";
+                file =  "/Editor/" + m_packageNamespaceId + ".Editor.asmdef";
             }
             else
             {
                 folder = "/Runtime/";
-                file =  "/Runtime/com.unity." + m_packageNamespaceId + ".Runtime.asmdef";
+                file =  "/Runtime/" + m_packageNamespaceId + ".Runtime.asmdef";
             }
         
     }
@@ -193,7 +236,7 @@ public class AssemblyBuildInformation
 public class PackageBuildInformation
 {
     [Header("Project info")]
-    public string m_projectId;
+    public string m_projectAlphNumId;
     public string m_projectName;
     public string m_country = "com";
     public string m_company = "youcompany";
@@ -204,15 +247,22 @@ public class PackageBuildInformation
     public CatergoryType m_category = CatergoryType.Script;
     public string m_packageVersion = "0.0.1";
     public string m_unityVersion = "2018.1";
-    [Tooltip("com.yourcompany.example")]
+
     public PackageDependencyId[] m_otherPackageDependency = new PackageDependencyId[] { };
+    public PackageDependencyId[] m_otherPackageRelation = new PackageDependencyId[] { };
     public AssemblyBuildInformation m_assemblyRuntime = new AssemblyBuildInformation() { m_assemblyType = AssemblyBuildInformation.AssemblyType.Unity };
     public AssemblyBuildInformation m_assemblyEditor = new AssemblyBuildInformation() { m_assemblyType = AssemblyBuildInformation.AssemblyType.Editor };
-    public AuthorInformation m_author;
+    public AuthorInformation m_author = new AuthorInformation();
+    public GitRepository m_repositoryLink = new GitRepository();
+    public SamplesInfo m_samples= new SamplesInfo();
+    internal string m_unityVersionRelease;
 
     public string GetProjectNamespaceId(bool useLower = false)
     {
-        string id = string.Format("{0}.{1}.{2}", m_country, m_company, m_projectId);
+        string id =string.Format("{0}.{1}.{2}",
+            UnityPaths.AlphaNumeric(m_country),
+            UnityPaths.AlphaNumeric(m_company),
+            UnityPaths.AlphaNumeric(m_projectAlphNumId));
         if (useLower)
             id = id.ToLower();
         return id;
@@ -221,12 +271,12 @@ public class PackageBuildInformation
 
     internal void CheckThatAssemblyAreDefined()
     {
-        m_assemblyRuntime.m_packageName = this.m_projectId;
-        m_assemblyRuntime.m_packageNamespaceId = this.m_projectId;
+        m_assemblyRuntime.m_packageName = this.m_projectAlphNumId;
+        m_assemblyRuntime.m_packageNamespaceId = this.GetProjectNamespaceId();
         m_assemblyRuntime.m_assemblyType = AssemblyBuildInformation.AssemblyType.Unity;
 
-        m_assemblyEditor.m_packageName = this.m_projectId + "Editor";
-        m_assemblyEditor.m_packageNamespaceId = this.m_projectId+"Editor";
+        m_assemblyEditor.m_packageName = this.m_projectAlphNumId + "Editor";
+        m_assemblyEditor.m_packageNamespaceId = this.GetProjectNamespaceId() +"Editor";
         m_assemblyEditor.m_assemblyType = AssemblyBuildInformation.AssemblyType.Editor;
         CheckThatRuntimeIsInEditor(m_assemblyRuntime, m_assemblyEditor);
     }
@@ -244,21 +294,48 @@ public class PackageBuildInformation
 
     internal string GetProjectNameId(bool toLower)
     {
-        string id = m_projectId.Replace(" ", "");
+        string id = m_projectAlphNumId.Replace(" ", "");
         if (toLower)
             id = id.ToLower();
         return id;
 
     }
 
-    public enum CatergoryType { Script }
+    public enum CatergoryType { Script, Libraries,Cinematography,Text_Rendering,Unity_Test_Framework, Other }
 }
 
 [System.Serializable]
-public class AuthorInformation {
-    public string m_name;
-    public string m_url;
-    public string m_mail;
+public class AuthorInformation
+{
+    public string m_name="";
+    public string m_url="";
+    public string m_mail="";
 
+}
+[System.Serializable]
+public class GitRepository
+{
+    public string m_url = "";
+    public string m_type = "Git";
+    public string m_revision = "";
+    public string m_footprint = "";
+
+}
+
+[System.Serializable]
+public class SamplesInfo {
+    public List<SampleInfo> m_samples = new List<SampleInfo>();
+}
+
+[System.Serializable]
+public class SampleInfo
+{
+    public string m_displayName = "";
+    public string m_description = "Git";
+    public string m_assetRelativePath = "Samples~/";
+
+    public void ResetDefaultSamplesPath() { 
+      m_assetRelativePath= "Samples~/";
+    }
 }
 

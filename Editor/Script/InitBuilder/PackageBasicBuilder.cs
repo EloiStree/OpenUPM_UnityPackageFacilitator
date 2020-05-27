@@ -68,13 +68,16 @@ public class PackageBasicBuilder : EditorWindow
         public UnityPathSelectionInfo m_selector;
         public PackageJsonFileStream m_packageTargeted;
         public GitLinkOnDisk m_targetedGit;
-        public PackageBuildInformation m_packageBuilder;
+        public PackageBuildInformation m_packageBuilder= new PackageBuildInformation();
         public bool m_hidePackageBuilder;
         public bool m_hideGitUtilitary;
         public int m_dropDownSelectionServer;
         public string m_projectNameToCreate;
         public string m_userNameToCreateGit;
-        internal string m_tmpFolderToCreate;
+        public string m_tmpFolderToCreate;
+        public string m_tmpCloneProposed;
+        internal bool m_tmp_rawDisplayJsonPackage;
+        internal string m_tmpPackageJsonProposition;
     }
 
     public void ResetInfo()
@@ -107,6 +110,7 @@ public class PackageBasicBuilder : EditorWindow
             {
                 QuickGit.CreateLocal(path);
             }
+            GitForFacilitationEditor.ProposeCloneProject(m_info.m_selector, ref m_info.m_tmpCloneProposed);
              GitForFacilitationEditor.ProposeToCreateFolder(m_info.m_selector, ref m_info.m_tmpFolderToCreate);
 
         }
@@ -129,7 +133,9 @@ public class PackageBasicBuilder : EditorWindow
                 GitEditorDrawer.DisplayGitCommands(m_info.m_targetedGit);
                 UnityPackageEditorDrawer.DrawPackageDownUpButton(m_info.m_targetedGit, true);
             }
-            PackageJsonEditor.DrawEditorDefaultInterface(m_info.m_packageTargeted, ref m_info.m_targetedGit, ref m_info.m_packageBuilder, ref m_info.m_hidePackageBuilder);
+            PackageJsonEditor.DrawEditorDefaultInterface(m_info.m_selector, m_info.m_packageTargeted, ref m_info.m_packageBuilder, ref m_info.m_tmpPackageJsonProposition, ref m_info.m_tmp_rawDisplayJsonPackage, ref m_info.m_hidePackageBuilder); ;
+           
+
 
         }
 
@@ -468,7 +474,7 @@ public class PackageBasicBuilder : EditorWindow
             if (m_fullPackage.m_links)
                 m_linksAdvice = m_fullPackage.m_links;
             if (m_fullPackage.m_package && m_absolutPathOfFolderToWorkOn == "")
-                m_absolutPathOfFolderToWorkOn = m_fullPackage.m_package.m_data.m_projectId;
+                m_absolutPathOfFolderToWorkOn = m_fullPackage.m_package.m_data.m_projectAlphNumId;
             //RefreshDatabase();
         }
         m_previousFullPackage = m_fullPackage;
@@ -627,7 +633,7 @@ public class PackageBasicBuilder : EditorWindow
             {
 
                 string path = AssetDatabase.GetAssetPath(m_packageInformation.GetInstanceID());
-                AssetDatabase.RenameAsset(path, m_packageInformation.m_data.m_projectId);
+                AssetDatabase.RenameAsset(path, m_packageInformation.m_data.m_projectAlphNumId);
             }
         }
     }

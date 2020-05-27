@@ -110,13 +110,13 @@ public class UnityPackageEditorDrawer
         enableStyle.normal.textColor = new Color(0f, 0.4f, 0f);
         return enableStyle;
     }
+
     public static  void DrawPackageDownUpButton(GitLinkOnDisk disk, bool affectPackage = true)
     {
         if (!disk.HasUrl()) return;
         
         bool isDirectoryCreated = Directory.Exists(disk.GetDirectoryPath());
-        string folderUrl = "";
-        bool isGitFolderPresent = QuickGit.GetGitUrl(disk.GetUrl(), out folderUrl);
+        bool isGitFolderPresent = disk.HasUrl();
         GUIStyle disableStyle = GetDisableStyle();
         GUIStyle enableStyle = GetEnableStyle();
 
@@ -158,15 +158,15 @@ public class UnityPackageEditorDrawer
         //    AssetDatabase.Refresh();
         //}
 
-        if (string.IsNullOrEmpty(package.m_projectId))
-            package.m_projectId = AlphaNumeric(Application.productName);
+        if (string.IsNullOrEmpty(package.m_projectAlphNumId))
+            package.m_projectAlphNumId = AlphaNumeric(Application.productName);
         if (string.IsNullOrEmpty(package.m_company))
             package.m_company = AlphaNumeric(Application.companyName);
         package.m_country = AlphaNumeric(GUILayout.TextField("" + package.m_country));
         GUILayout.Label(".", GUILayout.Width(5));
         package.m_company = AlphaNumeric(GUILayout.TextField("" + package.m_company));
         GUILayout.Label(".", GUILayout.Width(5));
-        package.m_projectId = AlphaNumeric(GUILayout.TextField("" + package.m_projectId));
+        package.m_projectAlphNumId = AlphaNumeric(GUILayout.TextField("" + package.m_projectAlphNumId));
         GUILayout.EndHorizontal();
         GUILayout.Label("Namespace ID: " + package.GetProjectNamespaceId());
         GUILayout.BeginHorizontal();

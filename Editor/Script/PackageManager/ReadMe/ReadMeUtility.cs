@@ -87,7 +87,15 @@ public class FileStream {
 
     public virtual void Create(string text = "Yeah, you read me :)") { Set(text); }
     public string Get() { return File.ReadAllText(m_pathToFile); }
-    public void Set(string text) { File.WriteAllText(m_pathToFile, text); }
+    public void Set(string text, bool refreshDataBaseAfter=false) {
+       if (File.Exists(m_pathToFile))
+            File.Delete(m_pathToFile);
+       File.WriteAllText(m_pathToFile, text);
+        if(refreshDataBaseAfter)    
+            AssetDatabase.Refresh();
+    }
+
+    public string GetAbsolutePath() { return m_pathToFile; }
 }
 
 public class ReadMeFileStream : FileStream

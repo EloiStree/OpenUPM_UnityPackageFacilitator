@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -24,5 +25,9 @@ public class DocumentationEditor : EditorWindow
         GUILayout.Label("Base Settings", EditorStyles.boldLabel);
         m_info.m_yo = EditorGUILayout.TextField("Text Field", m_info.m_yo);
 
+    }
+
+    public static void DrawInfoAboutInterface(DocumentationDirectoryStream documentation)
+    {
     }
 }
