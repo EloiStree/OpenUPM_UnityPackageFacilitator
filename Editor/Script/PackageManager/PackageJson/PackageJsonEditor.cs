@@ -131,7 +131,7 @@ public class PackageJsonEditor : EditorWindow
             }
             if (GUILayout.Button("Create Files & Folders"))
             {
-                PackageBuilder.CreateUnityPackage(packageTarget.GetPackageProjectRoot(), package);
+              PackageBuilder.CreateUnityPackage(packageTarget.GetPackageProjectRoot(), package);
                 AssetDatabase.Refresh();
             }
         
@@ -148,10 +148,12 @@ public class PackageJsonEditor : EditorWindow
 
 
         GUILayout.BeginHorizontal();
-    
 
-        if (string.IsNullOrEmpty(package.m_projectAlphNumId))
-            package.m_projectAlphNumId = UnityPaths.AlphaNumeric(Application.productName, true);
+
+        if (string.IsNullOrEmpty(package.m_projectAlphNumId)) {
+            // package.m_projectAlphNumId = UnityPaths.AlphaNumeric(Application.productName, true);
+            package.m_projectAlphNumId= selection.GetSelectName(true);
+        }
         if (string.IsNullOrEmpty(package.m_company))
             package.m_company = UnityPaths.AlphaNumeric(Application.companyName);
 
@@ -190,21 +192,15 @@ public class PackageJsonEditor : EditorWindow
 
         GUILayout.Label("Repository Info");
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Git Url: " + package.m_repositoryLink.m_url, GUILayout.MaxWidth(60));
+        GUILayout.Label("Git Url: " , GUILayout.MaxWidth(60));
         
     
-        package.m_repositoryLink.m_url = GUILayout.TextField(package.m_repositoryLink.m_url);
-        if (string.IsNullOrEmpty(package.m_repositoryLink.m_url))
-            package.m_repositoryLink.m_url = gitLinked.GetUrl();
+        package.m_repositoryLink.m_url = GUILayout.TextField(gitLinked.GetUrl());
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Revision: " + package.m_repositoryLink.m_revision, GUILayout.MaxWidth(60));
-        package.m_repositoryLink.m_revision = GUILayout.TextField(package.m_repositoryLink.m_revision);
-        if (string.IsNullOrEmpty(package.m_repositoryLink.m_revision))
-        { 
-            package.m_repositoryLink.m_revision = gitLinked.GetLastRevision();
-        }
-
+        GUILayout.Label("Revision: " , GUILayout.MaxWidth(60));
+        package.m_repositoryLink.m_revision = GUILayout.TextField(gitLinked.GetLastRevision());
+      
         GUILayout.EndHorizontal();
 
 
@@ -264,6 +260,12 @@ public class PackageJsonEditor : EditorWindow
             List<PackageDependencyId> d = dependencies.ToList();
             d.Add(new PackageDependencyId());
             dependencies = d.ToArray();
+        }
+        if (GUILayout.Button("Remove Empty"))
+        {
+            List<PackageDependencyId> d = dependencies.ToList();
+            
+            dependencies =d.Where(k => k.m_nameId != null && k.m_nameId.Length > 0).ToArray();
         }
     }
 

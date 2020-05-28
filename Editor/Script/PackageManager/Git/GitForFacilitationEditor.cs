@@ -53,7 +53,7 @@ public class GitForFacilitationEditor : MonoBehaviour
                         QuickGit.PushLocalToGitLab(gitLink.GetDirectoryPath(), userName, projectNameId, out url);
                         urlToCreate = string.Format("https://gitlab.com/{0}/{1}.git", userName, projectNameId);
 
-                        Application.OpenURL(url);
+                        Application.OpenURL(urlToCreate);
                     }
 
                 }

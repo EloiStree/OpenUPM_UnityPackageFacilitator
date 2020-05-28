@@ -42,12 +42,13 @@ public class PackageBuilder
         Directory.CreateDirectory(absFolder);
         File.Delete(absFile);
         File.WriteAllText(absFile, GetAssemblyAsJson( package.m_assemblyRuntime));
-
+        File.WriteAllText(absFolder + "/" + UnityPaths.AlphaNumeric(package.GetProjectNamespaceId(false) )+ ".cs", "//Empty Script");
 
         GetAssemblyFilepath(aboslutePath, package.m_assemblyEditor, out absFolder, out absFile);
         Directory.CreateDirectory(absFolder);
         File.Delete(absFile);
         File.WriteAllText(absFile, GetAssemblyAsJson( package.m_assemblyEditor));
+        File.WriteAllText(absFolder + "/" + UnityPaths.AlphaNumeric(package.GetProjectNamespaceId(false)) + ".cs", "//Empty Script");
 #if UNITY_EDITOR
 
         AssetDatabase.Refresh();
@@ -77,7 +78,7 @@ public class PackageBuilder
 
         string packageJson = "";
         packageJson += "\n{                                                                   ";
-        packageJson += "\n            \"name\": \"" + assemblyInfo.m_packageNamespaceId + "\",          ";
+        packageJson += "\n            \"name\": \"" + assemblyInfo.GetNameSpace() + "\",          ";
         packageJson += "\n    \"references\": [";
         packageJson += string.Join(",", dependenciesModificatedForJson);
         packageJson += "\n],                                                              ";
@@ -209,10 +210,16 @@ public class AssemblyBuildInformation
     [HideInInspector]
     public string m_packageName="";
     [HideInInspector]
-    public string m_packageNamespaceId="";
+    
+    [SerializeField] string m_packageNamespaceId="";
     public string[] m_reference = new string [0];
     [HideInInspector]
     public AssemblyType m_assemblyType = AssemblyType.Unity;
+
+    public void SetNameSpace(string namespaceID){
+        m_packageNamespaceId = UnityPaths.NamespaceTrim(namespaceID);
+    }
+    public string GetNameSpace() { return UnityPaths.NamespaceTrim(m_packageNamespaceId); }
 
     internal void GetRelativePathOfAssembly(out string folder, out string file)
     {
@@ -272,11 +279,11 @@ public class PackageBuildInformation
     internal void CheckThatAssemblyAreDefined()
     {
         m_assemblyRuntime.m_packageName = this.m_projectAlphNumId;
-        m_assemblyRuntime.m_packageNamespaceId = this.GetProjectNamespaceId();
+        m_assemblyRuntime.SetNameSpace( this.GetProjectNamespaceId());
         m_assemblyRuntime.m_assemblyType = AssemblyBuildInformation.AssemblyType.Unity;
 
         m_assemblyEditor.m_packageName = this.m_projectAlphNumId + "Editor";
-        m_assemblyEditor.m_packageNamespaceId = this.GetProjectNamespaceId() +"Editor";
+        m_assemblyEditor.SetNameSpace(this.GetProjectNamespaceId() +"Editor");
         m_assemblyEditor.m_assemblyType = AssemblyBuildInformation.AssemblyType.Editor;
         CheckThatRuntimeIsInEditor(m_assemblyRuntime, m_assemblyEditor);
     }
@@ -286,8 +293,8 @@ public class PackageBuildInformation
 
 
         List<string> editorRef = editor.m_reference.ToList();
-        editorRef.Remove(runtime.m_packageNamespaceId);
-        editorRef.Insert(0, runtime.m_packageNamespaceId);
+        editorRef.Remove(runtime.GetNameSpace());
+        editorRef.Insert(0, runtime.GetNameSpace());
         editor.m_reference = editorRef.ToArray();
 
     }

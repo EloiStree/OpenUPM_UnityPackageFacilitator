@@ -32,6 +32,7 @@ public class ChangeLogEditor : EditorWindow
 
 
     public static void DrawEditorDefaultInterface(ChangeLogFileStream changelog, ref string version, ref string title, ref string logs, ref bool hide) {
+        if (changelog == null) return;
         hide = EditorGUILayout.Foldout(hide, hide? "→ Log" : "↓ Log", EditorStyles.boldLabel);
         if (!hide) { 
             GUILayout.BeginHorizontal();
