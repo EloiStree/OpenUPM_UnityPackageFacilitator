@@ -3,7 +3,7 @@
     "references": [
         "be.eloistree.unitypackagefacilitator",
         "be.eloistree.quickgitutility",
-        "be.eloiexperiments.quickgitutilityeditor"
+        "be.eloistree.quickgitutilityeditor"
     ],
     "includePlatforms": [
         "Editor"
