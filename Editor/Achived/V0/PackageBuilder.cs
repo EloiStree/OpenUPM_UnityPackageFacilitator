@@ -221,7 +221,7 @@ public class AssemblyBuildInformation
     }
     public string GetNameSpace() { return UnityPaths.NamespaceTrim(m_packageNamespaceId); }
 
-    internal void GetRelativePathOfAssembly(out string folder, out string file)
+    public void GetRelativePathOfAssembly(out string folder, out string file)
     {
        
             if (m_assemblyType == AssemblyBuildInformation.AssemblyType.Editor)
@@ -262,7 +262,7 @@ public class PackageBuildInformation
     public AuthorInformation m_author = new AuthorInformation();
     public GitRepository m_repositoryLink = new GitRepository();
     public SamplesInfo m_samples= new SamplesInfo();
-    internal string m_unityVersionRelease;
+    public string m_unityVersionRelease;
 
     public string GetProjectNamespaceId(bool useLower = false)
     {
@@ -276,7 +276,7 @@ public class PackageBuildInformation
     }
     
 
-    internal void CheckThatAssemblyAreDefined()
+    public void CheckThatAssemblyAreDefined()
     {
         m_assemblyRuntime.m_packageName = this.m_projectAlphNumId;
         m_assemblyRuntime.SetNameSpace( this.GetProjectNamespaceId());
@@ -288,7 +288,7 @@ public class PackageBuildInformation
         CheckThatRuntimeIsInEditor(m_assemblyRuntime, m_assemblyEditor);
     }
 
-    internal void CheckThatRuntimeIsInEditor( AssemblyBuildInformation runtime, AssemblyBuildInformation editor)
+    public void CheckThatRuntimeIsInEditor( AssemblyBuildInformation runtime, AssemblyBuildInformation editor)
     {
 
 
@@ -299,7 +299,7 @@ public class PackageBuildInformation
 
     }
 
-    internal string GetProjectNameId(bool toLower)
+    public string GetProjectNameId(bool toLower)
     {
         string id = m_projectAlphNumId.Replace(" ", "");
         if (toLower)

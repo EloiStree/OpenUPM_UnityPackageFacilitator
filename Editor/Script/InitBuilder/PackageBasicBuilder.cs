@@ -99,8 +99,8 @@ public class PackageBasicBuilder : EditorWindow
         public string m_userNameToCreateGit="";
         public string m_tmpFolderToCreate="";
         public string m_tmpCloneProposed="";
-        internal bool m_tmp_rawDisplayJsonPackage=true;
-        internal string m_tmpPackageJsonProposition="";
+        public bool m_tmp_rawDisplayJsonPackage=true;
+        public string m_tmpPackageJsonProposition="";
     }
 
     public void ResetInfo()

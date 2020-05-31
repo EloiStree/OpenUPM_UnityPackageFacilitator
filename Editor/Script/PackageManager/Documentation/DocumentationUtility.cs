@@ -100,7 +100,7 @@ public class HiddenDirectoryStream
         File.WriteAllText(path+"/"+relativeFilePath, text);
     }
 
-    internal void ToggleVisiblity()
+    public void ToggleVisiblity()
     {
         Debug.Log("Test:" + IsHidden());
         SetHidden(!IsHidden());

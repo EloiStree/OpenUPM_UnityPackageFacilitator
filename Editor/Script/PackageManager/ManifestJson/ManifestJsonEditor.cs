@@ -8,9 +8,9 @@ public class ManifestJsonEditor : EditorWindow
     public Info m_info = new Info();
     public class Info
     {
-        internal Utility_ManifestJson m_manifestInfo = new Utility_ManifestJson();
-        internal string m_manifestaddNamespace="";
-        internal string m_manifestaddgitlink="";
+        public Utility_ManifestJson m_manifestInfo = new Utility_ManifestJson();
+        public string m_manifestaddNamespace="";
+        public string m_manifestaddgitlink="";
     }
     [MenuItem("Window/Package Utility/2. Manifest", false, 10)]
     static void Init()

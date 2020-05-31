@@ -67,7 +67,7 @@ public class PackagePullPushMono : MonoBehaviour
 
 
 
-    internal void SetGitLink(string gitLink)
+    public void SetGitLink(string gitLink)
     {
         m_gitLink = gitLink;
         RefreshInfo();

@@ -25,7 +25,7 @@ public class SampleUtility : MonoBehaviour
             tmp.ToggleVisiblity();
     }
 
-    internal static string[] GetRelativeFoldersIn(SampleDirectoryStream samplesDir)
+    public static string[] GetRelativeFoldersIn(SampleDirectoryStream samplesDir)
     {
         if (!samplesDir.Exist())
             return new string[0];

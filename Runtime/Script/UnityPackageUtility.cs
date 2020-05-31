@@ -112,7 +112,7 @@ public class UnityPackageUtility
 
 
 
-    internal static Utility_ManifestJson DownloadPackageManifest(string url, out string received)
+    public static Utility_ManifestJson DownloadPackageManifest(string url, out string received)
     {
         WebClient client = new WebClient();
         received = client.DownloadString(url);

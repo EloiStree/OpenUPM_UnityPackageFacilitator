@@ -26,10 +26,10 @@ public class AllBuilderInOnEditor : EditorWindow
         public Vector2 m_scollrPackagePosition;
         public ChangeLogFileStream m_changelog;
         public LicenseFileStream m_license;
-        internal bool m_tmpLogHide;
-        internal bool tmpLicenseHide;
-        internal bool m_tmpReadMeHide;
-        internal bool m_hideHiddenTool;
+        public bool m_tmpLogHide;
+        public bool tmpLicenseHide;
+        public bool m_tmpReadMeHide;
+        public bool m_hideHiddenTool;
     }
     [MenuItem("Window/Package Utility/1. Update & Save", false, 10)]
     static void Init()
