@@ -61,7 +61,7 @@ public class ManifestJsonEditor : EditorWindow
                     if (l.LastIndexOf(".git") == l.Length - 4)
                     {
 
-                        Debug.Log("URL GIT:" + l);
+                        //Debug.Log("URL GIT:" + l);
                         bool found;
                         string nameId;
                         DownloadInfoFromGitServer.LoadNamespaceFromProjectGitLink(l, out found, out nameId);
