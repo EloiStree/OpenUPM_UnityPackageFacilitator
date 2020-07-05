@@ -75,7 +75,7 @@ class UnityPackageBuilderWindow : EditorWindow
 
         m_currentManifest = EditorGUILayout.Foldout(m_currentManifest, "Current manifest");
         if (m_currentManifest) {
-            UnityPackageEditorDrawer.DrawManifrest(ref m_manifestInfo, ref m_manifestaddNamespace, ref m_manifestaddgitlink);
+            UnityPackageEditorDrawer.DrawManifrest(ref m_manifestInfo, ref m_manifestaddNamespace, ref m_manifestaddgitlink, ref scollrPackagePosition);
         }
         EditorGUILayout.HelpBox("Reminder: Git must be install and Git.exe must be add in System Variable Path.", MessageType.Warning, true);
 

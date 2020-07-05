@@ -21,6 +21,7 @@ public class ManifestFromWeb : MonoBehaviour
     public string m_toAddName;
     [HideInInspector]
     public string m_toAddValue;
+    public Vector2 m_scollState;
 
     private void OnValidate()
     {

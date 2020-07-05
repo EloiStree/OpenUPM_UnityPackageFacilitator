@@ -9,8 +9,8 @@ public class UnityPackageEditorDrawer
 {
 
 
-    
-    public static void DrawManifrest(ref Utility_ManifestJson manifestInfo, ref string addname, ref string addvalue, bool withButtonToPushAndLoad = true)
+
+    public static void DrawManifrest(ref Utility_ManifestJson manifestInfo, ref string addname, ref string addvalue, ref Vector2 scrollValue, bool withButtonToPushAndLoad = true)
     {
         int buttonlenght = 30;
         int nameLength = 250;
@@ -26,17 +26,17 @@ public class UnityPackageEditorDrawer
                 UnityPackageUtility.SetManifest(manifestInfo);
                 AssetDatabase.Refresh();
             }
-             if (GUILayout.Button("Go 2 Manifest"))
+            if (GUILayout.Button("Go 2 Manifest"))
             {
                 UnityPackageUtility.OpenManifestFile();
             }
             GUILayout.EndHorizontal();
         }
-       
+
         GUILayout.BeginHorizontal();
-        GUILayout.Label("", GUILayout.Width(buttonlenght));    
+        GUILayout.Label("", GUILayout.Width(buttonlenght));
         GUILayout.Label("Namespace Id", GUILayout.Width(nameLength));
-        GUILayout.Label("https://server.com/user/project.git#branch" );
+        GUILayout.Label("https://server.com/user/project.git#branch");
 
 
         GUILayout.EndHorizontal();
@@ -46,27 +46,35 @@ public class UnityPackageEditorDrawer
             manifestInfo.Add(addname, addvalue);
         }
         addname = GUILayout.TextField(addname, GUILayout.Width(nameLength));
-        addvalue = GUILayout.TextField(addvalue);
-        if (addvalue.Length > 0 && addname.Length<=0)
-        {
+        if (addvalue.Length > 0 && GUILayout.Button("<o")) {
+
             bool found;
             string nameId;
             DownloadInfoFromGitServer.LoadNamespaceFromProjectGitLink(addvalue, out found, out nameId);
-            if (found)
-            {
-                if (addvalue.ToLower().IndexOf(".git") < 0)
-                    addvalue += ".git";
-                addname = nameId;
-            }
-            else addvalue = "";
+            addname = nameId;
         }
+
+        addvalue = GUILayout.TextField(addvalue);
+
+
 
 
         GUILayout.EndHorizontal();
+        if (addvalue.Length > 0 && addvalue.ToLower().IndexOf(".git") < 0)
+        {
+            EditorGUILayout.HelpBox("Are you sure it is a git link ?", MessageType.Warning);
+            if (GUILayout.Button("Add .git at the end of the link"))
+            {
+                addvalue += ".git";
+            }
+        }
+
+        scrollValue = GUILayout.BeginScrollView(scrollValue, false, true);
+        List<DependencyJson> m_dependencies = manifestInfo.dependencies;
+        if (m_dependencies != null && m_dependencies.Count>0)
+        {
 
         GUILayout.Label("Current package");
-        List<DependencyJson> m_dependencies = manifestInfo.dependencies;
-        if( m_dependencies!=null)
         for (int i = 0; i < m_dependencies.Count; i++)
         {
             GUILayout.BeginHorizontal();
@@ -93,7 +101,9 @@ public class UnityPackageEditorDrawer
 
             GUILayout.EndHorizontal();
 
+            }
         }
+        GUILayout.EndScrollView();
     }
 
 
