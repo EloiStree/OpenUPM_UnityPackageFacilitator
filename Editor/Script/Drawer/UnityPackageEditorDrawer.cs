@@ -78,17 +78,23 @@ public class UnityPackageEditorDrawer
         for (int i = 0; i < m_dependencies.Count; i++)
         {
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("-", GUILayout.Width(buttonlenght)))
-            {
-                manifestInfo.Remove(m_dependencies[i].nameId);
-            }
-            GUILayout.TextField(m_dependencies[i].nameId, GUILayout.Width(nameLength));
+                if (GUILayout.Button("-", GUILayout.Width(buttonlenght)))
+                {
+                    manifestInfo.Remove(m_dependencies[i].nameId);
+                }
+                
+                GUILayout.TextField(m_dependencies[i].nameId, GUILayout.Width(nameLength));
             if (m_dependencies[i].value.IndexOf("http") > -1)
             {
-
-                if (GUILayout.Button("Down", GUILayout.Width(50))) {
-                    UnityPackageUtility.Down(m_dependencies[i].value);
-                }
+                    if (GUILayout.Button("Update", GUILayout.Width(60)))
+                    {
+                        manifestInfo.RemoveLocker(m_dependencies[i].nameId);
+                        AssetDatabase.Refresh();
+                    }
+                    if (GUILayout.Button("Down", GUILayout.Width(50))) {
+                        UnityPackageUtility.Down(m_dependencies[i].value);
+                        //AssetDatabase.Refresh();
+                    }
             
                 if (GUILayout.Button("Go", GUILayout.Width(30)))
                 {

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
+using UnityEngine.Experimental.Playables;
 
 [System.Serializable]
 public class Utility_ManifestJson
@@ -88,8 +91,17 @@ public class Utility_ManifestJson
 
     public static Utility_ManifestJson CreateFromFile(string filePath)
     {
-        string file = File.ReadAllText(filePath);
+        string file =  File.ReadAllText(filePath);
         return CreateFromJson(file);
+    }
+
+    private static string GetJsonProjectManifestAsText()
+    {
+        return File.ReadAllText(UnityPackageUtility.GetManifestPath());
+    }
+    private void SetJsonProjectManifestAsText(string json)
+    {
+        File.WriteAllText(UnityPackageUtility.GetManifestPath(), json);
     }
 
     public static Utility_ManifestJson CreateFromJson(string json)
@@ -115,6 +127,62 @@ public class Utility_ManifestJson
 
         }
     }
+
+    public void RemoveLocker(params string[] nameId)
+    {
+        string json = GetJsonProjectManifestAsText();
+        for (int i = 0; i < nameId.Length; i++)
+        {
+            RemoveLocker(ref json, nameId[i]);
+        }
+        SetJsonProjectManifestAsText(json);
+
+    }
+    public void RemoveLocker( string nameId)
+    {
+        string json = GetJsonProjectManifestAsText();
+        RemoveLocker(ref json, nameId);
+        SetJsonProjectManifestAsText(json);
+
+
+    }
+
+    
+
+    public void RemoveLocker(ref string json, string nameId)
+    {
+        //VERY DIRTY AND UNSTABLE BUT THAT WORK FOR THE MOMENT.
+        //NEED TO FIND BETTER SOLUTION
+
+
+        int lastIndexOfNameId = json.LastIndexOf(nameId);
+        if (lastIndexOfNameId < 0)
+            return;
+       
+        string temp = json.Substring(lastIndexOfNameId);
+
+        int lastIndexOf = temp.IndexOf("}");
+        if (lastIndexOf < 0)
+            return;
+         temp = temp.Substring(0,lastIndexOf+1);
+
+        int openIndex = temp.IndexOf("\"hash\"");
+        if (openIndex < 0) 
+            return;
+        temp= temp.Substring(openIndex+6);
+        int startIndex = temp.IndexOf('"');
+        temp = temp.Substring(startIndex + 1);
+        int endIndex= temp.IndexOf('"');
+        temp = temp.Substring(0,endIndex);
+        string hashId = temp;
+        UnityEngine.Debug.Log(temp);
+        json= json.Replace(hashId, "");
+
+        
+
+
+    }
+
     public void Remove(List<DependencyJson> dependencies)
     {
         for (int i = 0; i < dependencies.Count; i++)

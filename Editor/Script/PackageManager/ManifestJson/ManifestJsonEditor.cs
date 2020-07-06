@@ -14,7 +14,8 @@ public class ManifestJsonEditor : EditorWindow
         public string m_manifestaddNamespace="";
         public string m_manifestaddgitlink="";
         public string m_pastSeveralLinks="";
-        internal Vector2 m_scollValue;
+        public Vector2 m_scollValue;
+        public Vector2 m_windowScrollValue;
     }
     [MenuItem("Window/Package Utility/2. Manifest", false, 10)]
     static void Init()
@@ -25,60 +26,31 @@ public class ManifestJsonEditor : EditorWindow
     }
     void OnGUI()
     {
-        GUILayout.Label("Manifest Configuration", EditorStyles.boldLabel);
-
-        //if (GUILayout.Button("Add"))
-        //{
-        //    string[] lines = m_info.m_pastSeveralLinks.Split(',');
-        //    for (int i = 0; i < lines.Length; i++)
-        //    {
-        //        string l = lines[i];
-        //        l = l.Trim();
-        //        if (l.Length > 5)
-        //        {
-        //            if (l[0] == '"' && l[l.Length - 1] == '"')
-        //            {
-        //                l = l.Replace("\"", "");
-        //                string[] tokens = l.Split(':');
-        //                if (tokens.Length == 2)
-        //                {
-        //                    string nameId = tokens[0];
-        //                    string url = tokens[1];
-        //                    if (nameId.Trim().Length <= 0)
-        //                    {
-        //                        bool found;
-        //                        DownloadInfoFromGitServer.LoadNamespaceFromProjectGitLink(url, out found, out nameId);
-        //                        if (found)
-        //                        {
-
-        //                            m_info.m_manifestInfo.Add(nameId, url);
-        //                        }
-        //                    }
-        //                    else { 
-        //                        m_info.m_manifestInfo.Add(nameId, url);
-        //                    }
-        //                }
-        //            }
-        //            if (l.LastIndexOf(".git") == l.Length - 4)
-        //            {
-
-        //                //Debug.Log("URL GIT:" + l);
-        //                bool found;
-        //                string nameId;
-        //                DownloadInfoFromGitServer.LoadNamespaceFromProjectGitLink(l, out found, out nameId);
-        //                if (found) {
-
-        //                    m_info.m_manifestInfo.Add(nameId, l);
-        //                }
-
-        //            }
-        //        }
-        //    }
-        //    m_info.m_pastSeveralLinks = "";
-        //}
-        //m_info.m_pastSeveralLinks=GUILayout.TextArea(m_info.m_pastSeveralLinks, GUILayout.MinHeight(200));
-        UnityPackageEditorDrawer.DrawManifrest(ref m_info.m_manifestInfo, ref m_info.m_manifestaddNamespace, ref m_info.m_manifestaddgitlink,ref m_info.m_scollValue);
-        GUILayout.Label("Past several links split by ','", EditorStyles.boldLabel);
-       
+         GUILayout.Label("Manifest Configuration", EditorStyles.boldLabel);
+        UnityPackageEditorDrawer.DrawManifrest(ref m_info.m_manifestInfo, ref m_info.m_manifestaddNamespace, ref m_info.m_manifestaddgitlink, ref m_info.m_scollValue);
+        m_info.m_windowScrollValue = EditorGUILayout.BeginScrollView(m_info.m_windowScrollValue, false, false);
+        GUILayout.Label("Copy past gits", EditorStyles.boldLabel);
+        EditorGUILayout.HelpBox("Copy/past your git links split by a line return '\\n'", MessageType.Info);
+        if (GUILayout.Button("Load in the manifest"))
+        {
+            string[] lines = m_info.m_pastSeveralLinks.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string l = lines[i];
+                l = l.Trim();
+                string nameId;
+                bool found;
+                DownloadInfoFromGitServer.LoadNamespaceFromProjectGitLink(l, out found, out nameId);
+                if (found)
+                {
+                    if (l.ToLower().IndexOf(".git") < 0)
+                        l += ".git";
+                    m_info.m_manifestInfo.Add(nameId, l);
+                }
+            }
+            m_info.m_pastSeveralLinks = "";
+        }
+        m_info.m_pastSeveralLinks = GUILayout.TextArea(m_info.m_pastSeveralLinks, GUILayout.MinHeight(200));
+         EditorGUILayout.EndScrollView();
     }
 }

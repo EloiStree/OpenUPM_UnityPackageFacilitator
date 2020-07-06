@@ -110,7 +110,11 @@ public class UnityPackageUtility
         return currentPath.Substring(0, lastIndex);
     }
 
-
+ 
+    //public static void RemoveLocker(string nameId)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     public static Utility_ManifestJson DownloadPackageManifest(string url, out string received)
     {
