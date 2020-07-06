@@ -176,7 +176,7 @@ public class Utility_ManifestJson
         temp = temp.Substring(0,endIndex);
         string hashId = temp;
         UnityEngine.Debug.Log(temp);
-        json= json.Replace(hashId, "");
+        json= json.Replace("\""+hashId+"\"", "\"\"");
 
         
 

@@ -93,7 +93,7 @@ public class UnityPackageEditorDrawer
                     }
                     if (GUILayout.Button("Down", GUILayout.Width(50))) {
                         UnityPackageUtility.Down(m_dependencies[i].value);
-                        //AssetDatabase.Refresh();
+                        AssetDatabase.Refresh();
                     }
             
                 if (GUILayout.Button("Go", GUILayout.Width(30)))
