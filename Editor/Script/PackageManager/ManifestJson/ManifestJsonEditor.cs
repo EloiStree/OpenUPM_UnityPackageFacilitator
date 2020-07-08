@@ -16,6 +16,7 @@ public class ManifestJsonEditor : EditorWindow
         public string m_pastSeveralLinks="";
         public Vector2 m_scollValue;
         public Vector2 m_windowScrollValue;
+        internal string givenUrlLink;
     }
     [MenuItem("Window/Package Utility/2. Manifest", false, 10)]
     static void Init()
@@ -50,6 +51,21 @@ public class ManifestJsonEditor : EditorWindow
             }
             m_info.m_pastSeveralLinks = "";
         }
+        GUILayout.BeginHorizontal();
+        //https://raw.githubusercontent.com/EloiStree/UnityToolbox/master/CopyPast/GitLinks/TestGroup.md
+        
+        List<string> urlsFound;
+        if (GUILayout.Button("Extract gits")) {
+
+            DownloadInfoFromGitServer.LoadGitClassicGitLinksInUrl(m_info.givenUrlLink, out urlsFound);
+            for (int i = 0; i < urlsFound.Count; i++)
+            {
+                m_info.m_pastSeveralLinks += urlsFound[i].Trim()+'\n';
+            }
+        }
+        m_info.givenUrlLink = GUILayout.TextField(m_info.givenUrlLink);
+        GUILayout.EndHorizontal();
+        //be.eloistree.teleportvirtualrealityuser
         m_info.m_pastSeveralLinks = GUILayout.TextArea(m_info.m_pastSeveralLinks, GUILayout.MinHeight(200));
          EditorGUILayout.EndScrollView();
     }
