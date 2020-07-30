@@ -31,7 +31,7 @@ public class AllBuilderInOnEditor : EditorWindow
         public bool m_tmpReadMeHide;
         public bool m_hideHiddenTool;
     }
-    [MenuItem("Window/Package Utility/1. Update & Save", false, 10)]
+    [MenuItem("ꬲ🧰/Package Utility/1. Update & Save", false, 10)]
     static void Init()
     {
         AllBuilderInOnEditor window = (AllBuilderInOnEditor)EditorWindow.GetWindow(typeof(AllBuilderInOnEditor));

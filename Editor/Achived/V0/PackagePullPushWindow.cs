@@ -11,7 +11,7 @@ using UnityEngine;
 //https://learn.unity.com/tutorial/introduction-to-scriptable-objects#5cf187b7edbc2a31a3b9b123
 public class PackagePullPushWindow : EditorWindow
 {
-    //[MenuItem("Window / Facilitator/Pull Push")]
+    //[MenuItem("ꬲ🧰/ Facilitator/Pull Push")]
     public static void ShowWindow()
     {
         PackagePullPushWindow win = (PackagePullPushWindow)EditorWindow.GetWindow(typeof(PackagePullPushWindow));
@@ -214,7 +214,7 @@ public class PackagePullPushWindow : EditorWindow
     {
         if (name == "")
             name = "Default";
-        return (PackagePullPushObject)ScriptableUtility.CreateScritableAsset<PackagePullPushObject>("Facilitator/WebLink", name, true);
+        return (PackagePullPushObject)ScriptableUtility.CreateScritableAsset<PackagePullPushObject>("ꬲ🧰/Facilitator/WebLink", name, true);
     }
 
     private bool MathRegex(string text, string regex)

@@ -12,7 +12,7 @@ public class ReadMeEditor : EditorWindow
         public string m_yo;
 
     }
-    [MenuItem("Window/Package Utility/Window/Read Me", false, 20)]
+    [MenuItem("ꬲ🧰/Package Utility/Window/Read Me", false, 20)]
     static void Init()
     {
         ReadMeEditor window = (ReadMeEditor)EditorWindow.GetWindow(typeof(ReadMeEditor));

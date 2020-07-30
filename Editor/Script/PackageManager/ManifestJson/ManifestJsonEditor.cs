@@ -18,7 +18,7 @@ public class ManifestJsonEditor : EditorWindow
         public Vector2 m_windowScrollValue;
         internal string givenUrlLink;
     }
-    [MenuItem("Window/Package Utility/2. Manifest", false, 10)]
+    [MenuItem("ꬲ🧰/Package Utility/2. Manifest", false, 10)]
     static void Init()
     {
         ManifestJsonEditor window = (ManifestJsonEditor)EditorWindow.GetWindow(typeof(ManifestJsonEditor));

@@ -12,7 +12,7 @@ public class DocumentationEditor : EditorWindow
         public string m_yo;
 
     }
-    [MenuItem("Window / Package Utility")]
+    [MenuItem("ꬲ🧰/ Package Utility")]
     static void Init()
     {
         SampleEditor window = (SampleEditor)EditorWindow.GetWindow(typeof(SampleEditor));

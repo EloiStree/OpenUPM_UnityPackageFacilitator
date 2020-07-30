@@ -19,7 +19,7 @@ public class PackageJsonEditor : EditorWindow
     private bool m_raw;
     private string m_jsonProposition;
 
-    [MenuItem("Window/Package Utility/Window/Package Json", false, 20)]
+    [MenuItem("ꬲ🧰/Package Utility/Window/Package Json", false, 20)]
     static void Init()
     {
         PackageJsonEditor window = (PackageJsonEditor)EditorWindow.GetWindow(typeof(PackageJsonEditor));

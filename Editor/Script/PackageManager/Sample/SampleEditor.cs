@@ -11,7 +11,7 @@ public class SampleEditor : EditorWindow
         public string m_yo;
 
     }
-    //[MenuItem("Window/Package Utility/Window/Sample", false, 20)]
+    //[MenuItem("ꬲ🧰/Package Utility/Window/Sample", false, 20)]
     static void Init()
     {
         SampleEditor window = (SampleEditor)EditorWindow.GetWindow(typeof(SampleEditor));

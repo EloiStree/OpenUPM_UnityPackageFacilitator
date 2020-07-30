@@ -24,6 +24,16 @@ public class UnityPackageUtility
             return File.ReadAllText(GetManifestPath());
         return "";
     }
+
+    public static void OpenPackageHiddenFolder()
+    {
+        Application.OpenURL(GetPackageHiddenFolder());
+    }
+    public static string GetPackageHiddenFolder()
+    {
+        return Directory.GetCurrentDirectory() + "\\Library\\PackageCache";
+    }
+
     public static Utility_ManifestJson GetManifest()
     {
         return Utility_ManifestJson.CreateFromUnityEditor();

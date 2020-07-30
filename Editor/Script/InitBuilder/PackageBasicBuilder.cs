@@ -10,7 +10,7 @@ public class PackageBasicBuilder : EditorWindow
 
 
 
-    [MenuItem("Window/Package Utility/0. Init. & Struct", false, 10)]
+    [MenuItem("ꬲ🧰/Package Utility/0. Init. & Struct", false, 10)]
     public static void ShowWindow()
     {
         PackageBasicBuilder window = (PackageBasicBuilder)EditorWindow.GetWindow(typeof(PackageBasicBuilder));
