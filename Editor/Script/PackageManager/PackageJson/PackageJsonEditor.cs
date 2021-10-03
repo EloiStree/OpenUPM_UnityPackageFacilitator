@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Eloi;
 public class PackageJsonEditor : EditorWindow
 {
 

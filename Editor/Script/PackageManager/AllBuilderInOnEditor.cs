@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eloi;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,7 @@ public class AllBuilderInOnEditor : EditorWindow
     {
         public string m_focusPath;
         public GitLinkOnDisk m_gitLink;
-        public ReadMeFileStream m_readMe;
+        public AbstractFileStream m_readMe;
         public SampleDirectoryStream m_sample;
         public DocumentationDirectoryStream m_documentation;
         public string m_tmpReadMeText="";

@@ -5,6 +5,9 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
+namespace Eloi
+{
+
 public class ReadMeUtility 
 {
     public static ReadMeFileStream GetReadMeFile(UnityPathSelectionInfo m_selector)
@@ -54,15 +57,15 @@ public class ReadMeUtility
 
 }
 
-public class FileStream {
+public class AbstractFileStream {
 
     public string m_pathToFile;
-    public FileStream(string absoluteFilePath)
+    public AbstractFileStream(string absoluteFilePath)
     {
         m_pathToFile = absoluteFilePath;
     }
 
-    public FileStream(string folderPath, string fileName, string defaultIfNonExisting, params string[] extension)
+    public AbstractFileStream(string folderPath, string fileName, string defaultIfNonExisting, params string[] extension)
     {
         bool foundOne;
         string filePathFound;
@@ -98,7 +101,7 @@ public class FileStream {
     public string GetAbsolutePath() { return m_pathToFile; }
 }
 
-public class ReadMeFileStream : FileStream
+public class ReadMeFileStream : AbstractFileStream
 {
     public ReadMeFileStream(string directPath) : base(directPath) { }
     public ReadMeFileStream(string folderPath, string extensionIfNotFound) :
@@ -107,5 +110,6 @@ public class ReadMeFileStream : FileStream
     {
     
     
+    }
     }
 }

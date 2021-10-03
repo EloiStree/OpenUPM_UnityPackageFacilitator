@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Eloi;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class LicenseUtility
     }
 }
 
-public class LicenseFileStream : FileStream
+public class LicenseFileStream : AbstractFileStream
 {
     public LicenseFileStream(string path) : base(path) { }
     public LicenseFileStream(string folderPath, string extensionIfNotFound) :

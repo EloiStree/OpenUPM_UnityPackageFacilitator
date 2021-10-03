@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eloi;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -40,7 +41,7 @@ public class ReadMeEditor : EditorWindow
 
     }
 
-    public  static void DrawEditorDefaultInterface(ReadMeFileStream readme,ref  GitLinkOnDisk gitLink, ref string readMeText, ref bool hide)
+    public  static void DrawEditorDefaultInterface(AbstractFileStream readme,ref  GitLinkOnDisk gitLink, ref string readMeText, ref bool hide)
     {
         hide = EditorGUILayout.Foldout(hide, hide ? "→ Read Me" : "↓ Read Me", EditorStyles.boldLabel);
         if (!hide)

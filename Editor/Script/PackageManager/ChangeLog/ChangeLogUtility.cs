@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eloi;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -83,7 +84,7 @@ public class ChangeLogUtility
 
 
 
-public class ChangeLogFileStream : FileStream
+public class ChangeLogFileStream : AbstractFileStream
 {
     public ChangeLogFileStream(string path) : base(path) { }
     public ChangeLogFileStream(string folderPath, string extensionIfNotFound) :
