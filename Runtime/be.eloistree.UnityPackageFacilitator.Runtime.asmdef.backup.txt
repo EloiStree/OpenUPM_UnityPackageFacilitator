@@ -1,0 +1,14 @@
+
+{                                                                   
+            "name": "be.eloistree.unitypackagefacilitator",          
+    "references": ["be.eloistree.quickgitutility","be.eloistree.quickgitutilityeditor"
+],                                                              
+    "optionalUnityReferences": [],                                  
+    "includePlatforms": [],                                                  
+    "excludePlatforms": [],                                         
+    "allowUnsafeCode": false,                                       
+    "overrideReferences": false,                                    
+    "precompiledReferences": [],                                    
+    "autoReferenced": true,                                         
+    "defineConstraints": []                                         
+}                                                                   

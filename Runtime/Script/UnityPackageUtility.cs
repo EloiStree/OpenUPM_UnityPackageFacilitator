@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using UnityEditor;
 using UnityEngine;
 
 public class UnityPackageUtility
@@ -18,7 +19,9 @@ public class UnityPackageUtility
     {
         return Application.dataPath + "/../Packages/manifest.json";
     }
+    
     public static string GetManifestPath() { return Application.dataPath + "/../Packages/manifest.json"; }
+    public static string GetManifestLockerPath() { return Application.dataPath + "/../Packages/packages-lock.json"; }
     public static string GetManifestJson() {
         if (File.Exists(GetManifestPath()))
             return File.ReadAllText(GetManifestPath());
@@ -47,11 +50,19 @@ public class UnityPackageUtility
 
     public static void DeleteManifest()
     {
-        File.Delete(GetManifestPath());
+
+        string path = GetManifestPath();
+        if (File.Exists(path))
+            File.Delete(path);
     }
     public static void RemoveLocker()
     {
-        SetManifest(GetManifest());
+        string path = GetManifestLockerPath();
+        if (File.Exists(path))
+            File.Delete(path);
+#if UNITY_EDITOR
+        AssetDatabase.Refresh();
+#endif
     }
 
     public static Utility_ManifestJson CreateManifestFrom(string json)

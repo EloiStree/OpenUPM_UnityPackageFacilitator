@@ -12,7 +12,7 @@
         "Git",
         "Unity Package"
     ],                     
-  "dependencies":{ "be.eloistree.license":"0.0.1"},     
+  "dependencies":{ },     
   "relatedPackages":{},     
   "samples" : [],     
   "author" : {
