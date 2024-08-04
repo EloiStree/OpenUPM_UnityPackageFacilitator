@@ -12,8 +12,6 @@
         "Git",
         "Unity Package"
     ],                     
-  "dependencies":{ },     
-  "relatedPackages":{},     
   "samples" : [],     
   "author" : {
 "name":"Eloi Stree",
