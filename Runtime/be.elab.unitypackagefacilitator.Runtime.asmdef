@@ -1,13 +1,10 @@
 {
-    "name": "be.eloistree.unitypackagefacilitatoreditor",
+    "name": "be.elab.unitypackagefacilitator",
+    "rootNamespace": "",
     "references": [
-        "be.eloistree.unitypackagefacilitator",
-        "be.eloistree.quickgitutility",
-        "be.eloistree.quickgitutilityeditor"
+        "GUID:670f9e8b15d5da4469d35cd41fce4db3"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

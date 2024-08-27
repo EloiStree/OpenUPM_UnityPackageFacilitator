@@ -1,0 +1,20 @@
+{
+    "name": "be.elab.unitypackagefacilitatoreditor",
+    "rootNamespace": "",
+    "references": [
+        "be.elab.quickgitutility",
+        "be.elab.unitypackagefacilitator",
+        "be.elab.quickgitutilityeditor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
