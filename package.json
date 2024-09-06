@@ -11,12 +11,19 @@
         "Productivity",
         "Git",
         "Unity Package"
-    ],                     
-  "samples" : [],     
-  "author" : {
-"name":"Eloi Stree",
-"mail":"streeeloi@gmail.com",
-"url":"https://eloistree.page.link/toolbox"},     
+    ],     
+ "samples": [
+    {
+      "displayName": "Demo Scene",
+      "description": "A sample scene that demonstrates the features of this package.",
+      "path": "Scene/Demo"
+    }
+  ],
+  "author": {
+    "name": "Eloi Stree",
+    "mail": "",
+    "url": "https://github.com/EloiStree/"
+  },     
   "repository":{
 "type":"Git",
 "url":"https://github.com/EloiStree/2019_07_21_UnityPackageFacilitator.git",
