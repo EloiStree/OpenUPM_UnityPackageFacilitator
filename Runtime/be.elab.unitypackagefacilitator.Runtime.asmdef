@@ -2,7 +2,7 @@
     "name": "be.elab.unitypackagefacilitator",
     "rootNamespace": "",
     "references": [
-        "GUID:670f9e8b15d5da4469d35cd41fce4db3"
+        "be.elab.quickgitutility"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
