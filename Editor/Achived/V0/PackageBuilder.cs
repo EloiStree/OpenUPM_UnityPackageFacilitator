@@ -143,7 +143,11 @@ public class PackageBuilder
         packageJson += "\n  \"keywords\": [" + string.Join(",", keywordForJson) + "],                       ";
         packageJson += "\n  \"dependencies\":{" + string.Join(",", dependenciesModificatedForJson) + "},     ";
         packageJson += "\n  \"relatedPackages\":{" + string.Join(",", dependenciesRelationModificatedForJson) + "},     ";
-        packageJson += "\n  \"samples\" : [" + GetSamplesCompress(packageInfo.m_samples.m_samples.ToArray()) + "],     ";
+        packageJson += "\n  \"samples\": [\r\n    " +
+            "{\r\n      \"displayName\": \"Demo Scene\"," +
+            "\r\n      \"description\": \"Demo on how to use the package\"," +
+            "\r\n      \"path\": \"Scene/Demo\"\r\n    }\r\n  ] ," +
+            "     ";
         packageJson += "\n  \"author\" : {" +
             "\n\"name\":\"" + packageInfo.m_author.m_name + "\"," +
             "\n\"mail\":\"" + packageInfo.m_author.m_mail + "\"," +
