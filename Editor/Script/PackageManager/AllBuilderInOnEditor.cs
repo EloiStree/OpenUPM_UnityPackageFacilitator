@@ -7,6 +7,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
+using Eloi.Git;
 public class AllBuilderInOnEditor : EditorWindow
 {
     public Info m_info= new Info();

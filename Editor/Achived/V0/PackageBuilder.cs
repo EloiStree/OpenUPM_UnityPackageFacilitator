@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEditor.PackageManager;
 
 
+using Eloi.Git;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

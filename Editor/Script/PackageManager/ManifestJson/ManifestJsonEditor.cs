@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Eloi.Git;
 public class ManifestJsonEditor : EditorWindow
 {
     public Info m_info = new Info();

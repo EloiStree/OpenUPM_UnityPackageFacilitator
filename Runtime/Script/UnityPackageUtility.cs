@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
+using Eloi.Git;
 public class UnityPackageUtility
 {
     public static void OpenManifestFile()

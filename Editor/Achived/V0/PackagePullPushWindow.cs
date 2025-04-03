@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
+using Eloi.Git;
 
 //https://learn.unity.com/tutorial/introduction-to-scriptable-objects#5cf187b7edbc2a31a3b9b123
 public class PackagePullPushWindow : EditorWindow

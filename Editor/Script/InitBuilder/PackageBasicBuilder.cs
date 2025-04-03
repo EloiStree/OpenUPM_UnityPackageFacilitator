@@ -5,6 +5,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
+using Eloi.Git;
 namespace Eloi
 {
     public class PackageBasicBuilder : EditorWindow

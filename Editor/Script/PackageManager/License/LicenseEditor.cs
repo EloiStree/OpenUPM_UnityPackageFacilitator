@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+using Eloi.Git;
 public class LicenseEditor : EditorWindow
 {
     private bool m_pathFound;

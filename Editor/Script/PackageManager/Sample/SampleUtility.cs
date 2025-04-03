@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+using Eloi.Git;
 public class SampleUtility : MonoBehaviour
 {
     public static SampleDirectoryStream GetSampleFolder(UnityPathSelectionInfo selector)

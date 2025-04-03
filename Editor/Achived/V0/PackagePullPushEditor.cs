@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using UnityEditor;
 using UnityEngine;
+using Eloi.Git;
 
 [CustomEditor(typeof(PackagePullPushMono))]
 public class PackagePullPushEditor : Editor

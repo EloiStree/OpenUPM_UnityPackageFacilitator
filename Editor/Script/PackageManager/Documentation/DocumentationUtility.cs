@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.WSA;
 
+using Eloi.Git;
 public class DocumentationUtility : MonoBehaviour
 {
     public static DocumentationDirectoryStream GetDocumentFolder(UnityPathSelectionInfo selector)

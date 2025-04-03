@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Eloi.Git;
 public class AccessGitWithPathSelector 
 {
     public  static void GetAffectedGit(UnityPathSelectionInfo selector, out GitLinkOnDisk gitAffected)

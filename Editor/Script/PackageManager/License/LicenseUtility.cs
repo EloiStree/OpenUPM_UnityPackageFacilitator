@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Eloi.Git;
 public class LicenseUtility 
 {
     public static LicenseFileStream GetReadMeFile(UnityPathSelectionInfo m_selector)

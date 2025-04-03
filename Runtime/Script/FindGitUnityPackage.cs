@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Eloi.Git;
 public class FindGitUnityPackage : MonoBehaviour
     {
         public string m_directory;

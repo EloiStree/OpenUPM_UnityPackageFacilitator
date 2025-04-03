@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
+using Eloi.Git;
 public class ChangeLogUtility 
 {
     public static ChangeLogFileStream GetReadMeFile(UnityPathSelectionInfo m_selector)
