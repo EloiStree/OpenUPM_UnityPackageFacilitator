@@ -207,9 +207,6 @@ public class GitPackageMono_FindPackageInUse : MonoBehaviour
             }
         }
         m_gitCopyPackageJsonWithHash += "```\n";
-
-
-
         m_markdownFullPage = $"\n# Packages used in scene \"{ SceneManager.GetActiveScene().name }\"\n\n";
         m_markdownFullPage += $"\n## As links \n\n";
         m_markdownFullPage += m_gitCloneList;
@@ -233,8 +230,124 @@ public class GitPackageMono_FindPackageInUse : MonoBehaviour
             AssemblyJson assemblyJson = JsonUtility.FromJson<AssemblyJson>(json);
             m_assemblyJsons.Add(assemblyJson);
         }
+        m_assemblyNames.Clear();
+        foreach (var assemblyJson in m_assemblyJsons)
+        {
+            m_assemblyNames.Add(assemblyJson.name);
+            foreach (var reference in assemblyJson.references)
+            {
+                m_assemblyNames.Add(reference);
+            }
+        }
+        m_assemblyNames = m_assemblyNames.Distinct().ToList();
+
+        m_allAssemblyInProject = System.IO.Directory.GetFiles(m_currentDirectory, "*.asmdef", System.IO.SearchOption.AllDirectories);
+        m_allFilePathOfAssemblyName.Clear();
+        foreach (string assemblyName in m_assemblyNames)
+        {
+            foreach (string assemblyPath in m_allAssemblyInProject)
+            {
+               if (assemblyPath.Contains(assemblyName))
+                {
+                    m_allFilePathOfAssemblyName.Add(assemblyPath);
+                }
+            }
+        }
+
+        m_gitOfAssembly.Clear();
+        foreach (var assemblyPath in m_allFilePathOfAssemblyName)
+        {
+            string directory = System.IO.Path.GetDirectoryName(assemblyPath);
+            QuickGit.GetGitsInParents(directory, out List<GitLinkOnDisk> gitsAssembly);
+            m_gitOfAssembly.AddRange(gitsAssembly);
+        }
+        m_gitOfAssembly = m_gitOfAssembly
+            .GroupBy(a => a.m_gitLink)
+            .Select(g => g.First())
+            .ToList();
+
+        m_gitToPackagesFromAssembly.Clear();
+        foreach (var gitLink in m_gitOfAssembly)
+        {
+            GitToPackageJson gitToPackageJson = new GitToPackageJson();
+            gitToPackageJson.m_gitLink = gitLink.m_gitLink;
+            gitToPackageJson.m_packageJsonPath = System.IO.Path.Combine(gitLink.m_projectDirectoryPath, "package.json");
+            gitToPackageJson.m_packageJsonDirectory = gitLink.m_projectDirectoryPath;
+            gitToPackageJson.m_gitLinkOnDisk = gitLink;
+            m_gitToPackagesFromAssembly.Add(gitToPackageJson);
+        }
+
+        foreach (var gitToPackage in m_gitToPackagesFromAssembly)
+        {
+            if (File.Exists(gitToPackage.m_packageJsonPath))
+            {
+                gitToPackage.m_jsonFileContent = File.ReadAllText(gitToPackage.m_packageJsonPath);
+                string[] lines = gitToPackage.m_jsonFileContent.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in lines)
+                {
+                    if (line.Contains("\"name\""))
+                    {
+                        string[] splitLine = line.Split(new[] { ':', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (splitLine.Length > 1)
+                        {
+                            string name = splitLine[1].Trim().Replace("\"", "");
+                            // name must be in namespace format aa.bb.cc
+                            string[] nameSplit = name.Split('.');
+                            if (nameSplit.Length >= 3)
+                            {
+                                gitToPackage.m_namepackage = name;
+                            }
+                        }
+                    }
+                }
+
+
+            }
+            string fileOrigin = System.IO.Path.Combine(gitToPackage.m_gitLinkOnDisk.m_projectDirectoryPath, ".git", "ORIG_HEAD");
+            if (File.Exists(fileOrigin))
+            {
+                gitToPackage.m_hashOf_ORIG_HEAD = File.ReadAllText(fileOrigin);
+            }
+
+
+        }
+
+        m_magicCopyPastGit = "## Pakcage with hash\n";
+        m_magicCopyPastGit += "```\n";
+        foreach (var gitToPackage in m_gitToPackagesFromAssembly)
+        {
+            if (!string.IsNullOrEmpty(gitToPackage.m_namepackage))
+            {
+                m_magicCopyPastGit += "  \"" + gitToPackage.m_namepackage + "\": \"" + gitToPackage.m_gitLink + "#" + gitToPackage.m_hashOf_ORIG_HEAD.Trim() + "\",\n";
+            }
+        }
+        m_magicCopyPastGit += "```\n\n";
+        m_magicCopyPastGit += "## Package without hash\n\n";
+        m_magicCopyPastGit += "```\n\n";
+        foreach (var gitToPackage in m_gitToPackagesFromAssembly)
+        {
+            if (!string.IsNullOrEmpty(gitToPackage.m_namepackage))
+            {
+                m_magicCopyPastGit += "  \"" + gitToPackage.m_namepackage + "\": \"" + gitToPackage.m_gitLink +"\",\n";
+            }
+        }
+        m_magicCopyPastGit += "```\n";
+
+
+
     }
     public List<AssemblyJson > m_assemblyJsons = new List<AssemblyJson>();
+    public List<string> m_assemblyNames = new List<string>();
+
+    public string[] m_allAssemblyInProject;
+    public List<string> m_allFilePathOfAssemblyName = new List<string>();
+
+    public List<GitLinkOnDisk> m_gitOfAssembly = new List<GitLinkOnDisk>();
+
+    public List<GitToPackageJson> m_gitToPackagesFromAssembly = new List<GitToPackageJson>();
+
+
+    public string m_magicCopyPastGit = string.Empty;
 }
 
 
