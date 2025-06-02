@@ -282,25 +282,7 @@ public class GitPackageMono_FindPackageInUse : MonoBehaviour
             if (File.Exists(gitToPackage.m_packageJsonPath))
             {
                 gitToPackage.m_jsonFileContent = File.ReadAllText(gitToPackage.m_packageJsonPath);
-                string[] lines = gitToPackage.m_jsonFileContent.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var line in lines)
-                {
-                    if (line.Contains("\"name\""))
-                    {
-                        string[] splitLine = line.Split(new[] { ':', ',' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (splitLine.Length > 1)
-                        {
-                            string name = splitLine[1].Trim().Replace("\"", "");
-                            // name must be in namespace format aa.bb.cc
-                            string[] nameSplit = name.Split('.');
-                            if (nameSplit.Length >= 3)
-                            {
-                                gitToPackage.m_namepackage = name;
-                            }
-                        }
-                    }
-                }
-
+                FindNamePackageFronJsonFile(gitToPackage);
 
             }
             string fileOrigin = System.IO.Path.Combine(gitToPackage.m_gitLinkOnDisk.m_projectDirectoryPath, ".git", "ORIG_HEAD");
@@ -335,7 +317,72 @@ public class GitPackageMono_FindPackageInUse : MonoBehaviour
 
 
 
+
+
+        foreach (var json in m_allPackageJsonFiles) {
+
+            string directory = System.IO.Path.GetDirectoryName(json);
+            QuickGit.GetGitsInParents(directory, out List<GitLinkOnDisk> gitNearPackageJson);
+            if (gitNearPackageJson.Count > 0)
+            {
+                GitLinkOnDisk gitLinkOnDisk = gitNearPackageJson[0];
+                GitLinkOnDisk gitLink = new GitLinkOnDisk(directory);
+                gitLink.m_gitLink = gitLinkOnDisk.m_gitLink;
+                gitLink.m_projectDirectoryPath = gitLinkOnDisk.m_projectDirectoryPath; 
+                m_allGitNearPackgeJson.Add(gitLink);
+
+                GitToPackageJson pack = new GitToPackageJson()
+                {
+                    m_gitLink = gitLink.m_gitLink,
+                    m_packageJsonPath = json,
+                    m_packageJsonDirectory = directory,
+                    m_gitLinkOnDisk = gitLink,
+                    m_jsonFileContent = File.ReadAllText(json)
+
+                };
+                FindNamePackageFronJsonFile(pack);
+                m_allGitNearPackgeJsonFromAssembly.Add(pack);
+
+
+            }
+        }
+        m_magicCopyPastAllPackage = $"## All package.json in {Application.productName}\n\n";
+        m_magicCopyPastAllPackage += "```\n";
+        foreach (var gitToPackage in m_allGitNearPackgeJsonFromAssembly)
+        {
+            if (!string.IsNullOrEmpty(gitToPackage.m_namepackage))
+            {
+                m_magicCopyPastAllPackage += "  \"" + gitToPackage.m_namepackage + "\": \"" + gitToPackage.m_gitLink + "\",\n";
+            }
+        }
+        m_magicCopyPastAllPackage += "```\n\n";
+
+
+
     }
+
+    private static void FindNamePackageFronJsonFile(GitToPackageJson gitToPackage)
+    {
+        string[] lines = gitToPackage.m_jsonFileContent.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        foreach (var line in lines)
+        {
+            if (line.Contains("\"name\""))
+            {
+                string[] splitLine = line.Split(new[] { ':', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                if (splitLine.Length > 1)
+                {
+                    string name = splitLine[1].Trim().Replace("\"", "");
+                    // name must be in namespace format aa.bb.cc
+                    string[] nameSplit = name.Split('.');
+                    if (nameSplit.Length >= 3)
+                    {
+                        gitToPackage.m_namepackage = name;
+                    }
+                }
+            }
+        }
+    }
+
     public List<AssemblyJson > m_assemblyJsons = new List<AssemblyJson>();
     public List<string> m_assemblyNames = new List<string>();
 
@@ -348,6 +395,12 @@ public class GitPackageMono_FindPackageInUse : MonoBehaviour
 
 
     public string m_magicCopyPastGit = string.Empty;
+
+
+    public List<GitLinkOnDisk> m_allGitNearPackgeJson = new List<GitLinkOnDisk>();
+    public List<GitToPackageJson> m_allGitNearPackgeJsonFromAssembly = new List<GitToPackageJson>();
+
+    public string m_magicCopyPastAllPackage = string.Empty;
 }
 
 
